@@ -53,7 +53,7 @@
       <a href="#hoy" class="btn btn--borde">¿Qué puedo plantar hoy?</a>
     </div>
     <div class="cifras">
-      <div class="cifra"><p class="cifra__n">31</p><p class="cifra__t">plantas con ficha</p></div>
+      <div class="cifra"><p class="cifra__n">114</p><p class="cifra__t">cultivos con ficha</p></div>
       <div class="cifra"><p class="cifra__n">4 m²</p><p class="cifra__t">de huerto para empezar</p></div>
       <div class="cifra"><p class="cifra__n">20</p><p class="cifra__t">errores que matan</p></div>
       <div class="cifra"><p class="cifra__n">17</p><p class="cifra__t">meses planificados</p></div>
@@ -115,17 +115,32 @@
         <p class="kicker">03 — Catálogo</p>
         <h2 class="titulo-2">Qué plantar, una por una</h2>
       </div>
-      <p class="intro">La barra de doce casillas de cada tarjeta son los meses del año: las marcadas son los meses en los que se planta. Filtra por grupo, por mes, o por los dos a la vez. Toca cualquier planta para abrir su ficha completa.</p>
+      <p class="intro">114 cultivos con ventana propia para Tortosa. La barra de doce casillas de cada tarjeta son los meses: <strong>verde</strong> es su mejor momento y <strong>ámbar</strong> es posible pero con menos margen. Toca cualquiera para abrir su ficha completa.</p>
+    </div>
+
+    <div class="barra-busqueda">
+      <input type="search" id="busqueda" placeholder="Buscar cultivo: tomate, higuera, albahaca…" aria-label="Buscar cultivo">
+      <span class="modo-catalogo" role="group" aria-label="Modo del catálogo">
+        <button type="button" class="chip" id="modoPlantar" data-modo="plantar">Puedo plantarlo ya</button>
+        <button type="button" class="chip" id="modoCualquiera" data-modo="cualquiera">Incluir semilleros</button>
+      </span>
     </div>
 
     <div class="filtros" id="filtros"></div>
 
-    <p class="etiqueta-filtro">Mes de plantación</p>
+    <p class="etiqueta-filtro">Mes de plantación / inicio</p>
     <div class="filtros filtros--meses" id="filtrosMes"></div>
+
+    <p class="leyenda-tira">
+      <span><i class="muestra muestra--optimo"></i> mejor momento</span>
+      <span><i class="muestra muestra--posible"></i> posible, con menos margen</span>
+      <span><i class="muestra muestra--fuera"></i> fuera de ventana</span>
+    </p>
+    <p class="nota-ventanas">La temperatura real, la variedad y tu microclima mandan; las fechas son ventanas orientativas para Tortosa.</p>
 
     <p class="conteo" id="conteo"></p>
     <div class="rejilla rejilla--tarjetas" id="rejillaPlantas"></div>
-    <p class="sin-resultados" id="sinResultados" hidden>Ese mes no hay nada que plantar de este grupo. Prueba con otro mes o quita el filtro de grupo.</p>
+    <p class="sin-resultados" id="sinResultados" hidden>Nada coincide con esos filtros. Prueba con otro mes, otra categoría, o activa «Incluir semilleros».</p>
   </div>
 </section>
 
@@ -146,12 +161,12 @@
     <p class="intro" style="max-width:70ch; margin-bottom:20px;">Tres verbos distintos que conviene no mezclar nunca:</p>
     <div class="rejilla rejilla--3" id="listaVocabulario" style="margin-bottom:56px;"></div>
 
-    <h3 class="titulo-3">Tabla maestra</h3>
-    <p class="intro" style="max-width:70ch; margin-bottom:20px;">La respuesta corta a prácticamente cualquier duda. Las fechas son <strong>ventanas</strong>, no días obligatorios: el calendario orienta, la temperatura real manda.</p>
+    <h3 class="titulo-3">Tabla maestra · los 114 cultivos</h3>
+    <p class="intro" style="max-width:70ch; margin-bottom:20px;">La respuesta corta a prácticamente cualquier duda: cómo se empieza cada cultivo, cuándo puede plantarse y cuándo va mejor. Las fechas son <strong>ventanas</strong>, no días obligatorios.</p>
     <div class="tabla-envoltorio" style="margin-bottom:56px;">
       <table class="tabla">
-        <thead><tr><th>Cultivo</th><th>Si partes de semilla</th><th>Cuándo va al bancal</th><th>Si compras plantel</th><th>Lo recomendado</th></tr></thead>
-        <tbody id="tablaSemilla"></tbody>
+        <thead><tr><th>Cultivo</th><th>Método principal</th><th>Puede plantarse</th><th>Mejor</th><th>Adaptación</th></tr></thead>
+        <tbody id="tablaResumen"></tbody>
       </table>
     </div>
 
@@ -344,22 +359,13 @@
     <h3 class="titulo-3">Rutina semanal, mensual y anual</h3>
     <div class="rejilla rejilla--3" id="listaRutinas" style="margin-bottom:56px;"></div>
 
-    <h3 class="titulo-3">Tabla maestra de hortalizas</h3>
-    <p class="intro" style="max-width:70ch; margin-bottom:20px;">Fechas orientativas para un clima mediterráneo cálido como el de Tortosa: ajústalas a la temperatura real de cada año.</p>
-
-    <h4 class="titulo-4">Primavera y verano</h4>
-    <div class="tabla-envoltorio" style="margin-bottom:32px;">
-      <table class="tabla">
-        <thead><tr><th>Cultivo</th><th>Inicio fácil</th><th>Separación</th><th>Lugar recomendado</th><th>Dificultad</th></tr></thead>
-        <tbody id="tablaVerano"></tbody>
-      </table>
-    </div>
-
-    <h4 class="titulo-4">Otoño, invierno y primavera temprana</h4>
+    <h3 class="titulo-3">Qué necesita cada cultivo</h3>
+    <p class="intro" style="max-width:70ch; margin-bottom:8px;">Sol, agua, separación y recipiente mínimo de las hortalizas y aromáticas del catálogo. Las <strong>fechas</strong> no están aquí: cada cultivo tiene su ventana propia en su ficha.</p>
+    <p class="conteo" id="conteoNecesidades"></p>
     <div class="tabla-envoltorio">
       <table class="tabla">
-        <thead><tr><th>Cultivo</th><th>Inicio fácil</th><th>Separación</th><th>Lugar recomendado</th><th>Dificultad</th></tr></thead>
-        <tbody id="tablaInvierno"></tbody>
+        <thead><tr><th>Cultivo</th><th>Sol</th><th>Agua</th><th>Separación</th><th>Maceta mínima</th><th>Fondo de bancal</th></tr></thead>
+        <tbody id="tablaNecesidades"></tbody>
       </table>
     </div>
 
@@ -509,8 +515,9 @@
         <p class="kicker">13 — Rigor</p>
         <h2 class="titulo-2">Fuentes técnicas</h2>
       </div>
-      <p class="intro">El plan combina el contexto concreto del terreno con recomendaciones agronómicas de fuentes institucionales y universitarias, revisadas el 16 de agosto de 2026.</p>
+      <p class="intro">El calendario no es una opinión: cada ventana de cada cultivo sale de fuentes contrastadas, y cada ficha enlaza las suyas.</p>
     </div>
+    <p class="conteo" id="conteoFuentes" style="max-width:80ch;"></p>
     <ul class="fuentes" id="listaFuentes"></ul>
   </div>
 </section>
@@ -539,6 +546,7 @@
   <button type="button" id="avisoTerminoCerrar" aria-label="Cerrar">×</button>
 </div>
 
+<script src="js/catalogo.js"></script>
 <script src="js/datos.js"></script>
 <script src="js/app.js"></script>
 </body>

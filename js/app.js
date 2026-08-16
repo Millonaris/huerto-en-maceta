@@ -1,6 +1,12 @@
 /* =========================================================
    Mi Huerto en Maceta — lógica de la web
-   JavaScript sin dependencias. Se apoya en js/datos.js.
+   JavaScript sin dependencias.
+
+   Datos:
+   · js/catalogo.js  → dataset maestro V3 (114 fichas). FUENTE DE VERDAD de
+                       todas las fechas. Generado desde datos/*.json.
+   · js/datos.js     → el resto del contenido (reglas, riego, cuidados…) y los
+                       trucos escritos a mano. Aquí NO hay fechas de plantación.
    ========================================================= */
 (function () {
   'use strict';
@@ -10,50 +16,64 @@
   const $$ = (sel, ctx) => Array.from((ctx || document).querySelectorAll(sel));
 
   function esc(txt) {
-    return String(txt)
+    return String(txt == null ? '' : txt)
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;');
   }
 
+  function sinAcentos(s) {
+    return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  }
+
+  /* ---------- Dataset V3 ---------- */
+  const CAT     = window.CATALOGO;
+  const CROPS   = CAT.crops;
+  const FUENTES = CAT.source_registry;
+  const NOMBRE_MES = ['', 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
   const LETRAS_MES = ['E', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
 
-  const GRUPOS = {
-    'Árboles frutales': { clase: 'etiqueta--arbol',     corto: 'Árbol' },
-    'Frutas pequeñas':  { clase: 'etiqueta--fruta',     corto: 'Fruta' },
-    'Verduras':         { clase: 'etiqueta--verdura',   corto: 'Verdura' },
-    'Aromáticas':       { clase: 'etiqueta--aromatica', corto: 'Aromática' }
+  const CATEGORIAS = {
+    hortaliza:     { t: 'Hortalizas',      corto: 'Hortaliza', clase: 'etiqueta--verdura' },
+    frutal:        { t: 'Frutales',        corto: 'Frutal',    clase: 'etiqueta--arbol' },
+    fruta_pequena: { t: 'Frutas pequeñas', corto: 'Fruta',     clase: 'etiqueta--fruta' },
+    aromatica:     { t: 'Aromáticas',      corto: 'Aromática', clase: 'etiqueta--aromatica' },
+    flor_util:     { t: 'Flores útiles',   corto: 'Flor',      clase: 'etiqueta--flor' }
+  };
+  const ORDEN_CATEGORIAS = ['hortaliza', 'aromatica', 'fruta_pequena', 'frutal', 'flor_util'];
+
+  const AJUSTE = {
+    condicional:      { t: 'Condicional en Tortosa', clase: 'ajuste--condicional' },
+    poco_recomendado: { t: 'Poco recomendado aquí',  clase: 'ajuste--poco' }
   };
 
-  function htmlDificultad(dif, grande) {
-    let out = '<span class="puntos-dif' + (grande ? ' puntos-dif--grande' : '') + '">';
-    for (let i = 1; i <= 5; i++) {
-      const on = i <= dif ? ' on' + (dif >= 3 ? ' alta' : '') : '';
-      out += '<span class="' + on.trim() + '"></span>';
-    }
-    return out + '</span>';
-  }
-
-  function htmlTira(meses, grande, resaltado) {
-    // Se usa <span> en lugar de <div> porque la tira vive dentro de un <button>.
-    let out = '<span class="tira' + (grande ? ' tira--grande' : '') + '">';
-    LETRAS_MES.forEach((l, i) => {
-      let clases = meses.indexOf(i + 1) >= 0 ? 'on' : '';
-      if (resaltado && resaltado === i + 1) clases += ' foco';
-      out += '<span' + (clases ? ' class="' + clases.trim() + '"' : '') + '>' + l + '</span>';
-    });
-    return out + '</span>';
-  }
+  // Cada método de establecimiento hereda el color de su "vía" equivalente.
+  const CLASE_METODO = {
+    semillero:              'via--semilla',
+    siembra_directa:        'via--semilla',
+    trasplante_plantel:     'via--plantel',
+    bulbo_tuberculo_diente: 'via--material',
+    plantacion_vivero:      'via--vivero',
+    raiz_desnuda:           'via--vivero'
+  };
 
   /* ---------- Estado ---------- */
   const hoy = new Date().getMonth() + 1;
   const estado = {
-    filtro: 'Todas',
+    categoria: 'Todas',
     filtroMes: 0,          // 0 = cualquier mes
+    modo: 'plantar',       // 'plantar' = puedo ponerlo ya · 'cualquiera' = incluye semilleros
     orden: 'grupo',
-    mes: hoy,
-    sim: hoy,
+    busqueda: '',
+    mes: hoy,              // calendario
+    sim: hoy,              // "qué planto hoy"
     abierta: null
   };
+
+  /* Meses de catálogo según el modo activo */
+  function mesesDe(c) {
+    return estado.modo === 'cualquiera' ? c.catalog_any_start_months : c.catalog_plantable_months;
+  }
 
   /* =========================================================
      1. REGLAS
@@ -92,15 +112,11 @@
       </div>`).join('');
   }
 
-  function pintarTablaMacetas() {
-    pintarTabla('#tablaMacetas', ['Planta', 'Recipiente objetivo'], MACETAS, [1]);
-  }
-
   /* =========================================================
      3. ACORDEONES
      ========================================================= */
   function pintarAcordeon(selector, datos) {
-    $(selector).innerHTML = datos.map((d, i) => `
+    $(selector).innerHTML = datos.map(d => `
       <div class="acordeon__item">
         <button class="acordeon__btn" type="button" aria-expanded="false">${d.t}</button>
         <div class="acordeon__cuerpo">${d.html}</div>
@@ -118,147 +134,310 @@
   }
 
   /* =========================================================
-     4. CATÁLOGO
+     4. TABLAS
+     En móvil cada fila pasa a ser una tarjeta: por eso cada celda
+     lleva su cabecera copiada en data-etiqueta.
      ========================================================= */
-  function plantasVisibles() {
-    let lista = PLANTAS.slice();
-    if (estado.orden === 'facil') {
-      lista.sort((a, b) => a.dif - b.dif || a.nombre.localeCompare(b.nombre, 'es'));
+  function pintarTabla(selector, cabeceras, filas, columnasNum) {
+    const num = columnasNum || [];
+    $(selector).innerHTML = filas.map(f =>
+      '<tr>' + f.map((c, i) => {
+        const clase = num.indexOf(i) >= 0 ? ' class="num"' : '';
+        const cont = i === 0 ? `<strong>${c}</strong>` : c;
+        return `<td data-etiqueta="${esc(cabeceras[i] || '')}"${clase}>${cont}</td>`;
+      }).join('') + '</tr>').join('');
+  }
+
+  function pintarTablaMacetas() {
+    pintarTabla('#tablaMacetas', ['Planta', 'Recipiente objetivo'], MACETAS, [1]);
+  }
+
+  /* Tabla de necesidades, derivada del dataset: sin fechas, solo agronomía. */
+  function pintarTablaNecesidades() {
+    const filas = CROPS
+      .filter(c => c.category === 'hortaliza' || c.category === 'aromatica')
+      .sort((a, b) => a.name.localeCompare(b.name, 'es'))
+      .map(c => [
+        c.name,
+        c.sun === 'sol' ? 'Sol' : (c.sun === 'semisombra' ? 'Semisombra' : c.sun),
+        { alto: 'Alto', medio: 'Medio', bajo: 'Bajo' }[c.water] || c.water,
+        c.spacing_cm ? c.spacing_cm + ' cm' : '—',
+        c.container_min_l ? c.container_min_l + ' L' : '—',
+        c.bed_depth_cm ? c.bed_depth_cm + ' cm' : '—'
+      ]);
+    pintarTabla('#tablaNecesidades',
+      ['Cultivo', 'Sol', 'Agua', 'Separación', 'Maceta mínima', 'Fondo de bancal'],
+      filas, [3, 4, 5]);
+    $('#conteoNecesidades').textContent =
+      filas.length + ' hortalizas y aromáticas del catálogo.';
+  }
+
+  /* Resumen de las 114 fichas: método, ventana posible y ventana óptima. */
+  function pintarTablaResumen() {
+    const filas = CROPS.slice()
+      .sort((a, b) =>
+        ORDEN_CATEGORIAS.indexOf(a.category) - ORDEN_CATEGORIAS.indexOf(b.category) ||
+        a.name.localeCompare(b.name, 'es'))
+      .map(c => [
+        c.name,
+        `<span class="via ${CLASE_METODO[c.catalog_default_action] || 'via--vivero'}">${c.catalog_default_label}</span>`,
+        c.catalog_plantable_text,
+        c.catalog_optimal_text || '—',
+        AJUSTE[c.tortosa_fit]
+          ? `<span class="ajuste ${AJUSTE[c.tortosa_fit].clase}">${c.tortosa_fit.replace('_', ' ')}</span>`
+          : c.tortosa_fit
+      ]);
+    pintarTabla('#tablaResumen',
+      ['Cultivo', 'Método principal', 'Puede plantarse', 'Mejor', 'Adaptación'],
+      filas);
+  }
+
+  /* =========================================================
+     5. CATÁLOGO
+     ========================================================= */
+  function cultivosVisibles() {
+    let lista = CROPS.slice();
+
+    if (estado.categoria !== 'Todas') lista = lista.filter(c => c.category === estado.categoria);
+    if (estado.filtroMes) lista = lista.filter(c => mesesDe(c).indexOf(estado.filtroMes) >= 0);
+
+    if (estado.busqueda) {
+      const q = sinAcentos(estado.busqueda);
+      lista = lista.filter(c =>
+        sinAcentos(c.name).indexOf(q) >= 0 ||
+        sinAcentos(c.subcategory || '').indexOf(q) >= 0 ||
+        sinAcentos(c.notes || '').indexOf(q) >= 0);
     }
-    if (estado.filtro !== 'Todas') lista = lista.filter(p => p.grupo === estado.filtro);
-    if (estado.filtroMes) lista = lista.filter(p => p.meses.indexOf(estado.filtroMes) >= 0);
+
+    if (estado.orden === 'facil') {
+      lista.sort((a, b) => a.difficulty - b.difficulty || a.name.localeCompare(b.name, 'es'));
+    } else {
+      lista.sort((a, b) =>
+        ORDEN_CATEGORIAS.indexOf(a.category) - ORDEN_CATEGORIAS.indexOf(b.category) ||
+        a.name.localeCompare(b.name, 'es'));
+    }
     return lista;
   }
 
+  function htmlDificultad(dif, grande) {
+    let out = '<span class="puntos-dif' + (grande ? ' puntos-dif--grande' : '') + '">';
+    for (let i = 1; i <= 5; i++) {
+      const on = i <= dif ? ' on' + (dif >= 3 ? ' alta' : '') : '';
+      out += '<span class="' + on.trim() + '"></span>';
+    }
+    return out + '</span>';
+  }
+
+  /* Tira de 12 meses: verde = óptimo, ámbar = posible, gris = fuera. */
+  function htmlTira(cultivo, grande) {
+    const posibles = mesesDe(cultivo);
+    const optimos = cultivo.catalog_optimal_months || [];
+    let out = '<span class="tira' + (grande ? ' tira--grande' : '') + '">';
+    LETRAS_MES.forEach((l, i) => {
+      const m = i + 1;
+      let clases = '';
+      if (optimos.indexOf(m) >= 0) clases = 'optimo';
+      else if (posibles.indexOf(m) >= 0) clases = 'posible';
+      if (estado.filtroMes === m) clases += ' foco';
+      out += '<span' + (clases ? ' class="' + clases.trim() + '"' : '') + '>' + l + '</span>';
+    });
+    return out + '</span>';
+  }
+
+  /* Qué toca hacer exactamente con este cultivo en el mes seleccionado */
+  function accionDelMes(c, mes) {
+    if (!mes) return null;
+    const metodos = c.establishment_methods.filter(m => m.possible_months.indexOf(mes) >= 0);
+    if (!metodos.length) return null;
+    // El método recomendado manda; si no aplica ese mes, el primero que sí.
+    const m = metodos.find(x => x.recommended_for_user) || metodos[0];
+    const optimo = (m.optimal_months || []).indexOf(mes) >= 0;
+    return {
+      label: m.label,
+      clase: CLASE_METODO[m.key] || 'via--vivero',
+      estado: optimo ? 'óptimo' : 'con precaución',
+      claseEstado: optimo ? 'estado--optimo' : 'estado--precaucion'
+    };
+  }
+
   function pintarFiltros() {
-    const nombres = ['Todas', 'Árboles frutales', 'Frutas pequeñas', 'Verduras', 'Aromáticas'];
-    const botones = nombres.map(n =>
-      `<button type="button" class="chip${estado.filtro === n ? ' activo' : ''}" data-filtro="${esc(n)}">${n}</button>`
-    ).join('');
-    const orden = `<button type="button" class="chip chip--orden" id="botonOrden">Orden: ${
-      estado.orden === 'facil' ? 'más fáciles primero' : 'por grupo'}</button>`;
-    $('#filtros').innerHTML = botones + orden;
+    const cats = ['Todas'].concat(ORDEN_CATEGORIAS);
+    $('#filtros').innerHTML = cats.map(k => {
+      const t = k === 'Todas' ? 'Todas' : CATEGORIAS[k].t;
+      const n = k === 'Todas' ? CROPS.length : CROPS.filter(c => c.category === k).length;
+      return `<button type="button" class="chip${estado.categoria === k ? ' activo' : ''}" data-categoria="${esc(k)}">${t}<span class="chip__n">${n}</span></button>`;
+    }).join('') +
+      `<button type="button" class="chip chip--orden" id="botonOrden">Orden: ${
+        estado.orden === 'facil' ? 'más fáciles primero' : 'por grupo'}</button>`;
 
     const cualquiera = `<button type="button" class="chip chip--mes${
       estado.filtroMes === 0 ? ' activo' : ''}" data-filtro-mes="0">Cualquier mes</button>`;
-    const meses = MESES.map(m => {
-      const cuantas = PLANTAS.filter(p => p.meses.indexOf(m.n) >= 0).length;
+    const meses = LETRAS_MES.map((_, i) => {
+      const m = i + 1;
+      const n = CROPS.filter(c => mesesDe(c).indexOf(m) >= 0).length;
+      const corto = CAT.months[String(m)];
       return `<button type="button" class="chip chip--mes${
-        estado.filtroMes === m.n ? ' activo' : ''}${cuantas ? '' : ' vacio'}" data-filtro-mes="${m.n}"
-        title="${m.nombre}: ${cuantas} ${cuantas === 1 ? 'planta' : 'plantas'}">${m.corto}<span class="chip__n">${cuantas}</span></button>`;
+        estado.filtroMes === m ? ' activo' : ''}${n ? '' : ' vacio'}" data-filtro-mes="${m}"
+        title="${NOMBRE_MES[m]}: ${n} cultivos">${corto}<span class="chip__n">${n}</span></button>`;
     }).join('');
     $('#filtrosMes').innerHTML = cualquiera + meses;
+
+    $('#modoPlantar').classList.toggle('activo', estado.modo === 'plantar');
+    $('#modoCualquiera').classList.toggle('activo', estado.modo === 'cualquiera');
   }
 
   function textoConteo(n) {
-    const grupo = estado.filtro === 'Todas' ? '' : ' de ' + estado.filtro.toLowerCase();
-    const unidad = n === 1 ? ' planta' : ' plantas';
-    if (!estado.filtroMes) {
-      return n + unidad + grupo + (estado.filtro === 'Todas' ? ' en total' : '');
-    }
-    const mes = MESES.find(m => m.n === estado.filtroMes).nombre.toLowerCase();
+    const cat = estado.categoria === 'Todas' ? 'cultivos' : CATEGORIAS[estado.categoria].t.toLowerCase();
+    if (!estado.filtroMes) return n + ' ' + cat + (estado.categoria === 'Todas' ? ' en total' : '');
+    const verbo = estado.modo === 'cualquiera' ? 'puedes empezar' : 'puedes plantar';
     return n === 0
-      ? 'Nada' + grupo + ' que plantar en ' + mes
-      : n + unidad + grupo + ' que se plantan en ' + mes;
+      ? 'Nada de ' + cat + ' para ' + NOMBRE_MES[estado.filtroMes]
+      : n + ' ' + cat + ' que ' + verbo + ' en ' + NOMBRE_MES[estado.filtroMes];
   }
 
   function pintarCatalogo() {
-    const lista = plantasVisibles();
+    const lista = cultivosVisibles();
 
     $('#conteo').textContent = textoConteo(lista.length);
     $('#sinResultados').hidden = lista.length > 0;
 
-    $('#rejillaPlantas').innerHTML = lista.map(p => {
-      const g = GRUPOS[p.grupo];
-      const v = VIAS[(VIA_PLANTA[p.id] || {}).via] || null;
+    $('#rejillaPlantas').innerHTML = lista.map(c => {
+      const cat = CATEGORIAS[c.category];
+      const fit = AJUSTE[c.tortosa_fit];
+      const acc = accionDelMes(c, estado.filtroMes);
       return `
-      <button type="button" class="planta" data-planta="${p.id}">
+      <button type="button" class="planta" data-cultivo="${c.id}">
         <span class="planta__alto">
-          <span class="planta__nombre">${p.nombre}</span>
-          <span class="etiqueta ${g.clase}">${g.corto}</span>
+          <span class="planta__nombre">${c.name}</span>
+          <span class="etiqueta ${cat.clase}">${cat.corto}</span>
         </span>
-        <span class="planta__corto">${p.corto}</span>
+        ${fit ? `<span class="ajuste ${fit.clase}">${fit.t}</span>` : ''}
         <span class="dificultad">
           <span class="dificultad__t">Dificultad</span>
-          ${htmlDificultad(p.dif)}
+          ${htmlDificultad(c.difficulty)}
         </span>
         <span>
-          ${htmlTira(p.meses, false, estado.filtroMes)}
+          ${htmlTira(c)}
           <span class="planta__pie">
-            <span>Plantar: ${p.plantarCorto}</span>
-            ${v ? `<span class="via ${v.clase}">${v.t}</span>` : ''}
+            <span>Plantar: ${estado.modo === 'cualquiera' ? c.catalog_any_start_text : c.catalog_plantable_text}</span>
+            <span class="via ${CLASE_METODO[c.catalog_default_action] || 'via--vivero'}">${etiquetaCorta(c.catalog_default_label)}</span>
           </span>
         </span>
+        ${acc ? `<span class="accion-mes">
+            <span class="via ${acc.clase}">${etiquetaCorta(acc.label)}</span>
+            <span class="estado ${acc.claseEstado}">${acc.estado}</span>
+          </span>` : `<span class="planta__resumen">${c.start_options_summary}</span>`}
       </button>`;
     }).join('');
   }
 
-  /* ---------- Cómo se empieza esta planta ---------- */
-  function htmlVia(id) {
-    const d = VIA_PLANTA[id];
-    if (!d) return '';
-    const v = VIAS[d.via];
-    const etiquetaSemilla = {
-      semilla:  'Siembra directa',
-      material: 'Qué plantas'
-    }[d.via] || 'Desde semilla';
+  /* "COMPRAR / TRASPLANTAR PLANTEL" no cabe en una tarjeta de móvil. */
+  function etiquetaCorta(label) {
+    return {
+      'COMPRAR / TRASPLANTAR PLANTEL': 'Plantel',
+      'DESDE SEMILLA · SIEMBRA DIRECTA': 'Semilla directa',
+      'DESDE SEMILLA · SEMILLERO': 'Semillero',
+      'PLANTA / ÁRBOL DE VIVERO': 'Vivero',
+      'COMPRAR / PLANTAR DE VIVERO': 'Vivero',
+      'BULBO / TUBÉRCULO / DIENTE / GARRA': 'Bulbo o diente',
+      'RAÍZ DESNUDA': 'Raíz desnuda'
+    }[label] || label;
+  }
+
+  /* ---------- Ficha ---------- */
+  function htmlMetodo(m) {
+    const rango = r => r && r.length
+      ? r.map(x => x.from_text + ' – ' + x.to_text).join(' · ')
+      : null;
+    const posible = rango(m.possible_date_ranges);
+    const optimo = rango(m.optimal_date_ranges);
+    const fuentes = (m.source_keys || []).filter(k => FUENTES[k]);
+
     return `
-      <div class="bloque-via">
-        <p class="subtitulo-bloque" style="margin-bottom:10px;">Cómo se empieza</p>
-        <p class="bloque-via__reco"><span class="via ${v.clase}">${v.t}</span> ${d.reco}</p>
-        <dl class="bloque-via__lista">
-          ${d.semilla ? `<dt>${etiquetaSemilla}</dt><dd>${d.semilla}</dd>` : ''}
-          ${d.trasplante ? `<dt>Trasplante</dt><dd>${d.trasplante}</dd>` : ''}
+      <div class="metodo${m.recommended_for_user ? ' metodo--recomendado' : ''}">
+        <p class="metodo__alto">
+          <span class="via ${CLASE_METODO[m.key] || 'via--vivero'}">${m.label}</span>
+          ${m.recommended_for_user ? '<span class="metodo__reco">recomendado</span>' : ''}
+        </p>
+        <dl class="metodo__lista">
+          <dt>Posible</dt><dd>${m.possible_text}${posible ? `<span class="metodo__fechas">${posible}</span>` : ''}</dd>
+          <dt class="es-optimo">Mejor</dt><dd class="es-optimo">${m.optimal_text || '—'}${optimo ? `<span class="metodo__fechas">${optimo}</span>` : ''}</dd>
+          ${m.caution_months && m.caution_months.length
+            ? `<dt class="es-precaucion">Precaución</dt><dd class="es-precaucion">${m.caution_text}</dd>` : ''}
         </dl>
-        ${d.nota ? `<p class="bloque-via__nota">${d.nota}</p>` : ''}
+        ${m.note ? `<p class="metodo__nota">${m.note}</p>` : ''}
+        ${fuentes.length ? `<p class="metodo__fuentes">Fuentes: ${fuentes.map(k =>
+          `<a href="${FUENTES[k].url}" target="_blank" rel="noopener" title="${esc(FUENTES[k].title)}">${k}</a>`).join(', ')}</p>` : ''}
       </div>`;
   }
 
-  /* ---------- Panel lateral ---------- */
   function abrirFicha(id) {
-    const p = PLANTAS.find(x => x.id === id);
-    if (!p) return;
-    const g = GRUPOS[p.grupo];
+    const c = CROPS.find(x => x.id === id);
+    if (!c) return;
+    const cat = CATEGORIAS[c.category];
+    const fit = AJUSTE[c.tortosa_fit];
+    const extra = (typeof TRUCOS !== 'undefined' && TRUCOS[c.id]) || null;
+
+    const cosecha = (c.harvest_months || []).length
+      ? c.harvest_months.map(m => CAT.months[String(m)]).join(' · ')
+      : 'Según variedad y año';
 
     $('#panel').innerHTML = `
       <div class="panel__alto">
         <div>
-          <span class="etiqueta ${g.clase}">${p.grupo}</span>
-          <h3 class="panel__nombre">${p.nombre}</h3>
-          <p class="panel__variedad">${p.variedad}</p>
+          <span class="etiqueta ${cat.clase}">${cat.t}</span>
+          <h3 class="panel__nombre">${c.name}</h3>
+          <p class="panel__variedad">${c.subcategory ? c.subcategory.replace(/_/g, ' ') : ''} · ciclo ${c.life_cycle}</p>
         </div>
         <button type="button" class="cerrar" data-cerrar aria-label="Cerrar ficha">×</button>
       </div>
 
+      ${fit ? `<div class="aviso"><p class="aviso__t">${fit.t}</p><p>${c.notes}</p></div>` : ''}
+
       <div class="panel__dif">
-        <span>Dificultad ${p.dif} de 5</span>
-        ${htmlDificultad(p.dif, true)}
+        <span>Dificultad ${c.difficulty} de 5</span>
+        ${htmlDificultad(c.difficulty, true)}
       </div>
 
-      <div class="rejilla rejilla--3" style="gap:12px; margin-bottom:22px;">
-        <div class="tarjeta--plana"><p class="dato-etiqueta">Cuándo plantar</p><p class="dato-valor">${p.plantar}</p></div>
-        <div class="tarjeta--plana"><p class="dato-etiqueta">Cuándo cosechar</p><p class="dato-valor">${p.cosecha}</p></div>
-        <div class="tarjeta--plana"><p class="dato-etiqueta">Dónde va</p><p class="dato-valor">${p.maceta}</p></div>
-        <div class="tarjeta--plana"><p class="dato-etiqueta">Riego</p><p class="dato-valor">${p.riego}</p></div>
+      <p class="subtitulo-bloque">Meses en los que puedes plantarlo</p>
+      <div style="margin-bottom:10px;">${htmlTira(c, true)}</div>
+      <p class="leyenda-tira">
+        <span><i class="muestra muestra--optimo"></i> mejor</span>
+        <span><i class="muestra muestra--posible"></i> posible</span>
+        <span><i class="muestra muestra--fuera"></i> fuera de ventana</span>
+      </p>
+      <p class="nota-ventanas">La temperatura real, la variedad y tu microclima mandan; las fechas son ventanas orientativas para Tortosa.</p>
+
+      <p class="subtitulo-bloque">${CAT.ui_contract.detail_page.section_title}</p>
+      ${c.establishment_methods.map(htmlMetodo).join('')}
+
+      <div class="rejilla rejilla--3" style="gap:12px; margin:24px 0 22px;">
+        <div class="tarjeta--plana"><p class="dato-etiqueta">Cosecha</p><p class="dato-valor">${cosecha}</p></div>
+        <div class="tarjeta--plana"><p class="dato-etiqueta">Sol</p><p class="dato-valor">${c.sun === 'sol' ? 'Sol directo' : (c.sun || '—')}</p></div>
+        <div class="tarjeta--plana"><p class="dato-etiqueta">Agua</p><p class="dato-valor">${({ alto: 'Alta', medio: 'Media', bajo: 'Baja' })[c.water] || c.water || '—'}</p></div>
+        <div class="tarjeta--plana"><p class="dato-etiqueta">Separación</p><p class="dato-valor">${c.spacing_cm ? c.spacing_cm + ' cm' : '—'}</p></div>
+        <div class="tarjeta--plana"><p class="dato-etiqueta">Maceta mínima</p><p class="dato-valor">${c.container_min_l ? c.container_min_l + ' L' : '—'}</p></div>
+        <div class="tarjeta--plana"><p class="dato-etiqueta">Fondo de bancal</p><p class="dato-valor">${c.bed_depth_cm ? c.bed_depth_cm + ' cm' : '—'}</p></div>
       </div>
 
-      <p class="subtitulo-bloque">Meses de plantación</p>
-      <div style="margin-bottom:24px;">${htmlTira(p.meses, true, estado.filtroMes)}</div>
+      ${!fit && c.notes ? `<p class="subtitulo-bloque">En resumen</p><p style="margin:0 0 24px; color:var(--texto-2);">${c.notes}</p>` : ''}
 
-      ${htmlVia(p.id)}
+      ${extra && extra.aviso ? `<div class="aviso"><p class="aviso__t">Aviso</p><p>${extra.aviso}</p></div>` : ''}
 
-      ${p.aviso ? `<div class="aviso"><p class="aviso__t">Aviso</p><p>${p.aviso}</p></div>` : ''}
+      ${extra && extra.trucos ? `
+        <p class="subtitulo-bloque">Trucos de principiante</p>
+        <ol class="puntos">${extra.trucos.map(t => `<li><p>${t}</p></li>`).join('')}</ol>` : ''}
 
-      <p class="subtitulo-bloque">Qué hacer exactamente</p>
-      <p style="margin:0 0 24px; color:var(--texto-2);">${p.accion}</p>
-
-      <p class="subtitulo-bloque">Trucos de principiante</p>
-      <ol class="puntos">
-        ${p.trucos.map(t => `<li><p>${t}</p></li>`).join('')}
-      </ol>`;
+      ${(c.research_sources || []).length ? `
+        <p class="subtitulo-bloque" style="margin-top:24px;">Fuentes de este cultivo</p>
+        <ul class="fuentes fuentes--compacta">
+          ${c.research_sources.filter(k => FUENTES[k]).map(k =>
+            `<li><a href="${FUENTES[k].url}" target="_blank" rel="noopener">${esc(FUENTES[k].title)}</a></li>`).join('')}
+        </ul>` : ''}`;
 
     $('#fondoPanel').hidden = false;
     document.body.style.overflow = 'hidden';
+    $('#panel').scrollTop = 0;
     estado.abierta = id;
     const btn = $('.cerrar', $('#panel'));
     if (btn) btn.focus();
@@ -271,8 +450,20 @@
   }
 
   /* =========================================================
-     5. CALENDARIO
+     6. CALENDARIO — qué se planta y qué se cosecha cada mes,
+        calculado desde el dataset.
      ========================================================= */
+  function agruparPorAccion(mes, soloOptimos) {
+    const grupos = {};
+    CROPS.forEach(c => {
+      if (c.catalog_plantable_months.indexOf(mes) < 0) return;
+      if (soloOptimos && c.catalog_optimal_months.indexOf(mes) < 0) return;
+      const k = c.catalog_default_label;
+      (grupos[k] = grupos[k] || []).push(c);
+    });
+    return grupos;
+  }
+
   function pintarCalendario() {
     $('#botonesMes').innerHTML = MESES.map(m =>
       `<button type="button" class="mes-btn${m.n === estado.mes ? ' activo' : ''}" data-mes="${m.n}">${m.corto}</button>`
@@ -283,68 +474,48 @@
       `<span class="temp--${m.temp}" title="${m.nombre}: ${txt[m.temp]}"></span>`).join('');
 
     const m = MESES.find(x => x.n === estado.mes);
-    const a = MES_ACCIONES[estado.mes] || {};
+    const mes = estado.mes;
+
+    const optimos = agruparPorAccion(mes, true);
+    const totalPosibles = CROPS.filter(c => c.catalog_plantable_months.indexOf(mes) >= 0).length;
+    const totalOptimos = CROPS.filter(c => c.catalog_optimal_months.indexOf(mes) >= 0).length;
+    const cosecha = CROPS.filter(c => (c.harvest_months || []).indexOf(mes) >= 0);
+
+    const bloques = Object.keys(optimos).map(label => `
+      <p class="mes-accion">
+        <span class="via ${CLASE_METODO[claveDeLabel(label)] || 'via--vivero'}">${etiquetaCorta(label)}</span>
+        ${optimos[label].map(c => `<button type="button" class="enlace-cultivo" data-cultivo="${c.id}">${c.name}</button>`).join(', ')}
+      </p>`).join('');
+
     $('#fichaMes').innerHTML = `
       <div class="ficha-mes__cab">
         <h3>${m.nombre}</h3>
         <p>${m.lema}</p>
       </div>
-      <div class="ficha-mes__celda"><p class="dato-etiqueta et-planta">Se planta</p><p>${m.planta}</p></div>
-      <div class="ficha-mes__celda"><p class="dato-etiqueta et-cosecha">Se cosecha</p><p>${m.cosecha}</p></div>
-      <div class="ficha-mes__celda"><p class="dato-etiqueta et-tarea">Tu tarea</p><p>${m.tarea}</p></div>
-      <div class="ficha-mes__celda"><p class="dato-etiqueta et-semilla">Siembra directa</p><p>${a.directa || '—'}</p></div>
-      <div class="ficha-mes__celda"><p class="dato-etiqueta et-plantel">Compra hecho</p><p>${a.plantel || '—'}</p></div>
+      <div class="ficha-mes__celda ficha-mes__celda--ancha">
+        <p class="dato-etiqueta et-planta">Lo mejor que puedes plantar en ${m.nombre.toLowerCase()} · ${totalOptimos} cultivos</p>
+        ${bloques || '<p>Ninguno está en su ventana óptima este mes. Es un mes para mantener, no para plantar.</p>'}
+      </div>
+      <div class="ficha-mes__celda">
+        <p class="dato-etiqueta et-cosecha">Se cosecha · ${cosecha.length} cultivos</p>
+        <p>${cosecha.length ? cosecha.slice(0, 14).map(c => c.name).join(', ') + (cosecha.length > 14 ? ` y ${cosecha.length - 14} más` : '') : '—'}</p>
+      </div>
+      <div class="ficha-mes__celda">
+        <p class="dato-etiqueta et-tarea">Tu tarea</p>
+        <p>${m.tarea}</p>
+      </div>
       <div class="ficha-mes__celda ficha-mes__celda--enlace">
-        <a href="#catalogo" data-ver-mes="${m.n}">Ver las plantas de ${m.nombre.toLowerCase()} en el catálogo →</a>
+        <a href="#catalogo" data-ver-mes="${m.n}">Ver los ${totalPosibles} cultivos que admite ${m.nombre.toLowerCase()} →</a>
       </div>`;
   }
 
-  /* =========================================================
-     5 bis. SEMILLA O PLANTEL
-     ========================================================= */
-  function pintarSemilla() {
-    $('#listaFormas').innerHTML = FORMAS.map(f => `
-      <div class="tarjeta" data-reveal>
-        <h4 class="titulo-4">${f.t}</h4>
-        <p class="riego-tarjeta__nota" style="margin-bottom:12px;">${f.d}</p>
-        <p class="regla__por">${f.ej}</p>
-      </div>`).join('');
-
-    $('#listaVocabulario').innerHTML = VOCABULARIO.map(v => `
-      <div class="tarjeta">
-        <p class="riego-tarjeta__frec c-primavera" style="font-size:24px;">${v.t}</p>
-        <p class="riego-tarjeta__nota">${v.d}</p>
-      </div>`).join('');
-
-    const cab = ['Cultivo', 'Si partes de semilla', 'Cuándo va al bancal', 'Si compras plantel', 'Lo recomendado'];
-    $('#tablaSemilla').innerHTML = TABLA_SEMILLA.map(f => `
-      <tr>
-        <td data-etiqueta="${cab[0]}"><strong>${f[0]}</strong></td>
-        <td data-etiqueta="${cab[1]}">${f[1]}</td>
-        <td data-etiqueta="${cab[2]}" class="num">${f[2]}</td>
-        <td data-etiqueta="${cab[3]}">${f[3]}</td>
-        <td data-etiqueta="${cab[4]}"><span class="via ${(VIAS[claseVia(f[4])] || {}).clase || ''}">${f[4]}</span></td>
-      </tr>`).join('');
-
-    $('#listaPrimerAno').innerHTML = PRIMER_ANO.map(b => `
-      <div class="tarjeta" data-reveal>
-        <span class="via ${VIAS[b.via].clase}">${VIAS[b.via].t}</span>
-        <h4 class="titulo-4" style="margin-top:12px;">${b.t}</h4>
-        <ul class="puntos">${b.items.map(i => `<li><p>${i}</p></li>`).join('')}</ul>
-      </div>`).join('');
-  }
-
-  // Traduce el texto de la columna "lo recomendado" a una de las cuatro vías.
-  function claseVia(txt) {
-    const t = txt.toLowerCase();
-    if (t.indexOf('diente') >= 0 || t.indexOf('patata') >= 0 || t.indexOf('tubérculo') >= 0) return 'material';
-    if (t.indexOf('plantel') >= 0) return 'plantel';
-    if (t.indexOf('semilla directa') >= 0) return 'semilla';
-    return 'vivero';
+  function claveDeLabel(label) {
+    const c = CROPS.find(x => x.catalog_default_label === label);
+    return c ? c.catalog_default_action : null;
   }
 
   /* =========================================================
-     6. RIEGO
+     7. RIEGO
      ========================================================= */
   function pintarRiego() {
     $('#listaRiego').innerHTML = RIEGO.map(r => `
@@ -394,7 +565,7 @@
   }
 
   /* =========================================================
-     7. CUIDADOS
+     8. CUIDADOS
      ========================================================= */
   function pintarRutinas() {
     $('#listaRutinas').innerHTML = RUTINAS.map(r => `
@@ -405,21 +576,33 @@
       </div>`).join('');
   }
 
-  /* Pinta una tabla. `cabeceras` se copia en cada celda como data-etiqueta:
-     en móvil las tablas se convierten en tarjetas y esa etiqueta es la que
-     hace de título de cada dato, para no tener que arrastrar de lado. */
-  function pintarTabla(selector, cabeceras, filas, columnasNum) {
-    const num = columnasNum || [];
-    $(selector).innerHTML = filas.map(f =>
-      '<tr>' + f.map((c, i) => {
-        const clase = num.indexOf(i) >= 0 ? ' class="num"' : '';
-        const cont = i === 0 ? `<strong>${c}</strong>` : c;
-        return `<td data-etiqueta="${esc(cabeceras[i] || '')}"${clase}>${cont}</td>`;
-      }).join('') + '</tr>').join('');
+  /* =========================================================
+     9. SEMILLA O PLANTEL
+     ========================================================= */
+  function pintarSemilla() {
+    $('#listaFormas').innerHTML = FORMAS.map(f => `
+      <div class="tarjeta" data-reveal>
+        <h4 class="titulo-4">${f.t}</h4>
+        <p class="riego-tarjeta__nota" style="margin-bottom:12px;">${f.d}</p>
+        <p class="regla__por">${f.ej}</p>
+      </div>`).join('');
+
+    $('#listaVocabulario').innerHTML = VOCABULARIO.map(v => `
+      <div class="tarjeta">
+        <p class="riego-tarjeta__frec c-primavera" style="font-size:24px;">${v.t}</p>
+        <p class="riego-tarjeta__nota">${v.d}</p>
+      </div>`).join('');
+
+    $('#listaPrimerAno').innerHTML = PRIMER_ANO.map(b => `
+      <div class="tarjeta" data-reveal>
+        <span class="via ${VIAS[b.via].clase}">${VIAS[b.via].t}</span>
+        <h4 class="titulo-4" style="margin-top:12px;">${b.t}</h4>
+        <ul class="puntos">${b.items.map(i => `<li><p>${i}</p></li>`).join('')}</ul>
+      </div>`).join('');
   }
 
   /* =========================================================
-     8. ERRORES Y DIAGNÓSTICO
+     10. ERRORES Y DIAGNÓSTICO
      ========================================================= */
   function pintarErrores() {
     $('#listaErrores').innerHTML = ERRORES.map(e => `
@@ -443,7 +626,7 @@
   }
 
   /* =========================================================
-     9. PLAN 2026-2027
+     11. PLAN 2026-2027
      ========================================================= */
   function pintarCronologia() {
     $('#listaCronologia').innerHTML = CRONOLOGIA.map(h => `
@@ -469,14 +652,13 @@
   }
 
   /* =========================================================
-     10. LISTA DE COMPRA
+     12. LISTA DE COMPRA
      ========================================================= */
   const CLAVE_COMPRA = 'huerto-compra-v1';
 
   function leerCompra() {
-    try {
-      return JSON.parse(localStorage.getItem(CLAVE_COMPRA) || '{}') || {};
-    } catch (e) { return {}; }
+    try { return JSON.parse(localStorage.getItem(CLAVE_COMPRA) || '{}') || {}; }
+    catch (e) { return {}; }
   }
 
   function guardarCompra(obj) {
@@ -515,50 +697,62 @@
   }
 
   /* =========================================================
-     11. QUÉ PLANTO HOY
+     13. QUÉ PLANTO HOY
      ========================================================= */
   function pintarSimulador() {
     $('#botonesSim').innerHTML = MESES.map(m =>
       `<button type="button" class="mes-btn${m.n === estado.sim ? ' activo' : ''}" data-sim="${m.n}">${m.corto}</button>`
     ).join('');
 
-    const mes = MESES.find(m => m.n === estado.sim);
-    const lista = PLANTAS.filter(p => p.meses.indexOf(estado.sim) >= 0);
+    const mes = estado.sim;
+    const optimos = CROPS.filter(c => c.catalog_optimal_months.indexOf(mes) >= 0);
+    const posibles = CROPS.filter(c => c.catalog_plantable_months.indexOf(mes) >= 0);
+    const lista = optimos.length ? optimos : posibles;
 
-    $('#simTitulo').textContent = lista.length
-      ? 'En ' + mes.nombre.toLowerCase() + ' puedes plantar ' + lista.length + (lista.length === 1 ? ' cosa' : ' cosas')
-      : 'En ' + mes.nombre.toLowerCase() + ' no se planta nada';
+    $('#simTitulo').textContent = optimos.length
+      ? 'En ' + NOMBRE_MES[mes] + ', ' + optimos.length + (optimos.length === 1 ? ' cultivo está' : ' cultivos están') + ' en su mejor momento'
+      : 'En ' + NOMBRE_MES[mes] + ' ninguno está en su ventana óptima';
 
-    $('#simSub').textContent = lista.length
-      ? mes.lema
-      : 'Y está bien. Tu tarea este mes: ' + mes.tarea.charAt(0).toLowerCase() + mes.tarea.slice(1);
+    $('#simSub').textContent = optimos.length
+      ? 'Estos son los que plantaría este mes. En total admite ' + posibles.length + '.'
+      : 'Aún puedes establecer ' + posibles.length + ' cultivos, pero ninguno en su mejor momento: es mes de mantener.';
 
-    $('#simLista').innerHTML = lista.map(p => {
-      const g = GRUPOS[p.grupo];
-      return `
-      <button type="button" class="simulador__item" data-planta="${p.id}">
-        <span style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
-          <span class="simulador__nombre">${p.nombre}</span>
-          <span class="etiqueta ${g.clase}">${g.corto}</span>
-        </span>
-        <span class="simulador__accion">${p.accion}</span>
-      </button>`;
-    }).join('');
+    $('#simLista').innerHTML = lista
+      .slice()
+      .sort((a, b) =>
+        ORDEN_CATEGORIAS.indexOf(a.category) - ORDEN_CATEGORIAS.indexOf(b.category) ||
+        a.name.localeCompare(b.name, 'es'))
+      .map(c => {
+        const cat = CATEGORIAS[c.category];
+        const acc = accionDelMes(c, mes);
+        return `
+        <button type="button" class="simulador__item" data-cultivo="${c.id}">
+          <span style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+            <span class="simulador__nombre">${c.name}</span>
+            <span class="etiqueta ${cat.clase}">${cat.corto}</span>
+          </span>
+          <span class="simulador__accion">${acc ? etiquetaCorta(acc.label) : c.catalog_default_label}</span>
+        </button>`;
+      }).join('');
   }
 
   /* =========================================================
-     12. FUENTES
+     14. FUENTES
      ========================================================= */
   function pintarFuentes() {
-    $('#listaFuentes').innerHTML = FUENTES.map(f => `
+    const claves = Object.keys(FUENTES);
+    $('#listaFuentes').innerHTML = claves.map(k => `
       <li>
-        <strong>${f.t}</strong>
-        <a href="${f.u}" target="_blank" rel="noopener">${f.u}</a>
+        <strong>${esc(FUENTES[k].title)}</strong>
+        <span class="fuentes__ambito">${esc(FUENTES[k].scope || '')}</span>
+        <a href="${FUENTES[k].url}" target="_blank" rel="noopener">${FUENTES[k].url}</a>
       </li>`).join('');
+    $('#conteoFuentes').textContent =
+      claves.length + ' referencias oficiales y universitarias. ' + CAT.meta.research_note;
   }
 
   /* =========================================================
-     13. GLOSARIO FLOTANTE
+     15. GLOSARIO FLOTANTE
      ========================================================= */
   function mostrarTermino(clave) {
     const t = GLOSARIO[clave];
@@ -570,7 +764,7 @@
   function ocultarTermino() { $('#avisoTermino').hidden = true; }
 
   /* =========================================================
-     14. INTERFAZ: scroll, nav, reveal, menú
+     16. INTERFAZ: scroll, nav, reveal, menú
      ========================================================= */
   function activarProgreso() {
     const barra = $('#progreso');
@@ -605,9 +799,6 @@
       el.style.transform = 'none';
     }
 
-    // Se revela también lo que queda POR ENCIMA del viewport: si no, al entrar
-    // por un enlace con ancla o al recargar a media página, esos bloques nunca
-    // llegarían a intersecar y se quedarían invisibles para siempre.
     const io = new IntersectionObserver(entradas => {
       entradas.forEach(e => {
         if (e.isIntersecting || e.boundingClientRect.top < 0) {
@@ -667,18 +858,16 @@
   }
 
   /* =========================================================
-     15. EVENTOS GLOBALES
+     17. EVENTOS
      ========================================================= */
   function activarEventos() {
     document.addEventListener('click', e => {
-      // Filtros del catálogo
-      const chip = e.target.closest('[data-filtro]');
-      if (chip) {
-        estado.filtro = chip.getAttribute('data-filtro');
+      const cat = e.target.closest('[data-categoria]');
+      if (cat) {
+        estado.categoria = cat.getAttribute('data-categoria');
         pintarFiltros(); pintarCatalogo(); return;
       }
 
-      // Filtro por mes de plantación
       const chipMes = e.target.closest('[data-filtro-mes]');
       if (chipMes) {
         const n = parseInt(chipMes.getAttribute('data-filtro-mes'), 10);
@@ -686,11 +875,17 @@
         pintarFiltros(); pintarCatalogo(); return;
       }
 
-      // «Ver las plantas de <mes> en el catálogo»
+      const modo = e.target.closest('[data-modo]');
+      if (modo) {
+        estado.modo = modo.getAttribute('data-modo');
+        pintarFiltros(); pintarCatalogo(); return;
+      }
+
       const verMes = e.target.closest('[data-ver-mes]');
       if (verMes) {
         estado.filtroMes = parseInt(verMes.getAttribute('data-ver-mes'), 10);
-        estado.filtro = 'Todas';
+        estado.categoria = 'Todas';
+        estado.modo = 'plantar';
         pintarFiltros(); pintarCatalogo();
         return; // el propio enlace #catalogo hace el desplazamiento
       }
@@ -700,31 +895,32 @@
         pintarFiltros(); pintarCatalogo(); return;
       }
 
-      // Abrir ficha de planta
-      const planta = e.target.closest('[data-planta]');
-      if (planta) { abrirFicha(planta.getAttribute('data-planta')); return; }
+      const cultivo = e.target.closest('[data-cultivo]');
+      if (cultivo) { abrirFicha(cultivo.getAttribute('data-cultivo')); return; }
 
-      // Cerrar ficha
       if (e.target.closest('[data-cerrar]') || e.target.id === 'fondoPanel') {
         cerrarFicha(); return;
       }
 
-      // Calendario
       const mes = e.target.closest('[data-mes]');
       if (mes) { estado.mes = parseInt(mes.getAttribute('data-mes'), 10); pintarCalendario(); return; }
 
-      // Simulador
       const sim = e.target.closest('[data-sim]');
       if (sim) { estado.sim = parseInt(sim.getAttribute('data-sim'), 10); pintarSimulador(); return; }
 
-      // Glosario
       const termino = e.target.closest('[data-termino]');
       if (termino) { mostrarTermino(termino.getAttribute('data-termino')); return; }
 
       if (e.target.closest('#avisoTerminoCerrar')) { ocultarTermino(); return; }
     });
 
-    // Lista de compra
+    let tiempoBusqueda;
+    $('#busqueda').addEventListener('input', e => {
+      clearTimeout(tiempoBusqueda);
+      const v = e.target.value;
+      tiempoBusqueda = setTimeout(() => { estado.busqueda = v.trim(); pintarCatalogo(); }, 140);
+    });
+
     $('#listaCompra').addEventListener('change', e => {
       if (e.target.type !== 'checkbox') return;
       const marcados = leerCompra();
@@ -740,20 +936,18 @@
       actualizarProgresoCompra();
     });
 
-    // Calculadoras
     ['#numGoteros', '#caudalGotero', '#minutosRiego'].forEach(sel =>
       $(sel).addEventListener('input', calcularAgua));
     ['#largoBancal', '#anchoBancal', '#altoBancal', '#numBancales'].forEach(sel =>
       $(sel).addEventListener('input', calcularSustrato));
 
-    // Teclado
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') { cerrarFicha(); ocultarTermino(); }
     });
   }
 
   /* =========================================================
-     16. ARRANQUE
+     18. ARRANQUE
      ========================================================= */
   function iniciar() {
     pintarReglas();
@@ -764,15 +958,14 @@
     pintarFiltros();
     pintarCatalogo();
     pintarSemilla();
+    pintarTablaResumen();
     pintarCalendario();
     pintarRiego();
     calcularAgua();
     calcularSustrato();
     pintarAcordeon('#acordeonCuidados', CUIDADOS);
     pintarRutinas();
-    const cabHort = ['Cultivo', 'Inicio fácil', 'Separación', 'Lugar recomendado', 'Dificultad'];
-    pintarTabla('#tablaVerano', cabHort, HORTALIZAS_VERANO, [2]);
-    pintarTabla('#tablaInvierno', cabHort, HORTALIZAS_INVIERNO, [2]);
+    pintarTablaNecesidades();
     pintarErrores();
     pintarDiagnostico();
     pintarCronologia();

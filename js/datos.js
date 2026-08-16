@@ -4,59 +4,24 @@
    Tortosa (Tarragona) 2026-2027".
    ========================================================= */
 
-/* ---------------------------------------------------------
-   1. CATÁLOGO DE PLANTAS (31 fichas)
-   --------------------------------------------------------- */
-const PLANTAS = [
-  { id: 'higuera', nombre: 'Higuera', grupo: 'Árboles frutales', variedad: 'Variedad bífera: Colar o San Pedro', dif: 1, corto: 'La más fácil de todas y la que antes te da fruta.', plantar: 'De noviembre a febrero', plantarCorto: 'nov–feb', cosecha: 'Brevas en junio e higos en agosto, ya el primer año', maceta: 'Maceta rígida clara de 80-100 L, sobre ladrillos', riego: 'Cada 2-3 días; diario en verano', meses: [11, 12, 1, 2], accion: 'Comprar de 2-3 años y plantar en maceta de 80-100 L', trucos: ['Cómprala de 2-3 años con el tronco gordo como un dedo y comes brevas el primer junio.', 'Aguanta el calor de Tortosa mejor que tú: no la mimes de más.', 'Corta los brotes que salen en la base del tronco, roban fuerza a los higos.'] },
-  { id: 'granado', nombre: 'Granado', grupo: 'Árboles frutales', variedad: 'Mollar de Elche', dif: 1, corto: 'Casi indestructible: el que más perdona los olvidos.', plantar: 'De noviembre a febrero', plantarCorto: 'nov–feb', cosecha: 'En otoño', maceta: 'Maceta rígida clara de 70-90 L, sobre ladrillos', riego: 'Cada 3-4 días; diario en pleno verano', meses: [11, 12, 1, 2], accion: 'Plantar en maceta de 70-90 L en el sitio más soleado', trucos: ['Es el árbol que más perdona: si te olvidas un riego, sobrevive.', 'Le encanta el sol directo, ponlo en el punto más soleado del patio.', 'No riegues a lo loco cuando la fruta madura: las granadas se abren.'] },
-  { id: 'limonero', nombre: 'Limonero', grupo: 'Árboles frutales', variedad: '4 estaciones', dif: 2, corto: 'Limones todo el año desde el primer año.', plantar: 'SOLO en marzo o abril, nunca antes del invierno', plantarCorto: 'mar–abr', cosecha: 'Todo el año, en varias tandas', maceta: 'Maceta rígida clara de 60-80 L, sobre ladrillos', riego: 'Cada 2-3 días; diario en verano', meses: [3, 4], accion: 'Plantar ahora: es su ventana, y solo esta', aviso: 'Hojas amarillas con los nervios verdes = le falta hierro (clorosis), muy típico si riegas con agua con cal. Se corrige con un corrector de hierro autorizado en agricultura ecológica.', trucos: ['Nunca lo plantes en otoño: una helada sobre un cítrico recién plantado se lo lleva por delante.', 'Abono específico de cítricos de marzo a octubre, sin fallar.', 'Hojas amarillentas con nervios verdes es hierro, no sed. No riegues más.'] },
-  { id: 'mandarino', nombre: 'Mandarino', grupo: 'Árboles frutales', variedad: 'Clementino', dif: 2, corto: 'Dulce, agradecido y de cosecha en noviembre.', plantar: 'En marzo o abril', plantarCorto: 'mar–abr', cosecha: 'En noviembre', maceta: 'Maceta rígida clara de 60-80 L, sobre ladrillos', riego: 'Cada 2-3 días; diario en verano', meses: [3, 4], accion: 'Plantar en maceta de 60-80 L, protegido del viento', trucos: ['Como todos los cítricos: primavera sí, otoño jamás.', 'Protégelo del viento fuerte: tira la flor y sin flor no hay mandarinas.', 'Abono de cítricos cada 15 días en primavera y verano.'] },
-  { id: 'kumquat', nombre: 'Kumquat', grupo: 'Árboles frutales', variedad: 'Naranjo chino', dif: 1, corto: 'Enano de nacimiento: nunca se te hará grande.', plantar: 'En marzo o abril', plantarCorto: 'mar–abr', cosecha: 'En invierno', maceta: 'Maceta rígida clara de 40-50 L, sobre ladrillos', riego: 'Cada 2-3 días; diario en verano', meses: [3, 4], accion: 'Plantar en maceta de 40-50 L: el cítrico de menos espacio', trucos: ['Es enano natural: nunca te comerá el patio.', 'La fruta se come entera con piel: la piel es lo dulce, la pulpa lo ácido.', 'Perfecto si dudas del espacio disponible: empieza por él.'] },
-  { id: 'ciruelo', nombre: 'Ciruelo japonés', grupo: 'Árboles frutales', variedad: 'Santa Rosa o Golden Japan', dif: 2, corto: 'Fruta a partir del segundo año. Mira que sea autofértil.', plantar: 'De noviembre a febrero', plantarCorto: 'nov–feb', cosecha: 'En verano, desde el segundo año', maceta: 'Maceta rígida clara de 80-100 L, sobre ladrillos', riego: 'Cada 2-3 días; diario en verano', meses: [11, 12, 1, 2], accion: 'Comprar a raíz desnuda y plantar en 80-100 L', aviso: 'Aquí la variedad exacta es crítica. Antes de pagar confirma: necesidades de frío, autofertilidad, compatibilidad de polinización y vigor del patrón.', trucos: ['Comprueba en la etiqueta que sea autofértil o tendrás flores y cero ciruelas.', 'Pierde la hoja en invierno y parece muerto. Es normal.', 'Poda ligera en invierno, cuando está sin hojas.'] },
-  { id: 'caqui', nombre: 'Caqui', grupo: 'Árboles frutales', variedad: 'Rojo Brillante', dif: 2, corto: 'El que más maceta pide de toda la lista.', plantar: 'De noviembre a febrero', plantarCorto: 'nov–feb', cosecha: 'En otoño, a partir del segundo año', maceta: 'Maceta rígida clara de 100-120 L, sobre ladrillos', riego: 'Cada 2-3 días; diario en verano', meses: [11, 12, 1, 2], accion: 'Plantar en maceta de 100-120 L: necesita sitio', trucos: ['No le escatimes litros: es el que más volumen de raíz necesita.', 'Tarda unos dos años en dar cosecha de verdad.', 'En otoño se queda sin hojas y lleno de bolas naranjas: precioso.'] },
-  { id: 'fresa', nombre: 'Fresa', grupo: 'Frutas pequeñas', variedad: 'Reflorescente (da varias veces)', dif: 1, corto: 'La primera alegría del año y cabe en cualquier sitio.', plantar: 'Septiembre y octubre', plantarCorto: 'sep–oct', cosecha: 'De marzo a junio', maceta: 'Cualquier maceta, jardinera o tubo vertical', riego: 'Cada 2 días; diario en verano', meses: [9, 10], accion: 'Plantar planteles con la corona a ras de tierra', trucos: ['La corona (el nudito del que salen las hojas) va a ras de tierra: ni enterrada ni al aire.', 'Enterrada se pudre, al aire se seca. Es su único punto delicado.', 'En pleno verano de Tortosa agradece protección del sol de tarde.'] },
-  { id: 'frambuesa', nombre: 'Frambuesa', grupo: 'Frutas pequeñas', variedad: 'Reflorescente', dif: 2, corto: 'Da fruta ya el primer otoño.', plantar: 'De noviembre a febrero', plantarCorto: 'nov–feb', cosecha: 'Primer otoño y luego cada verano', maceta: 'Maceta de 40 L, sobre ladrillos', riego: 'Cada 2 días; diario en verano', meses: [11, 12, 1, 2], accion: 'Plantar en 40 L, en un sitio con sombra a mediodía', trucos: ['Agradece sombra a mediodía en verano: no es planta de 40 °C al sol.', 'Corta a ras las cañas que ya han dado fruta.', 'No dejes que la tierra se seque del todo.'] },
-  { id: 'mora', nombre: 'Mora sin espinas', grupo: 'Frutas pequeñas', variedad: 'Variedad sin espinas', dif: 2, corto: 'Necesita una valla o alambre donde apoyarse.', plantar: 'De noviembre a febrero', plantarCorto: 'nov–feb', cosecha: 'En verano', maceta: 'Maceta de 30-50 L, sobre ladrillos', riego: 'Cada 2-3 días; diario en verano', meses: [11, 12, 1, 2], accion: 'Plantar en 30-50 L junto a una valla o guía', trucos: ['Compra la variedad sin espinas o acabarás odiando cosecharla.', 'Ata las ramas: crecen largas y se tumban solas.', 'Poda las cañas viejas cada invierno.'] },
-  { id: 'arandano', nombre: 'Arándano', grupo: 'Frutas pequeñas', variedad: 'Biloxi u O’Neal (clima cálido)', dif: 3, corto: 'Exige sustrato especial. Sin eso, no hay nada que hacer.', plantar: 'Octubre y noviembre', plantarCorto: 'oct–nov', cosecha: 'Primavera y verano', maceta: 'Maceta de 40 L, sobre ladrillos', riego: 'Frecuente: no soporta secarse', meses: [10, 11], accion: 'Comprar sustrato de acidófilas ANTES que la planta', aviso: 'Solo con sustrato para plantas acidófilas. Con agua alcalina o calcárea da bastante más trabajo que el resto: no es la compra de un principiante en Tortosa.', trucos: ['Busca el saco que ponga "acidófilas" o "para arándanos y hortensias". Es su comida.', 'Si tu agua tiene mucha cal, riégalo con agua de lluvia siempre que puedas.', 'Elige variedades de clima cálido: Biloxi u O’Neal. Otras no aguantan aquí.'] },
-  { id: 'parra', nombre: 'Parra de uva', grupo: 'Frutas pequeñas', variedad: 'Uva de mesa', dif: 3, corto: 'Uvas en 2-3 años y sombra gratis en verano.', plantar: 'De noviembre a febrero', plantarCorto: 'nov–feb', cosecha: 'En septiembre, desde el segundo o tercer año', maceta: 'Maceta de 50-80 L, sobre ladrillos', riego: 'Cada 3-4 días; más en verano', meses: [11, 12, 1, 2], accion: 'Plantar en 50-80 L al pie de una pérgola', trucos: ['Decide dónde va la pérgola antes de plantarla.', 'Te da uvas y sombra justo donde hace falta en verano.', 'Poda fuerte cada invierno: sin podar da mucha hoja y poca uva.'] },
-  { id: 'tomate', nombre: 'Tomate', grupo: 'Verduras', variedad: 'Plantel de vivero', dif: 3, corto: 'El clásico. Pide tutor, constancia y riego en la tierra.', plantar: 'Plantel en marzo y abril', plantarCorto: 'mar–abr', cosecha: 'De julio a septiembre', maceta: 'Bancal (50-70 cm entre plantas) o maceta de 30 L mínimo', riego: 'Cada 2 días; diario en verano', meses: [3, 4], accion: 'Comprar plantel y clavar el tutor el mismo día', aviso: 'El culo negro (podredumbre apical) casi siempre es riego irregular, no falta de calcio en la tierra. Primera medida: estabilizar el riego.', trucos: ['Necesita tutor desde el primer día: una caña alta bien clavada.', 'Riega la tierra, nunca las hojas: mojarlas trae hongos.', 'Compra plantel; no siembres semilla el primer año.'] },
-  { id: 'pimiento', nombre: 'Pimiento', grupo: 'Verduras', variedad: 'Plantel de vivero', dif: 2, corto: 'Produce hasta octubre: de los más rentables.', plantar: 'Plantel en abril', plantarCorto: 'abril', cosecha: 'De julio a octubre', maceta: 'Bancal (35-45 cm entre plantas) o maceta de 20-30 L', riego: 'Cada 2 días; diario en verano', meses: [4], accion: 'Plantar plantel en el bancal, con espacio entre plantas', trucos: ['Cuanto más recoges, más flores echa. No dejes fruta pasada en la planta.', 'Un tutor pequeño le ayuda cuando carga de pimientos.', 'Aguanta produciendo hasta bien entrado octubre.'] },
-  { id: 'berenjena', nombre: 'Berenjena', grupo: 'Verduras', variedad: 'Plantel de vivero', dif: 2, corto: 'De las que mejor llevan el verano de aquí.', plantar: 'Plantel en abril', plantarCorto: 'abril', cosecha: 'De julio a octubre', maceta: 'Bancal (50-60 cm entre plantas) o maceta de 30 L', riego: 'Cada 2 días; diario en verano', meses: [4], accion: 'Plantar 2 planteles: dan para toda la temporada', trucos: ['Le encanta el calor: es de las más adaptadas al verano de Tortosa.', 'Recógelas cuando brillan; si pierden brillo están pasadas.', 'Con dos plantas tienes berenjenas todo el verano.'] },
-  { id: 'calabacin', nombre: 'Calabacín', grupo: 'Verduras', variedad: 'Plantel de vivero', dif: 1, corto: 'De plantar a comer, 6-7 semanas. El subidón de moral.', plantar: 'Plantel en marzo-abril y otra tanda en agosto', plantarCorto: 'mar–abr y ago', cosecha: 'A las 6-7 semanas', maceta: 'Bancal: 80-100 cm por planta, ocupa mucho', riego: 'Cada 2 días; diario en verano', meses: [3, 4, 8], accion: 'Plantar plantel: en 6 semanas estás comiendo', aviso: 'Una sola planta sana produce más de lo que consume una familia. No pongas cinco calabacines en 4 m².', trucos: ['En seis semanas ya cosechas: perfecto para no perder la ilusión.', 'Recógelos de un palmo. Los gigantes saben a agua.', 'Planta una segunda tanda en agosto para comer en otoño.'] },
-  { id: 'pepino', nombre: 'Pepino', grupo: 'Verduras', variedad: 'Plantel de vivero', dif: 2, corto: 'Necesita malla o cañas para trepar.', plantar: 'Plantel en abril y mayo', plantarCorto: 'abr–may', cosecha: 'En verano', maceta: 'Bancal con malla vertical (40-50 cm entre plantas)', riego: 'Muy frecuente: no le gusta secarse', meses: [4, 5], accion: 'Montar la guía primero y luego plantar', trucos: ['Sin guía se pudre en el suelo y ocupa el triple.', 'Es de las que más agua pide del bancal.', 'La malla en el lado norte del bancal: no da sombra al resto.'] },
-  { id: 'judia', nombre: 'Judía de mata baja', grupo: 'Verduras', variedad: 'Mata baja, sin guía', dif: 1, corto: '60 días de la semilla al plato, sin guía ni tutor.', plantar: 'Abril y agosto', plantarCorto: 'abr y ago', cosecha: 'A los 60 días', maceta: 'Bancal o jardinera honda (15-25 cm entre plantas)', riego: 'Cada 2-3 días', meses: [4, 8], accion: 'Sembrar semilla directa: no hace falta plantel', trucos: ['La de mata baja no necesita guía: siembras y te olvidas.', 'Se siembra directa con semilla.', 'Si te gusta la trepadora, ponla en la misma malla que el pepino.'] },
-  { id: 'melon', nombre: 'Melón y sandía', grupo: 'Verduras', variedad: 'Plantel de vivero', dif: 3, corto: 'Una sola planta puede ocupar dos metros de bancal.', plantar: 'En mayo', plantarCorto: 'mayo', cosecha: 'Final del verano', maceta: 'Al borde del bancal, guiando las ramas hacia fuera', riego: 'Abundante hasta que la fruta engorda', meses: [5], accion: 'Plantar solo si tienes 2 m libres de bancal', trucos: ['Plántalo al borde y deja que las guías salgan fuera del bancal.', 'Pon una teja o tabla bajo la fruta para que no toque la tierra húmeda.', 'Deja 2-3 frutas por planta: salen más grandes y dulces.'] },
-  { id: 'ajo', nombre: 'Ajo', grupo: 'Verduras', variedad: 'Diente de ajo común', dif: 1, corto: 'La planta con menos trabajo de toda la guía.', plantar: 'De octubre a enero', plantarCorto: 'oct–ene', cosecha: 'En junio', maceta: 'Bancal o jardinera de 20 cm de hondo (10-15 cm entre dientes)', riego: 'Poco: cada 7-10 días', meses: [10, 11, 12, 1], accion: 'Enterrar dientes con la punta hacia arriba y olvidarse', trucos: ['Separa la cabeza en dientes y entierra cada uno con la punta hacia arriba.', 'Plantar y esperar: no pide nada más.', 'Cuando las hojas se secan a la mitad, ya puedes arrancarlos.'] },
-  { id: 'zanahoria', nombre: 'Zanahoria y rábano', grupo: 'Verduras', variedad: 'Siembra directa', dif: 1, corto: 'El rábano está en tu plato en 30 días.', plantar: 'Septiembre-noviembre y febrero-abril', plantarCorto: 'sep–nov y feb–abr', cosecha: 'Rábano en 30 días; zanahoria en 3-4 meses', maceta: 'Jardinera honda (mínimo 30 cm) o bancal', riego: 'Cada 2-3 días: tierra siempre algo húmeda', meses: [9, 10, 11, 2, 3, 4], accion: 'Sembrar semilla directa en jardinera honda', trucos: ['Siempre semilla directa, nunca plantel.', 'La tierra tiene que ser suelta y honda o la zanahoria sale torcida.', 'Aclara a 3-5 cm cuando nazcan: sin aclarar no engordan.'] },
-  { id: 'romero', nombre: 'Romero', grupo: 'Aromáticas', variedad: 'Grupo de poco riego', dif: 1, corto: 'Grupo seco: casi sin agua y a pleno sol.', plantar: 'Marzo-abril o septiembre-octubre', plantarCorto: 'mar–abr y sep–oct', cosecha: 'Todo el año', maceta: 'Maceta de 10-15 L, junto a las de poco riego', riego: 'Muy poco: cada 10-15 días', meses: [3, 4, 9, 10], accion: 'Plantar con tomillo, lavanda, salvia, orégano y laurel', trucos: ['Va con tomillo, lavanda, salvia, orégano y laurel: todas beben poquísimo.', 'Al romero se le mata de agua, no de sed.', 'Corta ramitas a menudo: se mantiene compacto.'] },
-  { id: 'tomillo', nombre: 'Tomillo', grupo: 'Aromáticas', variedad: 'Grupo de poco riego', dif: 1, corto: 'Grupo seco: cuanto peor lo tratas, mejor huele.', plantar: 'Marzo-abril o septiembre-octubre', plantarCorto: 'mar–abr y sep–oct', cosecha: 'Todo el año', maceta: 'Maceta pequeña, junto a las de poco riego', riego: 'Muy poco: cada 10-15 días', meses: [3, 4, 9, 10], accion: 'Plantar en la jardinera seca, a pleno sol', trucos: ['Necesita sol directo y buen drenaje: nada de plato con agua debajo.', 'Junta romero, tomillo y lavanda: mismo riego, mismo sol.', 'Se seca bien y dura todo el invierno en el bote.'] },
-  { id: 'lavanda', nombre: 'Lavanda', grupo: 'Aromáticas', variedad: 'Grupo de poco riego', dif: 1, corto: 'Atrae polinizadores y con ellos sube tu cosecha de fruta.', plantar: 'Marzo-abril o septiembre-octubre', plantarCorto: 'mar–abr y sep–oct', cosecha: 'Flores en primavera y verano', maceta: 'Maceta de 15 L, junto a las de poco riego', riego: 'Muy poco: cada 10-15 días', meses: [3, 4, 9, 10], accion: 'Plantar cerca de los frutales, no lejos', trucos: ['Ponla cerca de los frutales: los polinizadores que atrae te dan más fruta.', 'No necesita compartir el goteo diario de los tomates.', 'Poda las flores secas al final del verano.'] },
-  { id: 'salvia', nombre: 'Salvia', grupo: 'Aromáticas', variedad: 'Grupo de poco riego', dif: 1, corto: 'Grupo seco: hoja gris que refleja el sol.', plantar: 'Marzo-abril o septiembre-octubre', plantarCorto: 'mar–abr y sep–oct', cosecha: 'Todo el año', maceta: 'Maceta de 10-15 L, junto a las de poco riego', riego: 'Muy poco: cada 10-15 días', meses: [3, 4, 9, 10], accion: 'Plantar en la jardinera seca con romero y tomillo', trucos: ['Sus hojas grises reflejan el sol: por eso aguanta tanto calor.', 'No la riegues por encima, solo la tierra.', 'Mismo grupo que romero, tomillo y lavanda.'] },
-  { id: 'oregano', nombre: 'Orégano', grupo: 'Aromáticas', variedad: 'Grupo de poco riego', dif: 1, corto: 'Se seca en manojo y te dura todo el invierno.', plantar: 'Marzo-abril o septiembre-octubre', plantarCorto: 'mar–abr y sep–oct', cosecha: 'En verano', maceta: 'Maceta pequeña, junto a las de poco riego', riego: 'Muy poco: cada 10-15 días', meses: [3, 4, 9, 10], accion: 'Plantar en la jardinera seca, a pleno sol', trucos: ['Córtalo en flor, átalo en manojo y sécalo boca abajo.', 'Cuanto más sol, más aroma.', 'Poda después de floración si quieres mantenerlo compacto.'] },
-  { id: 'laurel', nombre: 'Laurel', grupo: 'Aromáticas', variedad: 'Grupo de poco riego', dif: 1, corto: 'Un arbusto que no se muere nunca.', plantar: 'Marzo-abril o septiembre-octubre', plantarCorto: 'mar–abr y sep–oct', cosecha: 'Todo el año', maceta: 'Maceta de 30-40 L, sobre ladrillos', riego: 'Poco: cada 8-12 días', meses: [3, 4, 9, 10], accion: 'Plantar en maceta de 30-40 L: crece despacio', trucos: ['Con un laurel tienes hojas para guisos de por vida.', 'Crece despacio, perfecto para maceta.', 'Recorta la punta para que ensanche en vez de subir.'] },
-  { id: 'albahaca', nombre: 'Albahaca', grupo: 'Aromáticas', variedad: 'Grupo de riego frecuente', dif: 2, corto: 'Grupo húmedo: agua casi a diario, nunca con el romero.', plantar: 'En abril, junto a los tomates', plantarCorto: 'abr–may', cosecha: 'De junio a septiembre', maceta: 'Maceta propia o junto al tomate en el bancal', riego: 'Frecuente: cada 1-2 días en verano', meses: [4, 5], accion: 'Plantar al lado de los tomates, no con las secas', aviso: 'Nunca en la misma maceta que romero o lavanda: ellas quieren sequía y la albahaca agua cada día. Este es el error clásico de las aromáticas.', trucos: ['Al lado de los tomates: se llevan bien y ocupan poco.', 'Corta las flores en cuanto salgan o la hoja amarga.', 'Es anual: en invierno se muere y se replanta cada primavera.'] },
-  { id: 'perejil', nombre: 'Perejil', grupo: 'Aromáticas', variedad: 'Grupo de riego frecuente', dif: 1, corto: 'Grupo húmedo: maceta propia y sombra a mediodía.', plantar: 'Marzo-abril o septiembre', plantarCorto: 'mar–abr y sep', cosecha: 'Casi todo el año', maceta: 'Maceta honda propia', riego: 'Frecuente: cada 2 días', meses: [3, 4, 9], accion: 'Plantar en maceta honda, en semisombra', trucos: ['Agradece sombra a mediodía en verano.', 'Corta las ramas de fuera desde la base y deja el centro.', 'En verano se sube a flor: replanta cada año.'] },
-  { id: 'cilantro', nombre: 'Cilantro', grupo: 'Aromáticas', variedad: 'Grupo de riego frecuente', dif: 2, corto: 'Grupo húmedo: con calor florece enseguida.', plantar: 'Marzo o septiembre-octubre', plantarCorto: 'mar y sep–oct', cosecha: 'A las 6-8 semanas', maceta: 'Maceta honda propia', riego: 'Frecuente: cada 2 días', meses: [3, 9, 10], accion: 'Sembrar directo en su maceta, mejor en otoño', trucos: ['Con calor se sube a flor: mejor sembrarlo en otoño.', 'Siembra un poco cada mes para tener siempre hoja tierna.', 'No le gusta el trasplante: siembra directa.'] },
-  { id: 'menta', nombre: 'Menta y hierbabuena', grupo: 'Aromáticas', variedad: 'Grupo de riego frecuente', dif: 1, corto: 'Siempre sola. Siempre. Sin excepciones.', plantar: 'Marzo-abril o septiembre', plantarCorto: 'mar–abr y sep', cosecha: 'De primavera a otoño', maceta: 'Maceta propia y exclusiva de 10-20 L', riego: 'Frecuente: cada 2 días, más en verano', meses: [3, 4, 9], accion: 'Plantar en una maceta para ella sola', aviso: 'SIEMPRE en maceta sola: la menta es la okupa del huerto. Mete raíces por todas partes y ahoga a las vecinas en una sola temporada.', trucos: ['Si la plantas con otras, en tres meses solo tendrás menta.', 'Nunca la plantes libre en el terreno.', 'Es la aromática que más agua pide.'] }
-];
+
 
 /* ---------------------------------------------------------
    2. CALENDARIO MES A MES
    --------------------------------------------------------- */
 const MESES = [
-  { n: 1, corto: 'Ene', nombre: 'Enero', lema: 'Mes de plantar árboles y podar.', planta: 'Árboles de hoja caduca: higuera, granado, ciruelo, caqui, frambuesa, mora y parra. Es cuando más baratos están. Continúa el ajo, la cebolla y el guisante.', cosecha: 'Limones, kumquats y mandarinas.', tarea: 'Podar los caducos mientras están sin hojas, revisar tutores y comprobar que el goteo no tenga fugas.', temp: 'frio' },
-  { n: 2, corto: 'Feb', nombre: 'Febrero', lema: 'Última llamada para los árboles.', planta: 'Últimos árboles de hoja caduca. Siembra directa de zanahoria y rábano. Patata de siembra si la quieres.', cosecha: 'Cítricos.', tarea: 'Comprar compost, abono granulado, tutores y sustrato. Preparar los bancales para el huerto de verano.', temp: 'frio' },
-  { n: 3, corto: 'Mar', nombre: 'Marzo', lema: 'Arranca el año de verdad.', planta: 'Cítricos (limonero, mandarino, kumquat), plantel de tomate y calabacín, aromáticas, zanahoria y cilantro.', cosecha: 'Primeras fresas.', tarea: 'Renovar la capa superficial de sustrato de los frutales y empezar la fertilización de primavera. Se acabó el descanso invernal.', temp: 'suave' },
-  { n: 4, corto: 'Abr', nombre: 'Abril', lema: 'El mes más ocupado del año.', planta: 'Plantel de tomate, pimiento, berenjena, pepino, judía, calabacín y albahaca. Todavía cítricos.', cosecha: 'Fresas a tope.', tarea: 'Poner los tutores el mismo día de plantar y subir el riego a cada 2-3 días. Acolchar cuando el suelo ya esté caliente.', temp: 'suave' },
-  { n: 5, corto: 'May', nombre: 'Mayo', lema: 'Entran melón y sandía.', planta: 'Melón, sandía y pepino.', cosecha: 'Fresas y primeras judías.', tarea: 'Ajustar el programador, revisar pulgón, guiar el pepino y atar el tomate. Empieza el calor de verdad.', temp: 'suave' },
-  { n: 6, corto: 'Jun', nombre: 'Junio', lema: 'Llegan las brevas.', planta: 'Nada nuevo: ya hace demasiado calor para trasplantar.', cosecha: 'Brevas de la higuera, fresas, ajos, judías y primeros calabacines.', tarea: 'Riego diario, acolchado completo y revisión semanal del goteo. Cosechar los calabacines jóvenes con frecuencia.', temp: 'calor' },
-  { n: 7, corto: 'Jul', nombre: 'Julio', lema: 'Mes crítico de agua.', planta: 'Nada. Julio no es mes de plantar.', cosecha: 'Tomate, pimiento, berenjena, calabacín y pepino.', tarea: 'Riega temprano. Si una maceta se seca cada tarde, aumenta agua o divide el riego en dos. Comprueba las pilas del programador.', temp: 'calor' },
-  { n: 8, corto: 'Ago', nombre: 'Agosto', lema: 'Mes de preparar, no de plantar.', planta: 'Solo una segunda tanda de judía y calabacín, y con cuidado.', cosecha: 'Higos, tomate, pimiento, berenjena y calabacín.', tarea: 'Comprar material y montar el riego por goteo. Es normal que el calor extremo reduzca el cuajado: no lo compenses con más abono.', temp: 'calor' },
-  { n: 9, corto: 'Sep', nombre: 'Septiembre', lema: 'Empieza el huerto de otoño.', planta: 'Fresas, aromáticas, zanahoria, rábano, perejil y cilantro.', cosecha: 'Higos, uvas y últimos tomates.', tarea: 'Bajar el riego a cada 3-4 días y hacer balance del año: kilos, variedades que funcionaron, qué sobró y qué faltó.', temp: 'suave' },
-  { n: 10, corto: 'Oct', nombre: 'Octubre', lema: 'Fresas y ajos a la tierra.', planta: 'Fresas, aromáticas, ajos, cebolla, guisante y arándanos.', cosecha: 'Granadas, caquis y uvas.', tarea: 'Último abonado del año y compost superficial en los bancales. A partir de aquí las plantas descansan.', temp: 'suave' },
-  { n: 11, corto: 'Nov', nombre: 'Noviembre', lema: 'Los árboles, más baratos que nunca.', planta: 'Árboles de hoja caduca, ajos, frambuesa, mora, parra y arándano.', cosecha: 'Mandarinas, caquis y granadas.', tarea: 'Comprar árboles a raíz desnuda: mejor momento y mejor precio del año. Con 2-3 frutales ya empiezas bien.', temp: 'frio' },
-  { n: 12, corto: 'Dic', nombre: 'Diciembre', lema: 'Frío suave, todo tranquilo.', planta: 'Árboles de hoja caduca y ajos.', cosecha: 'Limones y mandarinas.', tarea: 'Comprobar que los drenajes no estén bloqueados, proteger los cítricos si anuncian helada excepcional y no regar casi nada.', temp: 'frio' }
+  { n: 1, corto: 'Ene', nombre: 'Enero', lema: 'Mes de plantar árboles y podar.', tarea: 'Podar los caducos mientras están sin hojas, revisar tutores y comprobar que el goteo no tenga fugas.', temp: 'frio' },
+  { n: 2, corto: 'Feb', nombre: 'Febrero', lema: 'Última llamada para los árboles.', tarea: 'Comprar compost, abono granulado, tutores y sustrato. Preparar los bancales para el huerto de verano.', temp: 'frio' },
+  { n: 3, corto: 'Mar', nombre: 'Marzo', lema: 'Arranca el año de verdad.', tarea: 'Renovar la capa superficial de sustrato de los frutales y empezar la fertilización de primavera. Se acabó el descanso invernal.', temp: 'suave' },
+  { n: 4, corto: 'Abr', nombre: 'Abril', lema: 'El mes más ocupado del año.', tarea: 'Poner los tutores el mismo día de plantar y subir el riego a cada 2-3 días. Acolchar cuando el suelo ya esté caliente.', temp: 'suave' },
+  { n: 5, corto: 'May', nombre: 'Mayo', lema: 'Entran melón y sandía.', tarea: 'Ajustar el programador, revisar pulgón, guiar el pepino y atar el tomate. Empieza el calor de verdad.', temp: 'suave' },
+  { n: 6, corto: 'Jun', nombre: 'Junio', lema: 'Llegan las brevas.', tarea: 'Riego diario, acolchado completo y revisión semanal del goteo. Cosechar los calabacines jóvenes con frecuencia.', temp: 'calor' },
+  { n: 7, corto: 'Jul', nombre: 'Julio', lema: 'Mes crítico de agua.', tarea: 'Riega temprano. Si una maceta se seca cada tarde, aumenta agua o divide el riego en dos. Comprueba las pilas del programador.', temp: 'calor' },
+  { n: 8, corto: 'Ago', nombre: 'Agosto', lema: 'Mes de preparar, no de plantar.', tarea: 'Comprar material y montar el riego por goteo. Es normal que el calor extremo reduzca el cuajado: no lo compenses con más abono.', temp: 'calor' },
+  { n: 9, corto: 'Sep', nombre: 'Septiembre', lema: 'Empieza el huerto de otoño.', tarea: 'Bajar el riego a cada 3-4 días y hacer balance del año: kilos, variedades que funcionaron, qué sobró y qué faltó.', temp: 'suave' },
+  { n: 10, corto: 'Oct', nombre: 'Octubre', lema: 'Fresas y ajos a la tierra.', tarea: 'Último abonado del año y compost superficial en los bancales. A partir de aquí las plantas descansan.', temp: 'suave' },
+  { n: 11, corto: 'Nov', nombre: 'Noviembre', lema: 'Los árboles, más baratos que nunca.', tarea: 'Comprar árboles a raíz desnuda: mejor momento y mejor precio del año. Con 2-3 frutales ya empiezas bien.', temp: 'frio' },
+  { n: 12, corto: 'Dic', nombre: 'Diciembre', lema: 'Frío suave, todo tranquilo.', tarea: 'Comprobar que los drenajes no estén bloqueados, proteger los cítricos si anuncian helada excepcional y no regar casi nada.', temp: 'frio' }
 ];
 
 /* ---------------------------------------------------------
@@ -214,35 +179,9 @@ const MACETAS = [
   ['Menta', '10-20 L y siempre sola']
 ];
 
-/* ---------------------------------------------------------
-   10. TABLA MAESTRA DE HORTALIZAS
-   --------------------------------------------------------- */
-const HORTALIZAS_VERANO = [
-  ['Tomate', 'Plantel, mar-abr', '50-70 cm', 'bancal / maceta grande', 'media'],
-  ['Pimiento', 'Plantel, abr-may', '35-45 cm', 'bancal / 20-30 L', 'fácil-media'],
-  ['Berenjena', 'Plantel, abr-may', '50-60 cm', 'bancal / 30 L', 'media'],
-  ['Calabacín', 'Plantel, mar-may', '80-100 cm', 'bancal', 'fácil'],
-  ['Pepino', 'Plantel, abr-may', '40-50 cm', 'bancal con malla', 'fácil'],
-  ['Judía trepadora', 'Semilla, abr-jul', '15-25 cm', 'malla', 'fácil'],
-  ['Judía baja', 'Semilla, abr-jul', '15-25 cm', 'bancal', 'fácil'],
-  ['Melón', 'Plantel, abr-may', '80-120 cm', 'borde del bancal', 'media'],
-  ['Sandía', 'Plantel, abr-may', '100-150 cm', 'borde; guías fuera', 'media'],
-  ['Calabaza', 'Plantel, abr-may', '100+ cm', 'fuera del bancal pequeño', 'fácil'],
-  ['Maíz dulce', 'Semilla, abr-jun', '20-30 cm', 'en grupo/bloque', 'media']
-];
 
-const HORTALIZAS_INVIERNO = [
-  ['Zanahoria', 'Semilla, sep-nov / feb-abr', '3-5 cm tras aclarar', 'bancal profundo', 'media'],
-  ['Rábano', 'Semilla, sep-abr', '3-5 cm', 'bancal / jardinera', 'muy fácil'],
-  ['Ajo', 'Diente, oct-ene', '10-15 cm', 'bancal', 'muy fácil'],
-  ['Cebolla', 'Plantel, otoño/invierno', '10-15 cm', 'bancal', 'fácil'],
-  ['Patata', 'Tubérculo, feb-mar', '30-40 cm', 'bancal / saco grande', 'fácil-media'],
-  ['Guisante', 'Semilla, otoño-invierno', '5-10 cm', 'malla', 'fácil'],
-  ['Haba', 'Semilla, otoño-invierno', '20-30 cm', 'bancal', 'fácil'],
-  ['Lechuga', 'Plantel, otoño-primavera', '25-30 cm', 'bancal', 'fácil'],
-  ['Espinaca', 'Semilla, otoño-invierno', '10-15 cm', 'bancal', 'fácil'],
-  ['Acelga', 'Plantel, otoño-primavera', '30-40 cm', 'bancal', 'fácil']
-];
+
+
 
 /* ---------------------------------------------------------
    11. CUIDADOS (acordeón)
@@ -454,42 +393,7 @@ const VIAS = {
 };
 
 /* Cómo empezar cada planta del catálogo */
-const VIA_PLANTA = {
-  higuera:   { via: 'vivero', reco: 'Árbol de vivero', semilla: 'No: una semilla no reproduce la variedad', nota: 'En contenedor todo el año, o a raíz desnuda durante el reposo invernal.' },
-  granado:   { via: 'vivero', reco: 'Árbol de vivero', semilla: 'No: una semilla no reproduce la variedad', nota: 'En contenedor todo el año, o a raíz desnuda durante el reposo invernal.' },
-  limonero:  { via: 'vivero', reco: 'Árbol de vivero', semilla: 'No: sembrar una pepita de limón no da este árbol', nota: 'Cítricos, siempre en contenedor y con la variedad identificada.' },
-  mandarino: { via: 'vivero', reco: 'Árbol de vivero', semilla: 'No: sembrar una pepita no da este árbol', nota: 'Cítricos, siempre en contenedor y con la variedad identificada.' },
-  kumquat:   { via: 'vivero', reco: 'Árbol de vivero', semilla: 'No: sembrar una pepita no da este árbol', nota: 'Cítricos, siempre en contenedor y con la variedad identificada.' },
-  ciruelo:   { via: 'vivero', reco: 'Árbol de vivero', semilla: 'No: una semilla de ciruela no da esta variedad', nota: 'Contenedor, o raíz desnuda en invierno. Confirma variedad y patrón antes de pagar.' },
-  caqui:     { via: 'vivero', reco: 'Árbol de vivero', semilla: 'No: una semilla no reproduce la variedad', nota: 'Contenedor, o raíz desnuda en invierno.' },
 
-  fresa:     { via: 'vivero', reco: 'Planta comprada', semilla: 'Existe, pero es lenta y no compensa', nota: 'Planta en macetita o alveolo de vivero. Ventanas: finales de septiembre-otoño y final de invierno.' },
-  frambuesa: { via: 'vivero', reco: 'Planta o caña de vivero', semilla: 'No merece la pena', nota: 'Si quieres cosecha repetida, pide variedad remontante o reflorescente.' },
-  mora:      { via: 'vivero', reco: 'Planta de vivero', semilla: 'No merece la pena', nota: 'Compra planta identificada y sin espinas.' },
-  arandano:  { via: 'vivero', reco: 'Planta de vivero', semilla: 'No merece la pena', nota: 'Variedad de bajo requerimiento de frío, y sustrato de acidófilas comprado antes que la planta.' },
-  parra:     { via: 'vivero', reco: 'Planta de vivero', semilla: 'No: no reproduce la variedad', nota: 'Decide dónde va la pérgola antes de comprarla.' },
-
-  tomate:    { via: 'plantel', reco: 'Plantel', semilla: 'Semillero protegido en feb–mar', trasplante: 'Al bancal a finales de mar–abr', nota: '«Tomate en marzo-abril» significa comprar plantel y trasplantarlo, no poner una semilla en el bancal.' },
-  pimiento:  { via: 'plantel', reco: 'Plantel', semilla: 'Semillero protegido en feb–mar', trasplante: 'Al bancal en abr–may', nota: 'Más lento que el tomate y muy agradecido al calor: mejor retrasarlo que adelantarlo.' },
-  berenjena: { via: 'plantel', reco: 'Plantel', semilla: 'Semillero protegido en feb–mar', trasplante: 'Al bancal en abr–may', nota: 'Planta de calor. Sin prisa por sacarla al bancal.' },
-  calabacin: { via: 'plantel', reco: 'Plantel el primer año', semilla: 'Semillero mar–abr, o siembra directa abr–jun', trasplante: 'Al bancal en abr–may', nota: 'Si lo siembras directo, pon 2 semillas en el punto definitivo y deja luego la más fuerte.' },
-  pepino:    { via: 'plantel', reco: 'Plantel el primer año', semilla: 'Semillero mar–abr, o siembra directa abr–may', trasplante: 'Al bancal en abr–may', nota: 'No hagas el semillero muy pronto: crece deprisa y no conviene tenerlo atrapado en un alveolo.' },
-  melon:     { via: 'plantel', reco: 'Plantel', semilla: 'Semillero mar–abr, o siembra directa abr–may', trasplante: 'Al bancal a finales de abr–may', nota: 'Pondrás muy pocas plantas: no necesitas una bolsa entera de semillas.' },
-  judia:     { via: 'semilla', reco: 'Semilla en su sitio definitivo', semilla: 'Abr–jul, en tandas escalonadas', nota: 'Germina rápido y la semilla es grande. El plantel existe, pero no lo necesitas.' },
-  ajo:       { via: 'material', reco: 'Diente directo al bancal', semilla: 'Diente de ajo, de oct a ene', nota: 'Separa la cabeza, elige dientes sanos y entierra cada uno con la punta hacia arriba.' },
-  zanahoria: { via: 'semilla', reco: 'Semilla en su sitio definitivo', semilla: 'Zanahoria sep–nov y feb–abr; rábano sep–abr', nota: 'Nunca en semillero: la raíz es justo lo que quieres cosechar y el trasplante la deforma.' },
-
-  romero:  { via: 'vivero', reco: 'Planta de vivero', semilla: 'Posible, pero lenta', nota: 'Trasplanta en sep–oct o mar–abr. Más adelante la multiplicas gratis por esquejes.' },
-  tomillo: { via: 'vivero', reco: 'Planta de vivero', semilla: 'Posible, pero la semilla es diminuta y lenta', nota: 'Trasplanta en sep–oct o mar–abr.' },
-  lavanda: { via: 'vivero', reco: 'Planta de vivero', semilla: 'Posible, pero lenta', nota: 'Trasplanta en sep–oct o mar–abr.' },
-  salvia:  { via: 'vivero', reco: 'Planta de vivero', semilla: 'Posible en semillero de primavera', nota: 'Trasplanta en mar–abr o sep–oct, evitando extremos.' },
-  oregano: { via: 'vivero', reco: 'Planta pequeña de vivero', semilla: 'Posible en primavera', nota: 'También se multiplica por división de mata.' },
-  laurel:  { via: 'vivero', reco: 'Planta de vivero', semilla: 'Muy lenta', nota: 'Crece despacio: con una planta tienes hojas para años.' },
-  albahaca:{ via: 'plantel', reco: 'Plantel el primer año', semilla: 'Semillero mar–abr, o directa en época cálida', trasplante: 'Junto a los tomates en abr–may', nota: 'Es barata como plantel y te ahorra cuidados.' },
-  perejil: { via: 'plantel', reco: 'Plantel para empezar', semilla: 'Siembra directa feb–primavera y sep–otoño', nota: 'Germina bastante más despacio que un rábano: si lo haces desde semilla, ten paciencia.' },
-  cilantro:{ via: 'semilla', reco: 'Semilla en su sitio definitivo', semilla: 'Sep–nov y feb–mar', nota: 'Se resiente del trasplante. Haz tandas pequeñas en vez de sembrar el sobre entero.' },
-  menta:   { via: 'vivero', reco: 'Planta de vivero, en maceta propia', semilla: 'No tiene sentido', nota: 'Después la multiplicas con enorme facilidad. Nunca en el mismo recipiente que las mediterráneas.' }
-};
 
 /* Las tres formas de empezar una hortaliza */
 const FORMAS = [
@@ -506,37 +410,7 @@ const VOCABULARIO = [
 ];
 
 /* Tabla maestra: cultivo → semilla / bancal / plantel / recomendación */
-const TABLA_SEMILLA = [
-  ['Tomate', 'semillero feb-mar', 'fin mar-abr', 'comprar fin mar-abr', 'Plantel'],
-  ['Pimiento', 'semillero feb-mar', 'abr-may', 'comprar abr-may', 'Plantel'],
-  ['Berenjena', 'semillero feb-mar', 'abr-may', 'comprar abr-may', 'Plantel'],
-  ['Calabacín', 'semillero mar-abr o directa abr-jun', 'abr-may', 'comprar abr-may', 'Plantel 1.er año'],
-  ['Pepino', 'semillero mar-abr o directa abr-may', 'abr-may', 'comprar abr-may', 'Plantel 1.er año'],
-  ['Melón', 'semillero mar-abr o directa abr-may', 'fin abr-may', 'comprar fin abr-may', 'Plantel'],
-  ['Sandía', 'semillero mar-abr o directa fin abr-may', 'fin abr-may', 'comprar fin abr-may', 'Plantel'],
-  ['Calabaza', 'semillero mar-abr o directa abr-may', 'abr-may', 'comprar abr-may', 'Plantel 1.er año'],
-  ['Judía', 'directa abr-jul', '—', 'innecesario', 'Semilla directa'],
-  ['Maíz', 'directa abr-jun', '—', 'innecesario', 'Semilla directa'],
-  ['Zanahoria', 'directa sep-nov / feb-abr', '—', 'no', 'Semilla directa'],
-  ['Rábano', 'directa sep-abr', '—', 'no', 'Semilla directa'],
-  ['Ajo', 'diente oct-ene', '—', 'no', 'Diente directo'],
-  ['Cebolla', 'semillero según variedad y ciclo', 'según ciclo', 'otoño-invierno', 'Plantel'],
-  ['Patata', 'tubérculo feb-mar', '—', 'no', 'Patata de siembra'],
-  ['Guisante', 'directa oct-feb aprox.', '—', 'innecesario', 'Semilla directa'],
-  ['Haba', 'directa oct-ene', '—', 'innecesario', 'Semilla directa'],
-  ['Fresa', 'semilla no recomendada', '—', 'sep-otoño / final invierno', 'Planta comprada'],
-  ['Albahaca', 'semillero mar-abr', 'abr-may', 'abr-may', 'Plantel 1.er año'],
-  ['Perejil', 'directa feb-primavera / sep-otoño', '—', 'épocas suaves', 'Plantel para empezar'],
-  ['Cilantro', 'directa sep-nov / feb-mar', '—', 'posible', 'Semilla directa'],
-  ['Cebollino', 'primavera u otoño', 'primavera u otoño', 'primavera u otoño', 'Planta'],
-  ['Romero', 'posible, lento', '—', 'sep-oct / mar-abr', 'Planta'],
-  ['Tomillo', 'posible, lento', '—', 'sep-oct / mar-abr', 'Planta'],
-  ['Orégano', 'primavera', 'primavera', 'primavera u otoño', 'Planta'],
-  ['Salvia', 'primavera', 'primavera', 'mar-abr / sep-oct', 'Planta'],
-  ['Lavanda', 'posible, lenta', '—', 'sep-oct / mar-abr', 'Planta'],
-  ['Menta', 'no merece la pena', '—', 'épocas suaves', 'Planta'],
-  ['Frutales', 'no para este plan', '—', 'vivero', 'Árbol identificado']
-];
+
 
 /* Qué comprar el primer año, sin complicaciones */
 const PRIMER_ANO = [
@@ -547,37 +421,235 @@ const PRIMER_ANO = [
 ];
 
 /* Qué haces realmente cada mes: siembra directa y plantel a comprar */
-const MES_ACCIONES = {
-  1:  { directa: 'Guisante y haba según variedad y temperatura. Últimos dientes de ajo.', plantel: 'Cebolla o cebolleta si aún te falta. Últimos árboles caducos del vivero.' },
-  2:  { directa: 'Zanahoria, rábano, guisante según temperatura y patata de siembra a final de mes.', plantel: 'Nada de verano todavía. Si quieres hacer tus propios semilleros: tomate, pimiento y berenjena bajo protección.' },
-  3:  { directa: 'Zanahoria, rábano, perejil y cilantro mientras no apriete el calor.', plantel: 'Aromáticas perennes y cítricos. Solo si el tiempo acompaña a final de mes, las primeras tomateras. Semilleros opcionales de calabacín, pepino, melón, sandía, calabaza y albahaca.' },
-  4:  { directa: 'Judía y maíz. Y, si quieres probar la vía de la semilla, calabacín y pepino.', plantel: 'El mes clave: tomate, pimiento, berenjena, calabacín, pepino y albahaca.' },
-  5:  { directa: 'Judía, maíz y las cucurbitáceas que quieras probar desde semilla.', plantel: 'Pimiento, berenjena, pepino, calabacín si aún no lo pusiste, melón, sandía, calabaza y albahaca.' },
-  6:  { directa: 'Segundas tandas de judía; maíz hasta mediados de mes.', plantel: 'Nada nuevo: ya hace demasiado calor para trasplantar.' },
-  7:  { directa: 'Judía, en tandas pequeñas y escalonadas, si te apetece.', plantel: 'Nada. Tu trabajo es regar, entutorar, vigilar plagas y cosechar.' },
-  8:  { directa: 'Segunda tanda de judía y, con cuidado, calabacín.', plantel: 'Nada. Es mes de montar riego y comprar material.' },
-  9:  { directa: 'Rábano, zanahoria cuando afloje el calor, cilantro cuando refresque y perejil si lo haces desde semilla.', plantel: 'Fresas hacia finales de mes, romero, tomillo, lavanda y perejil si quieres la vía fácil.' },
-  10: { directa: 'Dientes de ajo, guisante, haba si las quieres, rábano y zanahoria.', plantel: 'Cebolla o cebolleta, fresas y aromáticas perennes.' },
-  11: { directa: 'Ajo, guisante, haba y zanahoria.', plantel: 'Cebolla adecuada a la temporada. Empieza la compra de frutales caducos en el vivero.' },
-  12: { directa: 'Ajo, guisante y haba.', plantel: 'Cebolla de temporada y frutales caducos a raíz desnuda.' }
-};
 
 /* ---------------------------------------------------------
-   19. FUENTES
+   TRUCOS Y AVISOS ESCRITOS A MANO
+   Consejo práctico que enriquece la ficha del catálogo. Las FECHAS
+   no salen de aquí: salen siempre del dataset V3 (js/catalogo.js).
    --------------------------------------------------------- */
-const FUENTES = [
-  { t: 'AEMET — Valores climatológicos normales, estación Tortosa (Roquetes), 9981A', u: 'https://www.aemet.es/es/serviciosclimaticos/datosclimatologicos/valoresclimatologicos?k=cat&l=9981A' },
-  { t: 'UC Agriculture and Natural Resources — Preparing: Beds, Containers, Soil, Irrigation', u: 'https://ucanr.edu/site/uc-marin-master-gardeners/preparing-beds-containers-soil-irrigation' },
-  { t: 'Utah State University Extension — Raised Bed Gardening', u: 'https://extension.usu.edu/yardandgarden/research/raised-bed-gardening' },
-  { t: 'University of Minnesota Extension — Raised bed gardens', u: 'https://extension.umn.edu/gardening-minnesota/raised-bed-gardens' },
-  { t: 'Utah State University Extension — DIY Guide to Backyard Drip Irrigation', u: 'https://extension.usu.edu/yardandgarden/research/the-do-it-yourself-guide-to-backyard-drip-irrigation' },
-  { t: 'UC ANR — Tips for growing fruit trees that thrive in containers', u: 'https://ucanr.edu/media/288793' },
-  { t: 'UC ANR — Container Gardening Basics', u: 'https://ucanr.edu/site/uc-master-gardeners-santa-clara-county/container-gardening-basics' },
-  { t: 'UC ANR — Drainage in Containers', u: 'https://ucanr.edu/site/uc-master-gardeners-santa-clara-county/drainage-containers' },
-  { t: 'University of Minnesota Extension — Planting and transplanting trees and shrubs', u: 'https://extension.umn.edu/how/planting-and-transplanting-trees-and-shrubs' },
-  { t: 'Generalitat de Catalunya — El compostatge en agricultura ecològica', u: 'https://agricultura.gencat.cat/web/.content/03-agricultura/pae/publicacions-material-referencia/produccions-agricoles/adobat/FT20_CompostatgeAE.pdf' },
-  { t: 'Ministerio de Agricultura, Pesca y Alimentación — Registro de Productos Fitosanitarios', u: 'https://www.mapa.gob.es/es/agricultura/temas/sanidad-vegetal/productos-fitosanitarios/registro-productos' },
-  { t: 'University of Minnesota Extension — Small-scale hydroponics', u: 'https://extension.umn.edu/gardening-minnesota/small-scale-hydroponics' },
-  { t: 'Reglamento (UE) 2018/848 sobre producción ecológica', u: 'https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32018R0848' },
-  { t: 'Generalitat de Catalunya — Guia pràctica d’horticultura ecològica. Diferencia expresamente época de siembra, de trasplante y de recolección, y advierte de que sus períodos están adaptados al litoral mediterráneo y deben desplazarse según el microclima real de cada lugar.' }
-];
+const TRUCOS = {
+  higuera: {
+    trucos: [
+      'Cómprala de 2-3 años con el tronco gordo como un dedo y comes brevas el primer junio.',
+      'Aguanta el calor de Tortosa mejor que tú: no la mimes de más.',
+      'Corta los brotes que salen en la base del tronco, roban fuerza a los higos.',
+    ]
+  },
+  granado: {
+    trucos: [
+      'Es el árbol que más perdona: si te olvidas un riego, sobrevive.',
+      'Le encanta el sol directo, ponlo en el punto más soleado del patio.',
+      'No riegues a lo loco cuando la fruta madura: las granadas se abren.',
+    ]
+  },
+  limonero: {
+    aviso: 'Hojas amarillas con los nervios verdes = le falta hierro (clorosis), muy típico si riegas con agua con cal. Se corrige con un corrector de hierro autorizado en agricultura ecológica.',
+    trucos: [
+      'Plántalo en la ventana buena (primavera o principio de otoño) y protégelo el primer invierno: una helada sobre un cítrico recién plantado hace mucho daño.',
+      'Abono específico de cítricos de marzo a octubre, sin fallar.',
+      'Hojas amarillentas con nervios verdes es hierro, no sed. No riegues más.',
+    ]
+  },
+  mandarino: {
+    trucos: [
+      'Como todos los cítricos: evita plantarlo en pleno verano o con helada anunciada; primavera y principio de otoño son sus mejores momentos.',
+      'Protégelo del viento fuerte: tira la flor y sin flor no hay mandarinas.',
+      'Abono de cítricos cada 15 días en primavera y verano.',
+    ]
+  },
+  kumquat: {
+    trucos: [
+      'Es enano natural: nunca te comerá el patio.',
+      'La fruta se come entera con piel: la piel es lo dulce, la pulpa lo ácido.',
+      'Perfecto si dudas del espacio disponible: empieza por él.',
+    ]
+  },
+  ciruelo_japones: {
+    aviso: 'Aquí la variedad exacta es crítica. Antes de pagar confirma: necesidades de frío, autofertilidad, compatibilidad de polinización y vigor del patrón.',
+    trucos: [
+      'Comprueba en la etiqueta que sea autofértil o tendrás flores y cero ciruelas.',
+      'Pierde la hoja en invierno y parece muerto. Es normal.',
+      'Poda ligera en invierno, cuando está sin hojas.',
+    ]
+  },
+  caqui: {
+    trucos: [
+      'No le escatimes litros: es el que más volumen de raíz necesita.',
+      'Tarda unos dos años en dar cosecha de verdad.',
+      'En otoño se queda sin hojas y lleno de bolas naranjas: precioso.',
+    ]
+  },
+  fresa: {
+    trucos: [
+      'La corona (el nudito del que salen las hojas) va a ras de tierra: ni enterrada ni al aire.',
+      'Enterrada se pudre, al aire se seca. Es su único punto delicado.',
+      'En pleno verano de Tortosa agradece protección del sol de tarde.',
+    ]
+  },
+  frambuesa: {
+    trucos: [
+      'Agradece sombra a mediodía en verano: no es planta de 40 °C al sol.',
+      'Corta a ras las cañas que ya han dado fruta.',
+      'No dejes que la tierra se seque del todo.',
+    ]
+  },
+  mora: {
+    trucos: [
+      'Compra la variedad sin espinas o acabarás odiando cosecharla.',
+      'Ata las ramas: crecen largas y se tumban solas.',
+      'Poda las cañas viejas cada invierno.',
+    ]
+  },
+  arandano: {
+    aviso: 'Solo con sustrato para plantas acidófilas. Con agua alcalina o calcárea da bastante más trabajo que el resto: no es la compra de un principiante en Tortosa.',
+    trucos: [
+      'Busca el saco que ponga "acidófilas" o "para arándanos y hortensias". Es su comida.',
+      'Si tu agua tiene mucha cal, riégalo con agua de lluvia siempre que puedas.',
+      'Elige variedades de clima cálido: Biloxi u O’Neal. Otras no aguantan aquí.',
+    ]
+  },
+  parra: {
+    trucos: [
+      'Decide dónde va la pérgola antes de plantarla.',
+      'Te da uvas y sombra justo donde hace falta en verano.',
+      'Poda fuerte cada invierno: sin podar da mucha hoja y poca uva.',
+    ]
+  },
+  tomate: {
+    aviso: 'El culo negro (podredumbre apical) casi siempre es riego irregular, no falta de calcio en la tierra. Primera medida: estabilizar el riego.',
+    trucos: [
+      'Necesita tutor desde el primer día: una caña alta bien clavada.',
+      'Riega la tierra, nunca las hojas: mojarlas trae hongos.',
+      'Compra plantel; no siembres semilla el primer año.',
+    ]
+  },
+  pimiento: {
+    trucos: [
+      'Cuanto más recoges, más flores echa. No dejes fruta pasada en la planta.',
+      'Un tutor pequeño le ayuda cuando carga de pimientos.',
+      'Aguanta produciendo hasta bien entrado octubre.',
+    ]
+  },
+  berenjena: {
+    trucos: [
+      'Le encanta el calor: es de las más adaptadas al verano de Tortosa.',
+      'Recógelas cuando brillan; si pierden brillo están pasadas.',
+      'Con dos plantas tienes berenjenas todo el verano.',
+    ]
+  },
+  calabacin: {
+    aviso: 'Una sola planta sana produce más de lo que consume una familia. No pongas cinco calabacines en 4 m².',
+    trucos: [
+      'En seis semanas ya cosechas: perfecto para no perder la ilusión.',
+      'Recógelos de un palmo. Los gigantes saben a agua.',
+      'Planta una segunda tanda en agosto para comer en otoño.',
+    ]
+  },
+  pepino: {
+    trucos: [
+      'Sin guía se pudre en el suelo y ocupa el triple.',
+      'Es de las que más agua pide del bancal.',
+      'La malla en el lado norte del bancal: no da sombra al resto.',
+    ]
+  },
+  judia_verde: {
+    trucos: [
+      'La de mata baja no necesita guía: siembras y te olvidas.',
+      'Se siembra directa con semilla.',
+      'Si te gusta la trepadora, ponla en la misma malla que el pepino.',
+    ]
+  },
+  melon: {
+    trucos: [
+      'Plántalo al borde y deja que las guías salgan fuera del bancal.',
+      'Pon una teja o tabla bajo la fruta para que no toque la tierra húmeda.',
+      'Deja 2-3 frutas por planta: salen más grandes y dulces.',
+    ]
+  },
+  ajo: {
+    trucos: [
+      'Separa la cabeza en dientes y entierra cada uno con la punta hacia arriba.',
+      'Plantar y esperar: no pide nada más.',
+      'Cuando las hojas se secan a la mitad, ya puedes arrancarlos.',
+    ]
+  },
+  zanahoria: {
+    trucos: [
+      'Siempre semilla directa, nunca plantel.',
+      'La tierra tiene que ser suelta y honda o la zanahoria sale torcida.',
+      'Aclara a 3-5 cm cuando nazcan: sin aclarar no engordan.',
+    ]
+  },
+  romero: {
+    trucos: [
+      'Va con tomillo, lavanda, salvia, orégano y laurel: todas beben poquísimo.',
+      'Al romero se le mata de agua, no de sed.',
+      'Corta ramitas a menudo: se mantiene compacto.',
+    ]
+  },
+  tomillo: {
+    trucos: [
+      'Necesita sol directo y buen drenaje: nada de plato con agua debajo.',
+      'Junta romero, tomillo y lavanda: mismo riego, mismo sol.',
+      'Se seca bien y dura todo el invierno en el bote.',
+    ]
+  },
+  lavanda: {
+    trucos: [
+      'Ponla cerca de los frutales: los polinizadores que atrae te dan más fruta.',
+      'No necesita compartir el goteo diario de los tomates.',
+      'Poda las flores secas al final del verano.',
+    ]
+  },
+  salvia: {
+    trucos: [
+      'Sus hojas grises reflejan el sol: por eso aguanta tanto calor.',
+      'No la riegues por encima, solo la tierra.',
+      'Mismo grupo que romero, tomillo y lavanda.',
+    ]
+  },
+  oregano: {
+    trucos: [
+      'Córtalo en flor, átalo en manojo y sécalo boca abajo.',
+      'Cuanto más sol, más aroma.',
+      'Poda después de floración si quieres mantenerlo compacto.',
+    ]
+  },
+  laurel: {
+    trucos: [
+      'Con un laurel tienes hojas para guisos de por vida.',
+      'Crece despacio, perfecto para maceta.',
+      'Recorta la punta para que ensanche en vez de subir.',
+    ]
+  },
+  albahaca: {
+    aviso: 'Nunca en la misma maceta que romero o lavanda: ellas quieren sequía y la albahaca agua cada día. Este es el error clásico de las aromáticas.',
+    trucos: [
+      'Al lado de los tomates: se llevan bien y ocupan poco.',
+      'Corta las flores en cuanto salgan o la hoja amarga.',
+      'Es anual: en invierno se muere y se replanta cada primavera.',
+    ]
+  },
+  perejil: {
+    trucos: [
+      'Agradece sombra a mediodía en verano.',
+      'Corta las ramas de fuera desde la base y deja el centro.',
+      'En verano se sube a flor: replanta cada año.',
+    ]
+  },
+  cilantro: {
+    trucos: [
+      'Con calor se sube a flor: mejor sembrarlo en otoño.',
+      'Siembra un poco cada mes para tener siempre hoja tierna.',
+      'No le gusta el trasplante: siembra directa.',
+    ]
+  },
+  menta: {
+    aviso: 'SIEMPRE en maceta sola: la menta es la okupa del huerto. Mete raíces por todas partes y ahoga a las vecinas en una sola temporada.',
+    trucos: [
+      'Si la plantas con otras, en tres meses solo tendrás menta.',
+      'Nunca la plantes libre en el terreno.',
+      'Es la aromática que más agua pide.',
+    ]
+  },
+};

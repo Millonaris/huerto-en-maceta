@@ -334,6 +334,64 @@ img { max-width: 100%; }
 .bloque-via__lista dd { margin: 0; color: var(--texto-2); }
 .bloque-via__nota { margin: 12px 0 0; font-size: 14px; color: var(--ocre); font-weight: 500; }
 
+/* --- Acción del mes en la tarjeta del catálogo --- */
+.accion-mes {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  padding-top: 12px; border-top: 1px solid var(--linea);
+}
+.estado { font-size: 12px; font-weight: 700; }
+.estado--optimo     { color: var(--verde-2); }
+.estado--precaucion { color: #9A6B12; }
+.planta__resumen {
+  font-size: 13px; color: var(--gris-2);
+  padding-top: 12px; border-top: 1px solid var(--linea);
+}
+
+/* --- Bloques "cómo empezar" de la ficha --- */
+.metodo {
+  border: 1px solid var(--linea); border-radius: 12px;
+  padding: 16px 18px; margin-bottom: 12px; background: var(--crema-2);
+}
+.metodo--recomendado { border-color: var(--verde-2); border-width: 2px; }
+.metodo__alto { margin: 0 0 12px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.metodo__reco {
+  font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--verde-2);
+}
+.metodo__lista { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; }
+.metodo__lista dt {
+  font-size: 12px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--gris-2); padding-top: 2px;
+}
+.metodo__lista dd { margin: 0; color: var(--texto-2); }
+.metodo__lista dt.es-optimo { color: var(--verde-2); }
+.metodo__lista dd.es-optimo { font-weight: 700; }
+.metodo__lista dt.es-precaucion,
+.metodo__lista dd.es-precaucion { color: #9A6B12; }
+.metodo__fechas { display: block; font-size: 13px; color: var(--gris-2); }
+.metodo__nota { margin: 12px 0 0; font-size: 14px; color: var(--texto-2); }
+.metodo__fuentes { margin: 10px 0 0; font-size: 12px; color: var(--gris-2); }
+.metodo__fuentes a { font-size: 12px; }
+
+/* --- Calendario: cultivos enlazados --- */
+.ficha-mes__celda--ancha { grid-column: 1 / -1; }
+.mes-accion {
+  margin: 0 0 12px; display: flex; gap: 8px; flex-wrap: wrap;
+  align-items: baseline; line-height: 1.7;
+}
+.mes-accion:last-child { margin-bottom: 0; }
+.enlace-cultivo {
+  border: none; background: transparent; padding: 0; cursor: pointer;
+  font: inherit; color: var(--terracota); text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.enlace-cultivo:hover { color: var(--terracota-2); }
+
+/* --- Fuentes --- */
+.fuentes__ambito { display: block; font-size: 14px; color: var(--gris); margin: 2px 0 4px; }
+.fuentes--compacta li { padding: 10px 0; }
+.fuentes--compacta a { font-size: 14px; word-break: normal; }
+
 .planta {
   text-align: left; cursor: pointer;
   background: var(--crema); border: 1px solid var(--linea); border-radius: var(--radio);
@@ -361,6 +419,45 @@ img { max-width: 100%; }
 .etiqueta--fruta    { background: #F3E1D6; color: #8C3F1F; }
 .etiqueta--verdura  { background: #E7E3D2; color: #6E6329; }
 .etiqueta--aromatica{ background: #DDE4EA; color: #3B5468; }
+.etiqueta--flor     { background: #EFE2EC; color: #6B3F63; }
+
+/* Adaptación del cultivo a Tortosa */
+.ajuste {
+  display: inline-block; font-size: 12px; font-weight: 700;
+  padding: 4px 9px; border-radius: 6px; align-self: flex-start;
+}
+.ajuste--condicional { background: #FBEDE4; color: #8C3F1F; }
+.ajuste--poco        { background: #F6E0DA; color: #8A2E1C; }
+
+/* Buscador y modo del catálogo */
+.barra-busqueda {
+  display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+  margin-bottom: 18px;
+}
+.barra-busqueda input {
+  flex: 1; min-width: 220px; padding: 12px 15px; border-radius: 10px;
+  border: 1px solid var(--linea-2); background: var(--crema);
+  font-family: var(--cuerpo); font-size: 16px; color: var(--texto);
+}
+.seccion--crema .barra-busqueda input { background: var(--crema-2); }
+.barra-busqueda input:focus { outline: 2px solid var(--verde-2); outline-offset: 1px; }
+.modo-catalogo { display: flex; gap: 4px; flex-wrap: wrap; }
+
+/* Leyenda de colores de la tira de meses */
+.leyenda-tira {
+  display: flex; gap: 18px; flex-wrap: wrap; margin: 0 0 8px;
+  font-size: 13px; color: var(--gris-2);
+}
+.leyenda-tira span { display: inline-flex; align-items: center; gap: 6px; }
+.muestra { width: 16px; height: 8px; border-radius: 3px; display: inline-block; }
+.muestra--optimo  { background: var(--verde-2); }
+.muestra--posible { background: #D9A441; }
+.muestra--fuera   { background: #E6E2D7; }
+
+.nota-ventanas {
+  margin: 0 0 22px; font-size: 13px; color: var(--ocre);
+  font-style: italic; max-width: 80ch;
+}
 
 .dificultad { display: flex; align-items: center; gap: 8px; }
 .dificultad__t { font-size: 13px; color: var(--gris-2); font-weight: 500; }
@@ -376,7 +473,9 @@ img { max-width: 100%; }
   height: 20px; border-radius: 3px; background: #E6E2D7; color: #A9A395;
   font-size: 9px; font-weight: 700; display: grid; place-items: center;
 }
-.tira span.on { background: var(--verde-2); color: var(--crema); }
+.tira span.on,
+.tira span.optimo  { background: var(--verde-2); color: var(--crema); }
+.tira span.posible { background: #D9A441; color: #3E2E0B; }
 .tira span.foco { outline: 2px solid var(--terracota); outline-offset: 1px; }
 .tira--grande { gap: 3px; }
 .tira--grande span { height: 30px; border-radius: 5px; font-size: 10px; }

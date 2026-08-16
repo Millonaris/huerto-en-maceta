@@ -2,10 +2,23 @@
 
 **→ [millonaris.github.io/huerto-en-maceta](https://millonaris.github.io/huerto-en-maceta/)**
 
-Web estática (HTML + CSS + JavaScript, sin dependencias) que reúne el diseño
-*Mi Huerto en Maceta v2* y todo el contenido de
-`Plan_definitivo_huerto_frutales_Tortosa_2026.md` y
-`Calendario_semilla_vs_plantel_Tortosa_2026_2027.md`.
+Web estática (HTML + CSS + JavaScript, sin dependencias) sobre el diseño
+*Mi Huerto en Maceta v2*.
+
+**El calendario sale de un único sitio:**
+`datos/Catalogo_maestro_cultivos_Tortosa_V3_exhaustivo.json` — 114 cultivos,
+cada uno con sus métodos de establecimiento, ventana posible, ventana óptima,
+meses de precaución y fuentes. Es la fuente de verdad; el resto del contenido
+(reglas, terreno, riego, cuidados, plan 2026-27) viene de los `.md` del plan.
+
+Para regenerar el catálogo tras editar el JSON:
+
+```bash
+python3 herramientas/construir-catalogo.py
+```
+
+El script valida las 114 fichas y los 24 contadores mensuales antes de escribir
+`js/catalogo.js`; si algo no cuadra, falla y no genera nada.
 
 ## Cómo verla
 
@@ -26,7 +39,10 @@ Y abre <http://localhost:4321>.
 ```
 index.html              Estructura y textos fijos de las 13 secciones
 css/estilos.css         Sistema de diseño completo (tokens, componentes, responsive)
-js/datos.js             Todo el contenido: plantas, calendario, errores, cronograma…
+datos/                  Dataset maestro V3 en JSON — fuente de verdad del calendario
+herramientas/           Script que valida el JSON y genera js/catalogo.js
+js/catalogo.js          Dataset generado (no editar a mano)
+js/datos.js             Contenido no-calendario y trucos escritos a mano
 js/app.js               Renderizado e interacción
 servidor.js             Servidor local mínimo, opcional
 diseno-original/        El diseño descargado de claude.ai, como referencia
