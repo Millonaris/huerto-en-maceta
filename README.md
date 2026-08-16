@@ -69,3 +69,14 @@ tarjeta y el buscador «¿Qué puedo plantar hoy?».
 - **Glosario emergente**: los términos subrayados abren su definición abajo.
 - Barra de progreso de lectura, navegación activa, menú móvil y animaciones de
   entrada que respetan `prefers-reduced-motion`.
+
+## Nota sobre el móvil
+
+Por debajo de 760 px las tablas dejan de ser tablas: cada fila se convierte en
+una tarjeta y cada dato lleva encima el nombre de su columna, tomado del
+atributo `data-etiqueta` que añade `pintarTabla()` en `js/app.js`. Así no hay
+que arrastrar nada de lado. Si añades una tabla nueva, pásale las cabeceras a
+`pintarTabla()` o pon tú el `data-etiqueta` en cada `<td>`.
+
+Por debajo de 400 px el calendario pasa a 4 columnas, los campos de las
+calculadoras a una sola y los botones ocupan todo el ancho.

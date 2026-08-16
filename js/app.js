@@ -93,8 +93,7 @@
   }
 
   function pintarTablaMacetas() {
-    $('#tablaMacetas').innerHTML = MACETAS.map(m =>
-      `<tr><td>${m[0]}</td><td class="num">${m[1]}</td></tr>`).join('');
+    pintarTabla('#tablaMacetas', ['Planta', 'Recipiente objetivo'], MACETAS, [1]);
   }
 
   /* =========================================================
@@ -317,13 +316,14 @@
         <p class="riego-tarjeta__nota">${v.d}</p>
       </div>`).join('');
 
+    const cab = ['Cultivo', 'Si partes de semilla', 'Cuándo va al bancal', 'Si compras plantel', 'Lo recomendado'];
     $('#tablaSemilla').innerHTML = TABLA_SEMILLA.map(f => `
       <tr>
-        <td><strong>${f[0]}</strong></td>
-        <td>${f[1]}</td>
-        <td class="num">${f[2]}</td>
-        <td>${f[3]}</td>
-        <td><span class="via ${(VIAS[claseVia(f[4])] || {}).clase || ''}">${f[4]}</span></td>
+        <td data-etiqueta="${cab[0]}"><strong>${f[0]}</strong></td>
+        <td data-etiqueta="${cab[1]}">${f[1]}</td>
+        <td data-etiqueta="${cab[2]}" class="num">${f[2]}</td>
+        <td data-etiqueta="${cab[3]}">${f[3]}</td>
+        <td data-etiqueta="${cab[4]}"><span class="via ${(VIAS[claseVia(f[4])] || {}).clase || ''}">${f[4]}</span></td>
       </tr>`).join('');
 
     $('#listaPrimerAno').innerHTML = PRIMER_ANO.map(b => `
@@ -354,8 +354,9 @@
         <p class="riego-tarjeta__nota">${r.nota}</p>
       </div>`).join('');
 
-    $('#tablaGoteros').innerHTML = GOTEROS.map(g =>
-      `<tr><td><strong>${g.maceta}</strong></td><td>${g.config}</td><td class="num">${g.total}</td></tr>`).join('');
+    pintarTabla('#tablaGoteros',
+      ['Recipiente', 'Configuración', 'Caudal total'],
+      GOTEROS.map(g => [g.maceta, g.config, g.total]), [2]);
   }
 
   function num(id, porDefecto) {
@@ -404,12 +405,17 @@
       </div>`).join('');
   }
 
-  function pintarTabla(selector, filas) {
+  /* Pinta una tabla. `cabeceras` se copia en cada celda como data-etiqueta:
+     en móvil las tablas se convierten en tarjetas y esa etiqueta es la que
+     hace de título de cada dato, para no tener que arrastrar de lado. */
+  function pintarTabla(selector, cabeceras, filas, columnasNum) {
+    const num = columnasNum || [];
     $(selector).innerHTML = filas.map(f =>
-      '<tr>' + f.map((c, i) => i === 2
-        ? `<td class="num">${c}</td>`
-        : (i === 0 ? `<td><strong>${c}</strong></td>` : `<td>${c}</td>`)
-      ).join('') + '</tr>').join('');
+      '<tr>' + f.map((c, i) => {
+        const clase = num.indexOf(i) >= 0 ? ' class="num"' : '';
+        const cont = i === 0 ? `<strong>${c}</strong>` : c;
+        return `<td data-etiqueta="${esc(cabeceras[i] || '')}"${clase}>${cont}</td>`;
+      }).join('') + '</tr>').join('');
   }
 
   /* =========================================================
@@ -764,8 +770,9 @@
     calcularSustrato();
     pintarAcordeon('#acordeonCuidados', CUIDADOS);
     pintarRutinas();
-    pintarTabla('#tablaVerano', HORTALIZAS_VERANO);
-    pintarTabla('#tablaInvierno', HORTALIZAS_INVIERNO);
+    const cabHort = ['Cultivo', 'Inicio fácil', 'Separación', 'Lugar recomendado', 'Dificultad'];
+    pintarTabla('#tablaVerano', cabHort, HORTALIZAS_VERANO, [2]);
+    pintarTabla('#tablaInvierno', cabHort, HORTALIZAS_INVIERNO, [2]);
     pintarErrores();
     pintarDiagnostico();
     pintarCronologia();

@@ -218,19 +218,34 @@
     <p class="intro" style="max-width:70ch; margin-bottom:24px;">Las hortalizas, los árboles y el romero no tienen las mismas necesidades. El sistema mínimo debe tener dos zonas separadas. Las aromáticas mediterráneas pueden quedar fuera del automático o en un ramal que puedas cerrar.</p>
 
     <div class="columnas-2" style="margin-bottom:56px;">
-      <pre class="esquema">        GRIFO
-          │
-   DISTRIBUIDOR 2 VÍAS
-     ┌────┴────┐
-  PROGRAM. A  PROGRAM. B
-     │         │
-   FILTRO    FILTRO
-     │         │
-  REDUCTOR  REDUCTOR   (si hace falta)
-     │         │
-  TUBO 16mm  TUBO 16mm
-     │         │
-  BANCALES  MACETAS / FRUTALES</pre>
+      <div class="esquema">
+        <p class="esquema__nodo esquema__nodo--origen">Grifo</p>
+        <p class="esquema__flecha" aria-hidden="true">↓</p>
+        <p class="esquema__nodo">Distribuidor de 2 vías</p>
+        <p class="esquema__flecha" aria-hidden="true">↓</p>
+        <div class="esquema__zonas">
+          <div class="esquema__zona">
+            <p class="esquema__titulo">Zona 1 · Bancales</p>
+            <ol>
+              <li>Programador A</li>
+              <li>Filtro</li>
+              <li>Reductor de presión <span>si hace falta</span></li>
+              <li>Tubo de 16 mm</li>
+              <li class="esquema__destino">3 líneas de goteo por bancal</li>
+            </ol>
+          </div>
+          <div class="esquema__zona">
+            <p class="esquema__titulo">Zona 2 · Frutales</p>
+            <ol>
+              <li>Programador B</li>
+              <li>Filtro</li>
+              <li>Reductor de presión <span>si hace falta</span></li>
+              <li>Tubo de 16 mm</li>
+              <li class="esquema__destino">Goteros de caudal conocido por maceta</li>
+            </ol>
+          </div>
+        </div>
+      </div>
       <div>
         <h4 class="titulo-4">Componentes</h4>
         <ul class="puntos">
