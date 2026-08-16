@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mi Huerto en Maceta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #F7F5F0; color: #1B231A; font-family: 'DM Sans', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: #B4552E; text-decoration: none; }
+  a:hover { color: #8C3F1F; }
+  button { font-family: inherit; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</helmet>
+
+<div style="width:100%; overflow-x:hidden; font-size:17px; line-height:1.55;">
+
+  <div style="position:fixed; top:0; left:0; height:3px; background:#B4552E; z-index:90; transition:width .12s linear; width: {{ prog }}%;"></div>
+
+  <header style="position:fixed; top:0; left:0; right:0; z-index:80; background:rgba(247,245,240,.92); backdrop-filter:blur(12px); border-bottom:1px solid #E2DED3;">
+    <div style="max-width:1240px; margin:0 auto; padding:11px 20px; display:flex; align-items:center; gap:20px;">
+      <a href="#top" style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:16px; letter-spacing:-.02em; color:#1B231A;">Mi Huerto en Maceta</a>
+      <nav style="display:flex; gap:2px; margin-left:auto; flex-wrap:wrap; font-size:14px; font-weight:500;">
+        <a href="#reglas" style="padding:7px 11px; border-radius:8px; color:#5B6357;" style-hover="background:#ECE8DE; color:#1B231A;">Reglas</a>
+        <a href="#catalogo" style="padding:7px 11px; border-radius:8px; color:#5B6357;" style-hover="background:#ECE8DE; color:#1B231A;">Catálogo</a>
+        <a href="#calendario" style="padding:7px 11px; border-radius:8px; color:#5B6357;" style-hover="background:#ECE8DE; color:#1B231A;">Calendario</a>
+        <a href="#riego" style="padding:7px 11px; border-radius:8px; color:#5B6357;" style-hover="background:#ECE8DE; color:#1B231A;">Riego</a>
+        <a href="#errores" style="padding:7px 11px; border-radius:8px; color:#5B6357;" style-hover="background:#ECE8DE; color:#1B231A;">Errores</a>
+        <a href="#hoy" style="padding:7px 14px; border-radius:8px; background:#1F3B26; color:#F7F5F0; font-weight:700;" style-hover="background:#2E5E3A; color:#fff;">Qué planto hoy</a>
+      </nav>
+    </div>
+  </header>
+
+  <section id="top" style="background:#1F3B26; color:#EFEFE6; padding:130px 20px 0;">
+    <div style="max-width:1240px; margin:0 auto;">
+      <p style="font-family:'Space Grotesk',sans-serif; font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:#8FB498; margin:0 0 26px;">Guía de cultivo en maceta · Tortosa, clima mediterráneo</p>
+      <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(44px,8.4vw,110px); line-height:.94; letter-spacing:-.035em; margin:0 0 26px; max-width:14ch; text-wrap:balance;">De cero a tu primera cosecha</h1>
+      <p style="font-size:clamp(18px,2.2vw,22px); max-width:46ch; color:#C4D3C4; margin:0 0 40px; text-wrap:pretty;">Nunca has cultivado nada. El terreno es de alquiler y la tierra es mala. Solución: todo en macetas y bancales, para que el huerto se mude contigo. Aquí está el plan completo.</p>
+      <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:64px;">
+        <a href="#reglas" style="padding:14px 26px; border-radius:10px; background:#EFEFE6; color:#1F3B26; font-weight:700;" style-hover="background:#fff; color:#2E5E3A;">Empezar por las 8 reglas</a>
+        <a href="#hoy" style="padding:14px 26px; border-radius:10px; border:1px solid #4C6B52; color:#EFEFE6; font-weight:700;" style-hover="border-color:#8FB498; color:#fff;">¿Qué puedo plantar hoy?</a>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); border-top:1px solid #3A5540;">
+        <div style="padding:22px 20px 30px 0; border-right:1px solid #3A5540;">
+          <p style="font-family:'Space Grotesk',sans-serif; font-size:38px; font-weight:700; margin:0; letter-spacing:-.03em;">31</p>
+          <p style="margin:2px 0 0; color:#8FB498; font-size:15px;">plantas con ficha</p>
+        </div>
+        <div style="padding:22px 20px 30px; border-right:1px solid #3A5540;">
+          <p style="font-family:'Space Grotesk',sans-serif; font-size:38px; font-weight:700; margin:0; letter-spacing:-.03em;">12</p>
+          <p style="margin:2px 0 0; color:#8FB498; font-size:15px;">meses planificados</p>
+        </div>
+        <div style="padding:22px 20px 30px; border-right:1px solid #3A5540;">
+          <p style="font-family:'Space Grotesk',sans-serif; font-size:38px; font-weight:700; margin:0; letter-spacing:-.03em;">8</p>
+          <p style="margin:2px 0 0; color:#8FB498; font-size:15px;">errores que matan</p>
+        </div>
+        <div style="padding:22px 0 30px 20px;">
+          <p style="font-family:'Space Grotesk',sans-serif; font-size:38px; font-weight:700; margin:0; letter-spacing:-.03em;">2.º</p>
+          <p style="margin:2px 0 0; color:#8FB498; font-size:15px;">verano: cosecha de verdad</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="reglas" style="padding:96px 20px; background:#F7F5F0;">
+    <div style="max-width:1240px; margin:0 auto;">
+      <div data-reveal="1" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:30px; align-items:end; margin-bottom:54px;">
+        <div>
+          <p style="font-family:'Space Grotesk',sans-serif; font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:#B4552E; margin:0 0 14px;">01 — Empieza por aquí</p>
+          <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(32px,5vw,52px); line-height:1.02; letter-spacing:-.03em; margin:0; max-width:16ch;">Las 8 reglas del principiante</h2>
+        </div>
+        <p style="margin:0; color:#5B6357; max-width:44ch; text-wrap:pretty;">Si solo lees una cosa de toda la guía, que sea esta lista. Con estas ocho reglas ya vas por delante de mucha gente que lleva años intentándolo.</p>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(330px,1fr)); gap:0; border-top:1px solid #E2DED3;">
+        <sc-for list="{{ reglas }}" as="r" hint-placeholder-count="8">
+          <article data-reveal="1" style="border-bottom:1px solid #E2DED3; padding:26px 24px 26px 0; display:flex; gap:20px; transition:background .18s ease;" style-hover="background:#EFEDE5;">
+            <span style="font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:700; color:#B4552E; padding-top:5px; flex:none; width:26px;">{{ r.n }}</span>
+            <div>
+              <h3 style="font-family:'Space Grotesk',sans-serif; font-size:20px; font-weight:500; letter-spacing:-.01em; margin:0 0 7px;">{{ r.t }}</h3>
+              <p style="margin:0 0 9px; color:#5B6357;">{{ r.d }}</p>
+              <p style="margin:0; font-size:14px; color:#8C7B5C; font-weight:500;">Por qué: {{ r.p }}</p>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="catalogo" style="padding:96px 20px; background:#EFEDE5; border-top:1px solid #E2DED3;">
+    <div style="max-width:1240px; margin:0 auto;">
+      <div data-reveal="1" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:30px; align-items:end; margin-bottom:34px;">
+        <div>
+          <p style="font-family:'Space Grotesk',sans-serif; font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:#B4552E; margin:0 0 14px;">02 — Catálogo</p>
+          <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(32px,5vw,52px); line-height:1.02; letter-spacing:-.03em; margin:0; max-width:16ch;">Qué plantar, una por una</h2>
+        </div>
+        <p style="margin:0; color:#5B6357; max-width:44ch; text-wrap:pretty;">La barra de doce casillas de cada tarjeta son los meses del año: las marcadas son los meses en los que se planta. Toca cualquier planta para abrir su ficha completa.</p>
+      </div>
+
+      <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:14px;">
+        <sc-for list="{{ filtros }}" as="f" hint-placeholder-count="5">
+          <button type="button" onClick="{{ f.sel }}" style="cursor:pointer; padding:10px 16px; border-radius:9px; font-size:15px; font-weight:700; border:1px solid {{ f.borde }}; background:{{ f.fondo }}; color:{{ f.color }}; transition:border-color .15s ease;" style-hover="border-color:#1F3B26;">{{ f.t }}</button>
+        </sc-for>
+        <button type="button" onClick="{{ toggleOrden }}" style="cursor:pointer; margin-left:auto; padding:10px 16px; border-radius:9px; font-size:15px; font-weight:700; border:1px dashed #C7C1B2; background:transparent; color:#5B6357;" style-hover="border-color:#1F3B26; color:#1B231A;">Orden: {{ ordenTexto }}</button>
+      </div>
+      <p style="margin:0 0 26px; font-size:14px; color:#8A8578;">{{ conteo }}</p>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(272px,1fr)); gap:14px;">
+        <sc-for list="{{ plantas }}" as="pl" hint-placeholder-count="12">
+          <button type="button" onClick="{{ pl.abrir }}" style="text-align:left; cursor:pointer; background:#F7F5F0; border:1px solid #E2DED3; border-radius:14px; padding:20px; display:flex; flex-direction:column; gap:12px; transition:border-color .18s ease, transform .18s ease;" style-hover="border-color:#1F3B26; transform:translateY(-3px);">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:10px;">
+              <h3 style="font-family:'Space Grotesk',sans-serif; font-size:21px; font-weight:500; letter-spacing:-.02em; margin:0;">{{ pl.nombre }}</h3>
+              <span style="flex:none; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:5px 9px; border-radius:6px; background:{{ pl.tagBg }}; color:{{ pl.tagFg }};">{{ pl.grupoCorto }}</span>
+            </div>
+            <p style="margin:0; font-size:15px; color:#5B6357; min-height:3em;">{{ pl.corto }}</p>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="font-size:13px; color:#8A8578; font-weight:500;">Dificultad</span>
+              <span style="display:flex; gap:3px;">
+                <sc-for list="{{ pl.dots }}" as="d" hint-placeholder-count="5">
+                  <span style="width:12px; height:5px; border-radius:3px; background:{{ d }};"></span>
+                </sc-for>
+              </span>
+            </div>
+            <div>
+              <div style="display:grid; grid-template-columns:repeat(12,1fr); gap:2px;">
+                <sc-for list="{{ pl.strip }}" as="c" hint-placeholder-count="12">
+                  <span style="height:20px; border-radius:3px; background:{{ c.bg }}; color:{{ c.fg }}; font-size:9px; font-weight:700; display:grid; place-items:center;">{{ c.l }}</span>
+                </sc-for>
+              </div>
+              <p style="margin:7px 0 0; font-size:13px; color:#8A8578;">Plantar: {{ pl.plantarCorto }}</p>
+            </div>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <sc-if value="{{ abierta }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ cerrar }}" style="position:fixed; inset:0; z-index:95; background:rgba(27,35,26,.45); display:flex; justify-content:flex-end;">
+      <aside onClick="{{ stop }}" style="background:#F7F5F0; width:min(520px,100%); height:100%; overflow-y:auto; padding:28px 30px 60px; box-shadow:-24px 0 60px rgba(0,0,0,.2);">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:22px;">
+          <div>
+            <span style="font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:5px 9px; border-radius:6px; background:{{ abierta.tagBg }}; color:{{ abierta.tagFg }};">{{ abierta.grupo }}</span>
+            <h3 style="font-family:'Space Grotesk',sans-serif; font-size:34px; font-weight:700; letter-spacing:-.03em; margin:14px 0 4px;">{{ abierta.nombre }}</h3>
+            <p style="margin:0; color:#8C7B5C; font-weight:500;">{{ abierta.variedad }}</p>
+          </div>
+          <button type="button" onClick="{{ cerrar }}" style="flex:none; width:38px; height:38px; border-radius:9px; border:1px solid #E2DED3; background:transparent; color:#5B6357; font-size:19px; cursor:pointer;" style-hover="background:#ECE8DE; color:#1B231A;" aria-label="Cerrar ficha">×</button>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:10px; padding:14px 0; border-top:1px solid #E2DED3; border-bottom:1px solid #E2DED3; margin-bottom:22px;">
+          <span style="font-size:14px; color:#5B6357; font-weight:500;">Dificultad {{ abierta.dif }} de 5</span>
+          <span style="display:flex; gap:4px; margin-left:auto;">
+            <sc-for list="{{ abierta.dots }}" as="d" hint-placeholder-count="5">
+              <span style="width:22px; height:6px; border-radius:3px; background:{{ d }};"></span>
+            </sc-for>
+          </span>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:12px; margin-bottom:22px;">
+          <div style="background:#EFEDE5; border-radius:12px; padding:15px 17px;">
+            <p style="margin:0 0 3px; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#8A8578;">Cuándo plantar</p>
+            <p style="margin:0; font-weight:500;">{{ abierta.plantar }}</p>
+          </div>
+          <div style="background:#EFEDE5; border-radius:12px; padding:15px 17px;">
+            <p style="margin:0 0 3px; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#8A8578;">Cuándo cosechar</p>
+            <p style="margin:0; font-weight:500;">{{ abierta.cosecha }}</p>
+          </div>
+          <div style="background:#EFEDE5; border-radius:12px; padding:15px 17px;">
+            <p style="margin:0 0 3px; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#8A8578;">Dónde va</p>
+            <p style="margin:0; font-weight:500;">{{ abierta.maceta }}</p>
+          </div>
+          <div style="background:#EFEDE5; border-radius:12px; padding:15px 17px;">
+            <p style="margin:0 0 3px; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#8A8578;">Riego</p>
+            <p style="margin:0; font-weight:500;">{{ abierta.riego }}</p>
+          </div>
+        </div>
+
+        <p style="margin:0 0 8px; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#8A8578;">Meses de plantación</p>
+        <div style="display:grid; grid-template-columns:repeat(12,1fr); gap:3px; margin-bottom:24px;">
+          <sc-for list="{{ abierta.strip }}" as="c" hint-placeholder-count="12">
+            <span style="height:30px; border-radius:5px; background:{{ c.bg }}; color:{{ c.fg }}; font-size:10px; font-weight:700; display:grid; place-items:center;">{{ c.l }}</span>
+          </sc-for>
+        </div>
+
+        <sc-if value="{{ abierta.aviso }}" hint-placeholder-val="{{ false }}">
+          <div style="background:#FBEDE4; border-left:3px solid #B4552E; border-radius:0 12px 12px 0; padding:16px 18px; margin-bottom:24px;">
+            <p style="margin:0 0 4px; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#B4552E;">Aviso</p>
+            <p style="margin:0; color:#7A3A1C; font-weight:500;">{{ abierta.aviso }}</p>
+          </div>
+        </sc-if>
+
+        <p style="margin:0 0 12px; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#8A8578;">Trucos de principiante</p>
+        <ol style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px;">
+          <sc-for list="{{ abierta.trucos }}" as="t" hint-placeholder-count="3">
+            <li style="display:flex; gap:12px; border-top:1px solid #E2DED3; padding-top:12px;">
+              <span style="width:6px; height:6px; border-radius:50%; background:#2E5E3A; margin-top:9px; flex:none;"></span>
+              <p style="margin:0; color:#3E4A3C;">{{ t }}</p>
+            </li>
+          </sc-for>
+        </ol>
+      </aside>
+    </div>
+  </sc-if>
+
+  <section id="calendario" style="padding:96px 20px; background:#F7F5F0; border-top:1px solid #E2DED3;">
+    <div style="max-width:1240px; margin:0 auto;">
+      <div data-reveal="1" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:30px; align-items:end; margin-bottom:40px;">
+        <div>
+          <p style="font-family:'Space Grotesk',sans-serif; font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:#B4552E; margin:0 0 14px;">03 — El año</p>
+          <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(32px,5vw,52px); line-height:1.02; letter-spacing:-.03em; margin:0; max-width:16ch;">Calendario mes a mes</h2>
+        </div>
+        <p style="margin:0; color:#5B6357; max-width:44ch; text-wrap:pretty;">El huerto mediterráneo tiene dos arranques: noviembre-febrero para los árboles y marzo-abril para el verano. Agosto no se planta: se prepara.</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(12,minmax(0,1fr)); gap:6px; margin-bottom:8px;">
+        <sc-for list="{{ meses }}" as="m" hint-placeholder-count="12">
+          <button type="button" onClick="{{ m.sel }}" style="cursor:pointer; padding:14px 4px 12px; border-radius:10px; border:1px solid {{ m.borde }}; background:{{ m.fondo }}; color:{{ m.color }}; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; transition:border-color .15s ease;" style-hover="border-color:#1F3B26;">{{ m.corto }}</button>
+        </sc-for>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(12,minmax(0,1fr)); gap:6px; margin-bottom:26px;">
+        <sc-for list="{{ meses }}" as="m" hint-placeholder-count="12">
+          <span style="height:6px; border-radius:3px; background:{{ m.temp }};" title="{{ m.tempTxt }}"></span>
+        </sc-for>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1px; background:#E2DED3; border:1px solid #E2DED3; border-radius:16px; overflow:hidden;">
+        <div style="background:#1F3B26; color:#EFEFE6; padding:28px 26px; grid-column:1 / -1;">
+          <h3 style="font-family:'Space Grotesk',sans-serif; font-size:30px; font-weight:700; letter-spacing:-.03em; margin:0 0 6px;">{{ mesSel.nombre }}</h3>
+          <p style="margin:0; color:#8FB498; font-size:18px;">{{ mesSel.lema }}</p>
+        </div>
+        <div style="background:#F7F5F0; padding:24px 26px;">
+          <p style="margin:0 0 8px; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#2E5E3A;">Se planta</p>
+          <p style="margin:0; color:#3E4A3C;">{{ mesSel.planta }}</p>
+        </div>
+        <div style="background:#F7F5F0; padding:24px 26px;">
+          <p style="margin:0 0 8px; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#B4552E;">Se cosecha</p>
+          <p style="margin:0; color:#3E4A3C;">{{ mesSel.cosecha }}</p>
+        </div>
+        <div style="background:#F7F5F0; padding:24px 26px;">
+          <p style="margin:0 0 8px; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#8C7B5C;">Tu tarea</p>
+          <p style="margin:0; color:#3E4A3C;">{{ mesSel.tarea }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="riego" style="padding:96px 20px; background:#EFEDE5; border-top:1px solid #E2DED3;">
+    <div style="max-width:1240px; margin:0 auto;">
+      <div data-reveal="1" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:30px; align-items:end; margin-bottom:44px;">
+        <div>
+          <p style="font-family:'Space Grotesk',sans-serif; font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:#B4552E; margin:0 0 14px;">04 — Agua</p>
+          <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(32px,5vw,52px); line-height:1.02; letter-spacing:-.03em; margin:0; max-width:16ch;">Cuánto regar y cuándo</h2>
+        </div>
+        <p style="margin:0; color:#5B6357; max-width:44ch; text-wrap:pretty;">Una maceta no tiene reservas: lo que no le das tú, no lo tiene. Estas frecuencias son la base; el test del dedo es el que manda.</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px; margin-bottom:44px;">
+        <sc-for list="{{ riego }}" as="r" hint-placeholder-count="4">
+          <div style="background:{{ r.bg }}; border:1px solid {{ r.borde }}; border-radius:14px; padding:22px;">
+            <p style="margin:0 0 10px; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:{{ r.fg }};">{{ r.est }}</p>
+            <p style="font-family:'Space Grotesk',sans-serif; font-size:26px; font-weight:700; letter-spacing:-.02em; margin:0 0 6px; color:{{ r.fg }};">{{ r.frec }}</p>
+            <p style="margin:0; font-size:15px; color:#5B6357;">{{ r.nota }}</p>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:40px; align-items:start;">
+        <div data-reveal="1">
+          <h3 style="font-family:'Space Grotesk',sans-serif; font-size:26px; font-weight:700; letter-spacing:-.02em; margin:0 0 8px;">El test del dedo</h3>
+          <p style="margin:0 0 22px; color:#5B6357;">Gratis, instantáneo y más fiable que cualquier sensor. Tres pasos:</p>
+          <ol style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:0;">
+            <li style="display:flex; gap:18px; border-top:1px solid #E2DED3; padding:18px 0;">
+              <span style="font-family:'Space Grotesk',sans-serif; font-weight:700; color:#B4552E; flex:none;">01</span>
+              <p style="margin:0;"><strong style="font-weight:700;">Mete el dedo</strong> 4-5 cm en la tierra, hasta el nudillo.</p>
+            </li>
+            <li style="display:flex; gap:18px; border-top:1px solid #E2DED3; padding:18px 0;">
+              <span style="font-family:'Space Grotesk',sans-serif; font-weight:700; color:#B4552E; flex:none;">02</span>
+              <p style="margin:0;"><strong style="font-weight:700;">Sale seco:</strong> riega hasta que salga agua por los agujeros de abajo.</p>
+            </li>
+            <li style="display:flex; gap:18px; border-top:1px solid #E2DED3; border-bottom:1px solid #E2DED3; padding:18px 0;">
+              <span style="font-family:'Space Grotesk',sans-serif; font-weight:700; color:#B4552E; flex:none;">03</span>
+              <p style="margin:0;"><strong style="font-weight:700;">Sale húmedo:</strong> espera. Pasarse de agua pudre las raíces igual que quedarse corto las seca.</p>
+            </li>
+          </ol>
+        </div>
+        <div data-reveal="1" style="background:#1F3B26; color:#EFEFE6; border-radius:16px; padding:30px;">
+          <p style="font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#E39B6E; margin:0 0 14px;">Innegociable</p>
+          <p style="font-family:'Space Grotesk',sans-serif; font-size:clamp(22px,3vw,30px); line-height:1.2; letter-spacing:-.02em; margin:0 0 16px;">Un fin de semana de agosto sin riego mata un árbol en maceta.</p>
+          <p style="margin:0; color:#C4D3C4;">A 40 °C, dos días sin agua secan el sustrato entero y no hay riego de emergencia que lo recupere. El programador de goteo no es un lujo: es el seguro de vida del huerto. Cuesta menos que un solo frutal.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="errores" style="padding:96px 20px; background:#1B231A; color:#EFEFE6;">
+    <div style="max-width:1240px; margin:0 auto;">
+      <div data-reveal="1" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:30px; align-items:end; margin-bottom:46px;">
+        <div>
+          <p style="font-family:'Space Grotesk',sans-serif; font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:#E39B6E; margin:0 0 14px;">05 — Cuidado</p>
+          <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(32px,5vw,52px); line-height:1.02; letter-spacing:-.03em; margin:0; max-width:16ch;">Los 8 errores que matan tu huerto</h2>
+        </div>
+        <p style="margin:0; color:#9AA396; max-width:44ch; text-wrap:pretty;">Casi todos los huertos que fracasan mueren por uno de estos ocho. Ninguno es difícil de evitar si lo sabes de antemano.</p>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:1px; background:#333B31; border:1px solid #333B31; border-radius:16px; overflow:hidden;">
+        <sc-for list="{{ errores }}" as="e" hint-placeholder-count="8">
+          <article style="background:#1B231A; padding:26px 24px; transition:background .18s ease;" style-hover="background:#242D22;">
+            <div style="display:flex; align-items:baseline; gap:12px; margin-bottom:9px;">
+              <span style="font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; color:#C9553A;">{{ e.n }}</span>
+              <h3 style="font-family:'Space Grotesk',sans-serif; font-size:20px; font-weight:500; letter-spacing:-.02em; margin:0;">{{ e.t }}</h3>
+            </div>
+            <p style="margin:0 0 10px; color:#9AA396;">{{ e.d }}</p>
+            <p style="margin:0; font-size:14px; font-weight:500; color:#8FB498;">Solución: {{ e.s }}</p>
+          </article>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="hoy" style="padding:96px 20px; background:#F7F5F0;">
+    <div style="max-width:1240px; margin:0 auto;">
+      <div data-reveal="1" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:30px; align-items:end; margin-bottom:34px;">
+        <div>
+          <p style="font-family:'Space Grotesk',sans-serif; font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:#B4552E; margin:0 0 14px;">06 — Interactivo</p>
+          <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(32px,5vw,52px); line-height:1.02; letter-spacing:-.03em; margin:0; max-width:16ch;">¿Qué puedo plantar hoy?</h2>
+        </div>
+        <p style="margin:0; color:#5B6357; max-width:44ch; text-wrap:pretty;">Elige un mes y te digo exactamente qué comprar y plantar esa semana. Toca cualquier resultado para abrir su ficha.</p>
+      </div>
+      <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:26px;">
+        <sc-for list="{{ mesesSim }}" as="m" hint-placeholder-count="12">
+          <button type="button" onClick="{{ m.sel }}" style="cursor:pointer; padding:11px 17px; border-radius:9px; border:1px solid {{ m.borde }}; background:{{ m.fondo }}; color:{{ m.color }}; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px;" style-hover="border-color:#1F3B26;">{{ m.corto }}</button>
+        </sc-for>
+      </div>
+      <div style="border:1px solid #E2DED3; border-radius:16px; overflow:hidden;">
+        <div style="padding:26px; border-bottom:1px solid #E2DED3; background:#EFEDE5;">
+          <h3 style="font-family:'Space Grotesk',sans-serif; font-size:26px; font-weight:700; letter-spacing:-.025em; margin:0 0 5px;">{{ simTitulo }}</h3>
+          <p style="margin:0; color:#5B6357;">{{ simSub }}</p>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:1px; background:#E2DED3;">
+          <sc-for list="{{ simPlantas }}" as="s" hint-placeholder-count="6">
+            <button type="button" onClick="{{ s.abrir }}" style="cursor:pointer; text-align:left; background:#F7F5F0; border:none; padding:20px 22px; display:flex; flex-direction:column; gap:6px; transition:background .18s ease;" style-hover="background:#ECE8DE;">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+                <span style="font-family:'Space Grotesk',sans-serif; font-size:19px; font-weight:500; letter-spacing:-.02em;">{{ s.nombre }}</span>
+                <span style="flex:none; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:4px 8px; border-radius:6px; background:{{ s.tagBg }}; color:{{ s.tagFg }};">{{ s.grupoCorto }}</span>
+              </div>
+              <span style="font-size:14px; color:#5B6357;">{{ s.accion }}</span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="padding:80px 20px; background:#1F3B26; color:#EFEFE6;">
+    <div style="max-width:1240px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:40px; align-items:end;">
+      <div>
+        <p style="font-family:'Space Grotesk',sans-serif; font-size:clamp(26px,4vw,42px); font-weight:700; line-height:1.08; letter-spacing:-.03em; margin:0 0 16px; max-width:18ch;">Cuatro macetas bien cuidadas ganan a doce medio muertas.</p>
+        <p style="margin:0; color:#8FB498; max-width:46ch;">El primer año aprendes y comes higos. La cosecha que llena la mesa llega el segundo verano. Empieza pequeño, riega bien y ten paciencia.</p>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <a href="#catalogo" style="padding:14px 24px; border-radius:10px; background:#EFEFE6; color:#1F3B26; font-weight:700;" style-hover="background:#fff; color:#2E5E3A;">Elegir mi primera planta</a>
+        <a href="#reglas" style="padding:14px 24px; border-radius:10px; border:1px solid #4C6B52; color:#EFEFE6; font-weight:700;" style-hover="border-color:#8FB498; color:#fff;">Repasar las reglas</a>
+      </div>
+    </div>
+  </footer>
+
+  <sc-if value="{{ termino }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed; left:50%; bottom:18px; transform:translateX(-50%); z-index:96; max-width:min(560px,92vw); background:#1B231A; color:#EFEFE6; border-radius:12px; padding:15px 18px; display:flex; gap:14px; align-items:flex-start; box-shadow:0 18px 40px rgba(0,0,0,.28);">
+      <p style="margin:0; font-size:15px;"><strong style="color:#E39B6E;">{{ termino.t }}:</strong> {{ termino.d }}</p>
+      <button type="button" onClick="{{ cerrarTermino }}" style="flex:none; border:none; background:transparent; color:#9AA396; font-size:18px; cursor:pointer;" aria-label="Cerrar">×</button>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    const hoy = new Date().getMonth() + 1;
+    this.state = { filtro: 'Todas', abierta: null, mes: hoy, sim: hoy, prog: 0, orden: 'grupo', termino: null };
+  }
+
+  componentDidMount() {
+    this.red = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.onScroll = () => {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      this.setState({ prog: max > 0 ? Math.min(100, (h.scrollTop / max) * 100) : 0 });
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    this.onScroll();
+    this.onKey = (e) => { if (e.key === 'Escape') this.setState({ abierta: null, termino: null }); };
+    window.addEventListener('keydown', this.onKey);
+    if (!this.red) {
+      this.io = new IntersectionObserver((es) => es.forEach((en) => {
+        if (en.isIntersecting) { en.target.style.opacity = '1'; en.target.style.transform = 'none'; this.io.unobserve(en.target); }
+      }), { rootMargin: '0px 0px -6% 0px' });
+      this.scan = () => document.querySelectorAll('[data-reveal]:not([data-rv])').forEach((el) => {
+        el.setAttribute('data-rv', '1');
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(14px)';
+        el.style.transition = 'opacity .5s ease, transform .5s ease';
+        this.io.observe(el);
+      });
+      this.scan();
+      this.t1 = setTimeout(this.scan, 800);
+      this.t2 = setTimeout(this.scan, 2200);
+    }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('keydown', this.onKey);
+    if (this.io) this.io.disconnect();
+    clearTimeout(this.t1); clearTimeout(this.t2);
+  }
+
+  datos() {
+    return [
+      { id: 'higuera', nombre: 'Higuera', grupo: 'Árboles frutales', variedad: 'Variedad bífera: Colar o San Pedro', dif: 1, corto: 'La más fácil de todas y la que antes te da fruta.', plantar: 'De noviembre a febrero', plantarCorto: 'nov–feb', cosecha: 'Brevas en junio e higos en agosto, ya el primer año', maceta: 'Maceta rígida clara de 80-100 L, sobre ladrillos', riego: 'Cada 2-3 días; diario en verano', meses: [11, 12, 1, 2], accion: 'Comprar de 2-3 años y plantar en maceta de 80-100 L', trucos: ['Cómprala de 2-3 años con el tronco gordo como un dedo y comes brevas el primer junio.', 'Aguanta el calor de Tortosa mejor que tú: no la mimes de más.', 'Corta los brotes que salen en la base del tronco, roban fuerza a los higos.'] },
+      { id: 'granado', nombre: 'Granado', grupo: 'Árboles frutales', variedad: 'Mollar de Elche', dif: 1, corto: 'Casi indestructible: el que más perdona los olvidos.', plantar: 'De noviembre a febrero', plantarCorto: 'nov–feb', cosecha: 'En otoño', maceta: 'Maceta rígida clara de 70-90 L, sobre ladrillos', riego: 'Cada 3-4 días; diario en pleno verano', meses: [11, 12, 1, 2], accion: 'Plantar en maceta de 70-90 L en el sitio más soleado', trucos: ['Es el árbol que más perdona: si te olvidas un riego, sobrevive.', 'Le encanta el sol directo, ponlo en el punto más soleado del patio.', 'No riegues a lo loco cuando la fruta madura: las granadas se abren.'] },
+      { id: 'limonero', nombre: 'Limonero', grupo: 'Árboles frutales', variedad: '4 estaciones', dif: 2, corto: 'Limones todo el año desde el primer año.', plantar: 'SOLO en marzo o abril, nunca antes del invierno', plantarCorto: 'mar–abr', cosecha: 'Todo el año, en varias tandas', maceta: 'Maceta rígida clara de 60-80 L, sobre ladrillos', riego: 'Cada 2-3 días; diario en verano', meses: [3, 4], accion: 'Plantar ahora: es su ventana, y solo esta', aviso: 'Hojas amarillas con los nervios verdes = le falta hierro (clorosis), muy típico si riegas con agua con cal. Se corrige con quelato de hierro.', trucos: ['Nunca lo plantes en otoño: una helada sobre un cítrico recién plantado se lo lleva por delante.', 'Abono específico de cítricos de marzo a octubre, sin fallar.', 'Hojas amarillentas con nervios verdes es hierro, no sed. No riegues más.'] },
+      { id: 'mandarino', nombre: 'Mandarino', grupo: 'Árboles frutales', variedad: 'Clementino', dif: 2, corto: 'Dulce, agradecido y de cosecha en noviembre.', plantar: 'En marzo o abril', plantarCorto: 'mar–abr', cosecha: 'En noviembre', maceta: 'Maceta rígida clara de 60-80 L, sobre ladrillos', riego: 'Cada 2-3 días; diario en verano', meses: [3, 4], accion: 'Plantar en maceta de 60-80 L, protegido del viento', trucos: ['Como todos los cítricos: primavera sí, otoño jamás.', 'Protégelo del viento fuerte: tira la flor y sin flor no hay mandarinas.', 'Abono de cítricos cada 15 días en primavera y verano.'] },
+      { id: 'kumquat', nombre: 'Kumquat', grupo: 'Árboles frutales', variedad: 'Naranjo chino', dif: 1, corto: 'Enano de nacimiento: nunca se te hará grande.', plantar: 'En marzo o abril', plantarCorto: 'mar–abr', cosecha: 'En invierno', maceta: 'Maceta rígida clara de 40-50 L, sobre ladrillos', riego: 'Cada 2-3 días; diario en verano', meses: [3, 4], accion: 'Plantar en maceta de 40-50 L: el cítrico de menos espacio', trucos: ['Es enano natural: nunca te comerá el patio.', 'La fruta se come entera con piel: la piel es lo dulce, la pulpa lo ácido.', 'Perfecto si dudas del espacio disponible: empieza por él.'] },
+      { id: 'ciruelo', nombre: 'Ciruelo japonés', grupo: 'Árboles frutales', variedad: 'Santa Rosa o Golden Japan', dif: 2, corto: 'Fruta a partir del segundo año. Mira que sea autofértil.', plantar: 'De noviembre a febrero', plantarCorto: 'nov–feb', cosecha: 'En verano, desde el segundo año', maceta: 'Maceta rígida clara de 80-100 L, sobre ladrillos', riego: 'Cada 2-3 días; diario en verano', meses: [11, 12, 1, 2], accion: 'Comprar a raíz desnuda y plantar en 80-100 L', trucos: ['Comprueba en la etiqueta que sea autofértil o tendrás flores y cero ciruelas.', 'Pierde la hoja en invierno y parece muerto. Es normal.', 'Poda ligera en invierno, cuando está sin hojas.'] },
+      { id: 'caqui', nombre: 'Caqui', grupo: 'Árboles frutales', variedad: 'Rojo Brillante', dif: 2, corto: 'El que más maceta pide de toda la lista.', plantar: 'De noviembre a febrero', plantarCorto: 'nov–feb', cosecha: 'En otoño, a partir del segundo año', maceta: 'Maceta rígida clara de 100-120 L, sobre ladrillos', riego: 'Cada 2-3 días; diario en verano', meses: [11, 12, 1, 2], accion: 'Plantar en maceta de 100-120 L: necesita sitio', trucos: ['No le escatimes litros: es el que más volumen de raíz necesita.', 'Tarda unos dos años en dar cosecha de verdad.', 'En otoño se queda sin hojas y lleno de bolas naranjas: precioso.'] },
+      { id: 'fresa', nombre: 'Fresa', grupo: 'Frutas pequeñas', variedad: 'Reflorescente (da varias veces)', dif: 1, corto: 'La primera alegría del año y cabe en cualquier sitio.', plantar: 'Septiembre y octubre', plantarCorto: 'sep–oct', cosecha: 'De marzo a junio', maceta: 'Cualquier maceta, jardinera o tubo vertical', riego: 'Cada 2 días; diario en verano', meses: [9, 10], accion: 'Plantar planteles con la corona a ras de tierra', trucos: ['La corona (el nudito del que salen las hojas) va a ras de tierra: ni enterrada ni al aire.', 'Enterrada se pudre, al aire se seca. Es su único punto delicado.', 'Un tubo vertical con fresas ocupa nada y produce mucho.'] },
+      { id: 'frambuesa', nombre: 'Frambuesa', grupo: 'Frutas pequeñas', variedad: 'Reflorescente', dif: 2, corto: 'Da fruta ya el primer otoño.', plantar: 'De noviembre a febrero', plantarCorto: 'nov–feb', cosecha: 'Primer otoño y luego cada verano', maceta: 'Maceta de 40 L, sobre ladrillos', riego: 'Cada 2 días; diario en verano', meses: [11, 12, 1, 2], accion: 'Plantar en 40 L, en un sitio con sombra a mediodía', trucos: ['Agradece sombra a mediodía en verano: no es planta de 40 °C al sol.', 'Corta a ras las cañas que ya han dado fruta.', 'No dejes que la tierra se seque del todo.'] },
+      { id: 'mora', nombre: 'Mora sin espinas', grupo: 'Frutas pequeñas', variedad: 'Variedad sin espinas', dif: 2, corto: 'Necesita una valla o alambre donde apoyarse.', plantar: 'De noviembre a febrero', plantarCorto: 'nov–feb', cosecha: 'En verano', maceta: 'Maceta de 40 L, sobre ladrillos', riego: 'Cada 2-3 días; diario en verano', meses: [11, 12, 1, 2], accion: 'Plantar en 40 L junto a una valla o guía', trucos: ['Compra la variedad sin espinas o acabarás odiando cosecharla.', 'Ata las ramas: crecen largas y se tumban solas.', 'Poda las cañas viejas cada invierno.'] },
+      { id: 'arandano', nombre: 'Arándano', grupo: 'Frutas pequeñas', variedad: 'Biloxi u O\u2019Neal (clima cálido)', dif: 3, corto: 'Exige sustrato especial. Sin eso, no hay nada que hacer.', plantar: 'Octubre y noviembre', plantarCorto: 'oct–nov', cosecha: 'Primavera y verano', maceta: 'Maceta de 40 L, sobre ladrillos', riego: 'Frecuente: no soporta secarse', meses: [10, 11], accion: 'Comprar sustrato de acidófilas ANTES que la planta', aviso: 'Solo con sustrato para plantas acidófilas. Con sustrato normal se muere: no es opinable.', trucos: ['Busca el saco que ponga "acidófilas" o "para arándanos y hortensias". Es su comida.', 'Si tu agua tiene mucha cal, riégalo con agua de lluvia siempre que puedas.', 'Elige variedades de clima cálido: Biloxi u O\u2019Neal. Otras no aguantan aquí.'] },
+      { id: 'parra', nombre: 'Parra de uva', grupo: 'Frutas pequeñas', variedad: 'Uva de mesa', dif: 3, corto: 'Uvas en 2-3 años y sombra gratis en verano.', plantar: 'De noviembre a febrero', plantarCorto: 'nov–feb', cosecha: 'En septiembre, desde el segundo o tercer año', maceta: 'Maceta de 60-80 L, sobre ladrillos', riego: 'Cada 3-4 días; más en verano', meses: [11, 12, 1, 2], accion: 'Plantar en 60-80 L al pie de una pérgola', trucos: ['Decide dónde va la pérgola antes de plantarla.', 'Te da uvas y sombra justo donde hace falta en verano.', 'Poda fuerte cada invierno: sin podar da mucha hoja y poca uva.'] },
+      { id: 'tomate', nombre: 'Tomate', grupo: 'Verduras', variedad: 'Plantel de vivero', dif: 3, corto: 'El clásico. Pide tutor, constancia y riego en la tierra.', plantar: 'Plantel en marzo y abril', plantarCorto: 'mar–abr', cosecha: 'De julio a septiembre', maceta: 'Bancal, o maceta de 30 L mínimo', riego: 'Cada 2 días; diario en verano', meses: [3, 4], accion: 'Comprar plantel y clavar el tutor el mismo día', trucos: ['Necesita tutor desde el primer día: una caña alta bien clavada.', 'Riega la tierra, nunca las hojas: mojarlas trae hongos.', 'Compra plantel; no siembres semilla el primer año.'] },
+      { id: 'pimiento', nombre: 'Pimiento', grupo: 'Verduras', variedad: 'Plantel de vivero', dif: 2, corto: 'Produce hasta octubre: de los más rentables.', plantar: 'Plantel en abril', plantarCorto: 'abril', cosecha: 'De julio a octubre', maceta: 'Bancal, o maceta de 20 L', riego: 'Cada 2 días; diario en verano', meses: [4], accion: 'Plantar plantel en el bancal, con espacio entre plantas', trucos: ['Cuanto más recoges, más flores echa. No dejes fruta pasada en la planta.', 'Un tutor pequeño le ayuda cuando carga de pimientos.', 'Aguanta produciendo hasta bien entrado octubre.'] },
+      { id: 'berenjena', nombre: 'Berenjena', grupo: 'Verduras', variedad: 'Plantel de vivero', dif: 2, corto: 'De las que mejor llevan el verano de aquí.', plantar: 'Plantel en abril', plantarCorto: 'abril', cosecha: 'De julio a octubre', maceta: 'Bancal, o maceta de 25 L', riego: 'Cada 2 días; diario en verano', meses: [4], accion: 'Plantar 2 planteles: dan para toda la temporada', trucos: ['Le encanta el calor: es de las más adaptadas al verano de Tortosa.', 'Recógelas cuando brillan; si pierden brillo están pasadas.', 'Con dos plantas tienes berenjenas todo el verano.'] },
+      { id: 'calabacin', nombre: 'Calabacín', grupo: 'Verduras', variedad: 'Plantel de vivero', dif: 1, corto: 'De plantar a comer, 6-7 semanas. El subidón de moral.', plantar: 'Plantel en marzo-abril y otra tanda en agosto', plantarCorto: 'mar–abr y ago', cosecha: 'A las 6-7 semanas', maceta: 'Bancal: ocupa bastante sitio', riego: 'Cada 2 días; diario en verano', meses: [3, 4, 8], accion: 'Plantar plantel: en 6 semanas estás comiendo', trucos: ['En seis semanas ya cosechas: perfecto para no perder la ilusión.', 'Recógelos de un palmo. Los gigantes saben a agua.', 'Planta una segunda tanda en agosto para comer en otoño.'] },
+      { id: 'pepino', nombre: 'Pepino', grupo: 'Verduras', variedad: 'Plantel de vivero', dif: 2, corto: 'Necesita malla o cañas para trepar.', plantar: 'Plantel en abril y mayo', plantarCorto: 'abr–may', cosecha: 'En verano', maceta: 'Bancal con enrejado', riego: 'Muy frecuente: no le gusta secarse', meses: [4, 5], accion: 'Montar la guía primero y luego plantar', trucos: ['Sin guía se pudre en el suelo y ocupa el triple.', 'Es de las que más agua pide del bancal.', 'Recógelos jóvenes, antes de que amarilleen.'] },
+      { id: 'judia', nombre: 'Judía de mata baja', grupo: 'Verduras', variedad: 'Mata baja, sin guía', dif: 1, corto: '60 días de la semilla al plato, sin guía ni tutor.', plantar: 'Abril y agosto', plantarCorto: 'abr y ago', cosecha: 'A los 60 días', maceta: 'Bancal o jardinera honda', riego: 'Cada 2-3 días', meses: [4, 8], accion: 'Sembrar semilla directa: no hace falta plantel', trucos: ['La de mata baja no necesita guía: siembras y te olvidas.', 'Se siembra directa con semilla.', 'Dos tandas al año: abril y agosto.'] },
+      { id: 'melon', nombre: 'Melón y sandía', grupo: 'Verduras', variedad: 'Plantel de vivero', dif: 3, corto: 'Una sola planta puede ocupar dos metros de bancal.', plantar: 'En mayo', plantarCorto: 'mayo', cosecha: 'Final del verano', maceta: 'Bancal grande: se extienden mucho', riego: 'Abundante hasta que la fruta engorda', meses: [5], accion: 'Plantar solo si tienes 2 m libres de bancal', trucos: ['Planifica el espacio antes: se extienden metros.', 'Pon una teja o tabla bajo la fruta para que no toque la tierra húmeda.', 'Deja 2-3 frutas por planta: salen más grandes y dulces.'] },
+      { id: 'ajo', nombre: 'Ajo', grupo: 'Verduras', variedad: 'Diente de ajo común', dif: 1, corto: 'La planta con menos trabajo de toda la guía.', plantar: 'De octubre a diciembre', plantarCorto: 'oct–dic', cosecha: 'En junio', maceta: 'Bancal o jardinera de 20 cm de hondo', riego: 'Poco: cada 7-10 días', meses: [10, 11, 12], accion: 'Enterrar dientes con la punta hacia arriba y olvidarse', trucos: ['Separa la cabeza en dientes y entierra cada uno con la punta hacia arriba.', 'Plantar y esperar: no pide nada más.', 'Cuando las hojas se secan a la mitad, ya puedes arrancarlos.'] },
+      { id: 'zanahoria', nombre: 'Zanahoria y rábano', grupo: 'Verduras', variedad: 'Siembra directa', dif: 1, corto: 'El rábano está en tu plato en 30 días.', plantar: 'Septiembre-octubre y febrero-marzo', plantarCorto: 'sep–oct y feb–mar', cosecha: 'Rábano en 30 días; zanahoria en 3-4 meses', maceta: 'Jardinera honda (mínimo 30 cm) o bancal', riego: 'Cada 2-3 días: tierra siempre algo húmeda', meses: [9, 10, 2, 3], accion: 'Sembrar semilla directa en jardinera honda', trucos: ['Siempre semilla directa, nunca plantel.', 'La tierra tiene que ser suelta y honda o la zanahoria sale torcida.', 'El rábano en 30 días: ideal para mantener la ilusión.'] },
+      { id: 'romero', nombre: 'Romero', grupo: 'Aromáticas', variedad: 'Grupo de poco riego', dif: 1, corto: 'Grupo seco: casi sin agua y a pleno sol.', plantar: 'Marzo-abril o septiembre-octubre', plantarCorto: 'mar–abr y sep–oct', cosecha: 'Todo el año', maceta: 'Maceta de 10-15 L, junto a las de poco riego', riego: 'Muy poco: cada 10-15 días', meses: [3, 4, 9, 10], accion: 'Plantar con tomillo, lavanda, salvia, orégano y laurel', trucos: ['Va con tomillo, lavanda, salvia, orégano y laurel: todas beben poquísimo.', 'Al romero se le mata de agua, no de sed.', 'Corta ramitas a menudo: se mantiene compacto.'] },
+      { id: 'tomillo', nombre: 'Tomillo', grupo: 'Aromáticas', variedad: 'Grupo de poco riego', dif: 1, corto: 'Grupo seco: cuanto peor lo tratas, mejor huele.', plantar: 'Marzo-abril o septiembre-octubre', plantarCorto: 'mar–abr y sep–oct', cosecha: 'Todo el año', maceta: 'Maceta pequeña, junto a las de poco riego', riego: 'Muy poco: cada 10-15 días', meses: [3, 4, 9, 10], accion: 'Plantar en la jardinera seca, a pleno sol', trucos: ['Necesita sol directo y buen drenaje: nada de plato con agua debajo.', 'Junta romero, tomillo y lavanda: mismo riego, mismo sol.', 'Se seca bien y dura todo el invierno en el bote.'] },
+      { id: 'lavanda', nombre: 'Lavanda', grupo: 'Aromáticas', variedad: 'Grupo de poco riego', dif: 1, corto: 'Atrae abejas y con ellas sube tu cosecha de fruta.', plantar: 'Marzo-abril o septiembre-octubre', plantarCorto: 'mar–abr y sep–oct', cosecha: 'Flores en primavera y verano', maceta: 'Maceta de 15 L, junto a las de poco riego', riego: 'Muy poco: cada 10-15 días', meses: [3, 4, 9, 10], accion: 'Plantar cerca de los frutales, no lejos', trucos: ['Ponla cerca de los frutales: las abejas que atrae polinizan y te dan más fruta.', 'Es la planta más rentable del huerto sin dar nada de comer.', 'Poda las flores secas al final del verano.'] },
+      { id: 'salvia', nombre: 'Salvia', grupo: 'Aromáticas', variedad: 'Grupo de poco riego', dif: 1, corto: 'Grupo seco: hoja gris que refleja el sol.', plantar: 'Marzo-abril o septiembre-octubre', plantarCorto: 'mar–abr y sep–oct', cosecha: 'Todo el año', maceta: 'Maceta de 10-15 L, junto a las de poco riego', riego: 'Muy poco: cada 10-15 días', meses: [3, 4, 9, 10], accion: 'Plantar en la jardinera seca con romero y tomillo', trucos: ['Sus hojas grises reflejan el sol: por eso aguanta tanto calor.', 'No la riegues por encima, solo la tierra.', 'Mismo grupo que romero, tomillo y lavanda.'] },
+      { id: 'oregano', nombre: 'Orégano', grupo: 'Aromáticas', variedad: 'Grupo de poco riego', dif: 1, corto: 'Se seca en manojo y te dura todo el invierno.', plantar: 'Marzo-abril o septiembre-octubre', plantarCorto: 'mar–abr y sep–oct', cosecha: 'En verano', maceta: 'Maceta pequeña, junto a las de poco riego', riego: 'Muy poco: cada 10-15 días', meses: [3, 4, 9, 10], accion: 'Plantar en la jardinera seca, a pleno sol', trucos: ['Córtalo en flor, átalo en manojo y sécalo boca abajo.', 'Cuanto más sol, más aroma.', 'Se expande un poco, pero no invade como la menta.'] },
+      { id: 'laurel', nombre: 'Laurel', grupo: 'Aromáticas', variedad: 'Grupo de poco riego', dif: 1, corto: 'Un arbusto que no se muere nunca.', plantar: 'Marzo-abril o septiembre-octubre', plantarCorto: 'mar–abr y sep–oct', cosecha: 'Todo el año', maceta: 'Maceta de 30-40 L, sobre ladrillos', riego: 'Poco: cada 8-12 días', meses: [3, 4, 9, 10], accion: 'Plantar en maceta de 30-40 L: crece despacio', trucos: ['Con un laurel tienes hojas para guisos de por vida.', 'Crece despacio, perfecto para maceta.', 'Recorta la punta para que ensanche en vez de subir.'] },
+      { id: 'albahaca', nombre: 'Albahaca', grupo: 'Aromáticas', variedad: 'Grupo de riego frecuente', dif: 2, corto: 'Grupo húmedo: agua casi a diario, nunca con el romero.', plantar: 'En abril, junto a los tomates', plantarCorto: 'abr–may', cosecha: 'De junio a septiembre', maceta: 'Maceta propia o junto al tomate en el bancal', riego: 'Frecuente: cada 1-2 días en verano', meses: [4, 5], accion: 'Plantar al lado de los tomates, no con las secas', aviso: 'Nunca en la misma maceta que romero o lavanda: ellas quieren sequía y la albahaca agua cada día. Este es el error clásico de las aromáticas.', trucos: ['Al lado de los tomates: se llevan bien y ahuyenta algún bicho.', 'Corta las flores en cuanto salgan o la hoja amarga.', 'Es anual: en invierno se muere y se replanta cada primavera.'] },
+      { id: 'perejil', nombre: 'Perejil', grupo: 'Aromáticas', variedad: 'Grupo de riego frecuente', dif: 1, corto: 'Grupo húmedo: maceta propia y sombra a mediodía.', plantar: 'Marzo-abril o septiembre', plantarCorto: 'mar–abr y sep', cosecha: 'Casi todo el año', maceta: 'Maceta honda propia', riego: 'Frecuente: cada 2 días', meses: [3, 4, 9], accion: 'Plantar en maceta honda, en semisombra', trucos: ['Agradece sombra a mediodía en verano.', 'Corta las ramas de fuera desde la base y deja el centro.', 'En verano se sube a flor: replanta cada año.'] },
+      { id: 'cilantro', nombre: 'Cilantro', grupo: 'Aromáticas', variedad: 'Grupo de riego frecuente', dif: 2, corto: 'Grupo húmedo: con calor florece enseguida.', plantar: 'Marzo o septiembre-octubre', plantarCorto: 'mar y sep–oct', cosecha: 'A las 6-8 semanas', maceta: 'Maceta honda propia', riego: 'Frecuente: cada 2 días', meses: [3, 9, 10], accion: 'Sembrar directo en su maceta, mejor en otoño', trucos: ['Con calor se sube a flor: mejor sembrarlo en otoño.', 'Siembra un poco cada mes para tener siempre hoja tierna.', 'No le gusta el trasplante: siembra directa.'] },
+      { id: 'menta', nombre: 'Menta y hierbabuena', grupo: 'Aromáticas', variedad: 'Grupo de riego frecuente', dif: 1, corto: 'Siempre sola. Siempre. Sin excepciones.', plantar: 'Marzo-abril o septiembre', plantarCorto: 'mar–abr y sep', cosecha: 'De primavera a otoño', maceta: 'Maceta propia y exclusiva', riego: 'Frecuente: cada 2 días, más en verano', meses: [3, 4, 9], accion: 'Plantar en una maceta para ella sola', aviso: 'SIEMPRE en maceta sola: la menta es la okupa del huerto. Mete raíces por todas partes y ahoga a las vecinas en una sola temporada.', trucos: ['Si la plantas con otras, en tres meses solo tendrás menta.', 'Es tan fácil que crece hasta si la maltratas.', 'Es la aromática que más agua pide.'] }
+    ];
+  }
+
+  mesesDatos() {
+    return [
+      { n: 1, corto: 'Ene', nombre: 'Enero', lema: 'Mes de plantar árboles y podar.', planta: 'Árboles de hoja caduca: higuera, granado, ciruelo, caqui, frambuesa, mora y parra. Es cuando más baratos están.', cosecha: 'Limones, kumquats y mandarinas.', tarea: 'Podar los caducos mientras están sin hojas y revisar que el goteo no tenga fugas.', temp: 'frio' },
+      { n: 2, corto: 'Feb', nombre: 'Febrero', lema: 'Última llamada para los árboles.', planta: 'Últimos árboles de hoja caduca. Siembra directa de zanahoria y rábano.', cosecha: 'Cítricos.', tarea: 'Comprar sustrato y preparar los bancales para el huerto de verano.', temp: 'frio' },
+      { n: 3, corto: 'Mar', nombre: 'Marzo', lema: 'Arranca el año de verdad.', planta: 'Cítricos (limonero, mandarino, kumquat), plantel de tomate y calabacín, aromáticas, zanahoria y cilantro.', cosecha: 'Primeras fresas.', tarea: 'Empezar a abonar todo. Se acabó el descanso invernal.', temp: 'suave' },
+      { n: 4, corto: 'Abr', nombre: 'Abril', lema: 'El mes más ocupado del año.', planta: 'Plantel de tomate, pimiento, berenjena, pepino, judía, calabacín y albahaca. Todavía cítricos.', cosecha: 'Fresas a tope.', tarea: 'Poner tutores y subir el riego a cada 2-3 días.', temp: 'suave' },
+      { n: 5, corto: 'May', nombre: 'Mayo', lema: 'Entran melón y sandía.', planta: 'Melón, sandía y pepino.', cosecha: 'Fresas y primeras judías.', tarea: 'Ajustar el programador: empieza el calor de verdad.', temp: 'suave' },
+      { n: 6, corto: 'Jun', nombre: 'Junio', lema: 'Llegan las brevas.', planta: 'Nada nuevo: ya hace demasiado calor para trasplantar.', cosecha: 'Brevas de la higuera, fresas, ajos y judías.', tarea: 'Riego diario y sombra a mediodía para lo más delicado.', temp: 'calor' },
+      { n: 7, corto: 'Jul', nombre: 'Julio', lema: 'Solo cosechar y regar.', planta: 'Nada. Julio no es mes de plantar.', cosecha: 'Tomate, pimiento, berenjena, calabacín y pepino.', tarea: 'Riego dos veces al día. Nunca te vayas un fin de semana sin programador.', temp: 'calor' },
+      { n: 8, corto: 'Ago', nombre: 'Agosto', lema: 'Mes de preparar, no de plantar.', planta: 'Solo una segunda tanda de judía y calabacín, y con cuidado.', cosecha: 'Higos, tomate, pimiento, berenjena y calabacín.', tarea: 'Comprar material y montar el riego por goteo para la temporada siguiente.', temp: 'calor' },
+      { n: 9, corto: 'Sep', nombre: 'Septiembre', lema: 'Empieza el huerto de otoño.', planta: 'Fresas, aromáticas, zanahoria, rábano, perejil y cilantro.', cosecha: 'Higos, uvas y últimos tomates.', tarea: 'Bajar el riego a cada 3-4 días.', temp: 'suave' },
+      { n: 10, corto: 'Oct', nombre: 'Octubre', lema: 'Fresas y ajos a la tierra.', planta: 'Fresas, aromáticas, ajos y arándanos.', cosecha: 'Granadas, caquis y uvas.', tarea: 'Último abonado del año. A partir de aquí las plantas descansan.', temp: 'suave' },
+      { n: 11, corto: 'Nov', nombre: 'Noviembre', lema: 'Los árboles, más baratos que nunca.', planta: 'Árboles de hoja caduca, ajos, frambuesa, mora, parra y arándano.', cosecha: 'Mandarinas, caquis y granadas.', tarea: 'Comprar árboles a raíz desnuda: mejor momento y mejor precio del año.', temp: 'frio' },
+      { n: 12, corto: 'Dic', nombre: 'Diciembre', lema: 'Frío suave, todo tranquilo.', planta: 'Árboles de hoja caduca y ajos.', cosecha: 'Limones y mandarinas.', tarea: 'Proteger los cítricos si anuncian helada y no regar casi nada.', temp: 'frio' }
+    ];
+  }
+
+  renderVals() {
+    const st = this.state;
+    const L = ['E', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
+    const tags = {
+      'Árboles frutales': { bg: '#DCE7DB', fg: '#26522F', corto: 'Árbol' },
+      'Frutas pequeñas': { bg: '#F3E1D6', fg: '#8C3F1F', corto: 'Fruta' },
+      'Verduras': { bg: '#E7E3D2', fg: '#6E6329', corto: 'Verdura' },
+      'Aromáticas': { bg: '#DDE4EA', fg: '#3B5468', corto: 'Aromática' }
+    };
+    const dots = (d) => [1, 2, 3, 4, 5].map((i) => i <= d ? (d >= 3 ? '#B4552E' : '#2E5E3A') : '#DAD5C8');
+
+    let todas = this.datos().map((p) => {
+      const t = tags[p.grupo];
+      return Object.assign({}, p, {
+        tagBg: t.bg, tagFg: t.fg, grupoCorto: t.corto,
+        dots: dots(p.dif),
+        strip: L.map((l, i) => p.meses.indexOf(i + 1) >= 0
+          ? { l, bg: '#2E5E3A', fg: '#F7F5F0' }
+          : { l, bg: '#E6E2D7', fg: '#A9A395' }),
+        abrir: () => this.setState({ abierta: p.id })
+      });
+    });
+
+    const orden = st.orden;
+    if (orden === 'facil') todas = todas.slice().sort((a, b) => a.dif - b.dif || a.nombre.localeCompare(b.nombre));
+
+    const plantas = st.filtro === 'Todas' ? todas : todas.filter((p) => p.grupo === st.filtro);
+    const abierta = st.abierta ? todas.find((p) => p.id === st.abierta) : null;
+
+    const chip = (activo) => activo
+      ? { borde: '#1F3B26', fondo: '#1F3B26', color: '#F7F5F0' }
+      : { borde: '#DAD5C8', fondo: 'transparent', color: '#5B6357' };
+
+    const filtros = ['Todas', 'Árboles frutales', 'Frutas pequeñas', 'Verduras', 'Aromáticas'].map((t) =>
+      Object.assign({ t, sel: () => this.setState({ filtro: t }) }, chip(st.filtro === t)));
+
+    const tempCol = { frio: '#A9BFD0', suave: '#8FB498', calor: '#D98A5B' };
+    const tempTxt = { frio: 'Meses frescos', suave: 'Temperatura suave', calor: 'Calor extremo' };
+    const md = this.mesesDatos();
+    const meses = md.map((m) => Object.assign({}, m, chip(m.n === st.mes), { temp: tempCol[m.temp], tempTxt: tempTxt[m.temp], sel: () => this.setState({ mes: m.n }) }));
+    const mesesSim = md.map((m) => Object.assign({}, m, chip(m.n === st.sim), { sel: () => this.setState({ sim: m.n }) }));
+    const mesSel = md.find((m) => m.n === st.mes);
+    const simMes = md.find((m) => m.n === st.sim);
+    const simPlantas = todas.filter((p) => p.meses.indexOf(st.sim) >= 0);
+
+    const term = (t, d) => () => this.setState({ termino: { t, d } });
+
+    return {
+      prog: Math.round(st.prog),
+      plantas, abierta, filtros,
+      conteo: plantas.length + (plantas.length === 1 ? ' planta' : ' plantas') + (st.filtro === 'Todas' ? ' en total' : ' en ' + st.filtro.toLowerCase()),
+      ordenTexto: orden === 'facil' ? 'más fáciles primero' : 'por grupo',
+      toggleOrden: () => this.setState({ orden: orden === 'facil' ? 'grupo' : 'facil' }),
+      cerrar: () => this.setState({ abierta: null }),
+      stop: (e) => e.stopPropagation(),
+      meses, mesesSim, mesSel,
+      simTitulo: simPlantas.length
+        ? 'En ' + simMes.nombre.toLowerCase() + ' puedes plantar ' + simPlantas.length + (simPlantas.length === 1 ? ' cosa' : ' cosas')
+        : 'En ' + simMes.nombre.toLowerCase() + ' no se planta nada',
+      simSub: simPlantas.length ? simMes.lema : 'Y está bien. Tu tarea este mes: ' + simMes.tarea.toLowerCase(),
+      simPlantas,
+      reglas: [
+        { n: '01', t: 'Nada en el suelo del terreno', d: 'Todo va en maceta o en bancal, sin excepción.', p: 'la tierra es mala y la casa es de alquiler; así el huerto se muda contigo.' },
+        { n: '02', t: 'Ninguna maceta tocando el suelo', d: 'Siempre apoyada sobre dos ladrillos.', p: 'si toca la tierra, las raíces salen por el agujero y se anclan al terreno.' },
+        { n: '03', t: 'Riego por goteo con programador', d: 'Instalado antes de que llegue el verano.', p: 'una maceta a 40 °C se seca en horas y tú no siempre estarás en casa.' },
+        { n: '04', t: 'Árboles de 2-3 años', d: 'Con el tronco gordo como un dedo.', p: 'un plantón fino tarda años; uno hecho te da fruta el primer verano.' },
+        { n: '05', t: 'Compra por variedad, no por especie', d: 'No compres "un ciruelo": compra un Santa Rosa autofértil.', p: 'sin la palabra autofértil en la etiqueta tendrás flores y cero fruta.' },
+        { n: '06', t: 'Macetas grandes y de color claro', d: 'Mínimo 60 L para un árbol, y rígidas.', p: 'una maceta negra al sol de agosto cuece las raíces como una olla.' },
+        { n: '07', t: 'Nunca deshagas el cepellón', d: 'El bloque de tierra con raíces se pasa entero.', p: 'al desmenuzarlo rompes las raíces finas, que son las que beben.' },
+        { n: '08', t: 'En maceta, abonar es obligatorio', d: 'De marzo a octubre, sin fallar.', p: 'la maceta es un plato cerrado: en tres meses el sustrato está agotado.' }
+      ],
+      riego: [
+        { est: 'Invierno', frec: 'Cada 7-10 días', nota: 'La planta descansa y el sustrato tarda en secarse.', bg: '#F7F5F0', borde: '#E2DED3', fg: '#3B5468' },
+        { est: 'Primavera', frec: 'Cada 2-3 días', nota: 'Empieza a crecer y a pedir agua de verdad.', bg: '#F7F5F0', borde: '#E2DED3', fg: '#2E5E3A' },
+        { est: 'Verano', frec: 'Todos los días', nota: 'En julio y agosto, dos veces al día. Sin negociar.', bg: '#FBEDE4', borde: '#E6BFA5', fg: '#B4552E' },
+        { est: 'Otoño', frec: 'Cada 3-4 días', nota: 'Baja el ritmo poco a poco según refresca.', bg: '#F7F5F0', borde: '#E2DED3', fg: '#8C7B5C' }
+      ],
+      errores: [
+        { n: '01', t: 'Maceta apoyada en el suelo', d: 'Las raíces salen por el agujero, se anclan al terreno y ya no puedes mover el árbol nunca más.', s: 'dos ladrillos debajo, desde el primer día.' },
+        { n: '02', t: 'Maceta demasiado pequeña', d: 'El árbol se queda enano y no da fruta: la maceta es su mundo entero.', s: 'mínimo 60 L para un frutal, y mejor 80.' },
+        { n: '03', t: 'Usar la tierra mala del terreno', d: 'Se compacta como el cemento, no drena y ahoga las raíces.', s: 'sustrato comprado siempre, aunque duela pagarlo.' },
+        { n: '04', t: 'Deshacer el cepellón al trasplantar', d: 'Rompes las raíces finas, las que de verdad beben, y la planta tarda semanas en recuperarse.', s: 'sácalo entero del tiesto y plántalo entero.' },
+        { n: '05', t: 'No abonar', d: 'A los tres meses el sustrato está vacío: planta preciosa, fruta cero.', s: 'abono cada 15 días de marzo a octubre.' },
+        { n: '06', t: 'Fallar el riego en agosto', d: 'Dos días sin agua a 40 °C y el árbol se seca. No hay riego de emergencia que lo salve.', s: 'programador de goteo instalado antes de junio.' },
+        { n: '07', t: 'Comprar sin mirar "autofértil"', d: 'Árbol lleno de flores preciosas y ni una pieza de fruta, porque nadie lo poliniza.', s: 'lee la etiqueta antes de pagar.' },
+        { n: '08', t: 'Plantar cítricos en otoño', d: 'Recién plantado no tiene raíces para aguantar la primera helada.', s: 'cítricos solo en marzo o abril.' }
+      ],
+      termino: st.termino,
+      cerrarTermino: () => this.setState({ termino: null }),
+      gCepellon: term('Cepellón', 'El bloque de tierra con las raíces dentro que sale entero al desmoldar la planta del tiesto.'),
+      gAutofertil: term('Autofértil', 'Que se poliniza solo: no necesita otro árbol al lado para dar fruta.'),
+      gPlantel: term('Plantel', 'Planta joven ya crecida que compras en el vivero, lista para trasplantar.'),
+      gCorona: term('Corona', 'En la fresa, el nudito del que salen las hojas. Va justo a ras de tierra.'),
+      gClorosis: term('Clorosis', 'Hojas amarillas con los nervios verdes: falta de hierro, típica al regar con agua con cal.'),
+      gReflorescente: term('Reflorescente', 'Variedad que da fruta varias veces al año en vez de una sola tanda.')
+    };
+  }
+}
+</script>
+</body>
+</html>

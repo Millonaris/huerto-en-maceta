@@ -1,0 +1,741 @@
+/* =========================================================
+   Mi Huerto en Maceta — hoja de estilos
+   Sistema de diseño heredado del diseño "Mi Huerto en Maceta v2"
+   ========================================================= */
+
+/* ---------- 1. Tokens ---------- */
+:root {
+  /* fondos */
+  --crema:        #F7F5F0;
+  --crema-2:      #EFEDE5;
+  --crema-3:      #ECE8DE;
+  --verde:        #1F3B26;
+  --verde-2:      #2E5E3A;
+  --tinta:        #1B231A;
+  --tinta-2:      #242D22;
+
+  /* texto */
+  --texto:        #1B231A;
+  --texto-2:      #3E4A3C;
+  --gris:         #5B6357;
+  --gris-2:       #8A8578;
+  --ocre:         #8C7B5C;
+  --crema-texto:  #EFEFE6;
+  --verde-claro:  #8FB498;
+  --verde-pastel: #C4D3C4;
+  --gris-oscuro:  #9AA396;
+
+  /* acentos */
+  --terracota:    #B4552E;
+  --terracota-2:  #8C3F1F;
+  --naranja:      #E39B6E;
+  --rojo:         #C9553A;
+  --azul:         #3B5468;
+  --azul-claro:   #A9BFD0;
+
+  /* líneas */
+  --linea:        #E2DED3;
+  --linea-2:      #DAD5C8;
+  --linea-osc:    #333B31;
+  --linea-verde:  #3A5540;
+  --linea-verde-2:#4C6B52;
+
+  /* avisos */
+  --aviso-bg:     #FBEDE4;
+  --aviso-borde:  #E6BFA5;
+  --aviso-texto:  #7A3A1C;
+
+  /* tipografía */
+  --display: 'Space Grotesk', system-ui, sans-serif;
+  --cuerpo:  'DM Sans', system-ui, sans-serif;
+
+  --ancho: 1240px;
+  --radio: 14px;
+}
+
+/* ---------- 2. Reset ---------- */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+
+body {
+  margin: 0;
+  background: var(--crema);
+  color: var(--texto);
+  font-family: var(--cuerpo);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a { color: var(--terracota); text-decoration: none; }
+a:hover { color: var(--terracota-2); }
+button { font-family: inherit; }
+img { max-width: 100%; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* ---------- 3. Estructura ---------- */
+.contenedor { max-width: var(--ancho); margin: 0 auto; }
+
+.seccion { padding: 96px 20px; }
+.seccion--crema  { background: var(--crema);   border-top: 1px solid var(--linea); }
+.seccion--crema2 { background: var(--crema-2); border-top: 1px solid var(--linea); }
+.seccion--verde  { background: var(--verde);   color: var(--crema-texto); }
+.seccion--tinta  { background: var(--tinta);   color: var(--crema-texto); }
+
+.seccion--verde h2, .seccion--tinta h2,
+.seccion--verde h3, .seccion--tinta h3 { color: var(--crema-texto); }
+
+/* ---------- 4. Barra de progreso y cabecera ---------- */
+#progreso {
+  position: fixed; top: 0; left: 0; height: 3px; width: 0;
+  background: var(--terracota); z-index: 90; transition: width .12s linear;
+}
+
+.cabecera {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 80;
+  background: rgba(247, 245, 240, .92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--linea);
+}
+.cabecera__fila {
+  max-width: var(--ancho); margin: 0 auto;
+  padding: 11px 20px;
+  display: flex; align-items: center; gap: 20px;
+}
+.cabecera__marca {
+  font-family: var(--display); font-weight: 700; font-size: 16px;
+  letter-spacing: -.02em; color: var(--texto); flex: none;
+}
+.cabecera__nav {
+  display: flex; gap: 1px; margin-left: auto; flex-wrap: wrap;
+  font-size: 13.5px; font-weight: 500;
+}
+.cabecera__nav a { padding: 7px 9px; border-radius: 8px; color: var(--gris); white-space: nowrap; }
+.cabecera__nav a:hover { background: var(--crema-3); color: var(--texto); }
+.cabecera__nav a.activo { background: var(--crema-3); color: var(--texto); }
+.cabecera__nav a.destacado {
+  padding: 7px 14px; background: var(--verde); color: var(--crema); font-weight: 700;
+}
+.cabecera__nav a.destacado:hover { background: var(--verde-2); color: #fff; }
+
+.menu-boton {
+  display: none; margin-left: auto;
+  border: 1px solid var(--linea-2); background: transparent;
+  border-radius: 8px; padding: 8px 12px; font-size: 14px; font-weight: 700;
+  color: var(--texto); cursor: pointer;
+}
+
+@media (max-width: 1240px) {
+  .menu-boton { display: block; }
+  .cabecera__nav {
+    display: none; width: 100%; margin-left: 0; order: 3;
+    padding-bottom: 10px; gap: 4px;
+  }
+  .cabecera__nav.abierto { display: flex; }
+}
+
+/* ---------- 5. Hero ---------- */
+.hero { background: var(--verde); color: var(--crema-texto); padding: 130px 20px 0; }
+.hero__kicker {
+  font-family: var(--display); font-size: 13px; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--verde-claro); margin: 0 0 26px;
+}
+.hero h1 {
+  font-family: var(--display); font-weight: 700;
+  font-size: clamp(44px, 8.4vw, 110px); line-height: .94; letter-spacing: -.035em;
+  margin: 0 0 26px; max-width: 14ch; text-wrap: balance;
+}
+.hero__entrada {
+  font-size: clamp(18px, 2.2vw, 22px); max-width: 46ch;
+  color: var(--verde-pastel); margin: 0 0 40px; text-wrap: pretty;
+}
+.hero__botones { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 64px; }
+
+.cifras {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  border-top: 1px solid var(--linea-verde);
+}
+.cifra { padding: 22px 20px 30px; border-right: 1px solid var(--linea-verde); }
+.cifra:first-child { padding-left: 0; }
+.cifra:last-child  { border-right: none; padding-right: 0; }
+.cifra__n {
+  font-family: var(--display); font-size: 38px; font-weight: 700;
+  margin: 0; letter-spacing: -.03em;
+}
+.cifra__t { margin: 2px 0 0; color: var(--verde-claro); font-size: 15px; }
+
+/* ---------- 6. Botones ---------- */
+.btn {
+  display: inline-block; padding: 14px 26px; border-radius: 10px;
+  font-weight: 700; cursor: pointer; border: none; font-size: 17px;
+}
+.btn--claro  { background: var(--crema-texto); color: var(--verde); }
+.btn--claro:hover { background: #fff; color: var(--verde-2); }
+.btn--borde  { border: 1px solid var(--linea-verde-2); color: var(--crema-texto); background: transparent; }
+.btn--borde:hover { border-color: var(--verde-claro); color: #fff; }
+.btn--verde  { background: var(--verde); color: var(--crema); }
+.btn--verde:hover { background: var(--verde-2); color: #fff; }
+
+/* ---------- 7. Cabeceras de sección ---------- */
+.cabecera-seccion {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px; align-items: end; margin-bottom: 46px;
+}
+.kicker {
+  font-family: var(--display); font-size: 13px; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--terracota); margin: 0 0 14px;
+}
+.kicker--claro { color: var(--naranja); }
+.titulo-2 {
+  font-family: var(--display); font-weight: 700;
+  font-size: clamp(32px, 5vw, 52px); line-height: 1.02; letter-spacing: -.03em;
+  margin: 0; max-width: 16ch;
+}
+.titulo-3 {
+  font-family: var(--display); font-weight: 700; font-size: 26px;
+  letter-spacing: -.02em; margin: 0 0 10px;
+}
+.titulo-4 {
+  font-family: var(--display); font-weight: 500; font-size: 20px;
+  letter-spacing: -.01em; margin: 0 0 7px;
+}
+.intro { margin: 0; color: var(--gris); max-width: 44ch; text-wrap: pretty; }
+.seccion--verde .intro, .seccion--tinta .intro { color: var(--gris-oscuro); }
+
+.subtitulo-bloque {
+  font-family: var(--display); font-size: 12px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--gris-2);
+  margin: 0 0 8px;
+}
+
+/* ---------- 8. Rejillas y tarjetas ---------- */
+.rejilla { display: grid; gap: 14px; }
+.rejilla--2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+.rejilla--3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.rejilla--4 { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+.rejilla--tarjetas { grid-template-columns: repeat(auto-fill, minmax(272px, 1fr)); }
+
+.tarjeta {
+  background: var(--crema); border: 1px solid var(--linea);
+  border-radius: var(--radio); padding: 22px;
+}
+.tarjeta--plana { background: var(--crema-2); border: none; border-radius: 12px; padding: 15px 17px; }
+.tarjeta--verde { background: var(--verde); color: var(--crema-texto); border: none; border-radius: 16px; padding: 30px; }
+.tarjeta--verde p { color: var(--verde-pastel); }
+
+.dato-etiqueta {
+  margin: 0 0 3px; font-size: 12px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--gris-2);
+}
+.dato-valor { margin: 0; font-weight: 500; }
+
+/* Lista numerada tipo "reglas" */
+.lista-reglas {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  border-top: 1px solid var(--linea);
+}
+.regla {
+  border-bottom: 1px solid var(--linea);
+  padding: 26px 24px 26px 0; display: flex; gap: 20px;
+  transition: background .18s ease;
+}
+.regla:hover { background: var(--crema-2); }
+.seccion--crema2 .regla:hover { background: var(--crema-3); }
+.regla__n {
+  font-family: var(--display); font-size: 14px; font-weight: 700;
+  color: var(--terracota); padding-top: 5px; flex: none; width: 26px;
+}
+.regla p { margin: 0 0 9px; color: var(--gris); }
+.regla__por { margin: 0 !important; font-size: 14px; color: var(--ocre); font-weight: 500; }
+
+/* Lista de pasos numerados */
+.pasos { margin: 0; padding: 0; list-style: none; }
+.pasos li {
+  display: flex; gap: 18px; border-top: 1px solid var(--linea); padding: 18px 0;
+}
+.pasos li:last-child { border-bottom: 1px solid var(--linea); }
+.pasos__n { font-family: var(--display); font-weight: 700; color: var(--terracota); flex: none; min-width: 24px; }
+.pasos p { margin: 0; }
+
+/* Lista de puntos */
+.puntos { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.puntos li { display: flex; gap: 12px; border-top: 1px solid var(--linea); padding-top: 12px; }
+.puntos li::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--verde-2); margin-top: 9px; flex: none;
+}
+.puntos p { margin: 0; color: var(--texto-2); }
+
+/* ---------- 9. Catálogo de plantas ---------- */
+.filtros { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
+.chip {
+  cursor: pointer; padding: 10px 16px; border-radius: 9px;
+  font-size: 15px; font-weight: 700;
+  border: 1px solid var(--linea-2); background: transparent; color: var(--gris);
+  transition: border-color .15s ease;
+}
+.chip:hover { border-color: var(--verde); }
+.chip.activo { border-color: var(--verde); background: var(--verde); color: var(--crema); }
+.chip--orden { margin-left: auto; border-style: dashed; border-color: #C7C1B2; }
+.chip--orden:hover { color: var(--texto); }
+.conteo { margin: 0 0 26px; font-size: 14px; color: var(--gris-2); }
+
+/* Filtro por mes de plantación */
+.etiqueta-filtro {
+  margin: 22px 0 8px; font-family: var(--display); font-size: 12px;
+  font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--gris-2);
+}
+.filtros--meses { gap: 6px; margin-bottom: 20px; }
+.chip--mes {
+  padding: 8px 12px; font-size: 14px;
+  font-family: var(--display); display: inline-flex; align-items: center; gap: 7px;
+}
+.chip__n {
+  font-size: 11px; font-weight: 700; line-height: 1;
+  padding: 3px 5px; border-radius: 5px;
+  background: var(--linea); color: var(--gris-2); font-family: var(--cuerpo);
+}
+.chip--mes.activo .chip__n { background: rgba(255, 255, 255, .18); color: var(--crema); }
+.chip--mes.vacio { opacity: .45; }
+.sin-resultados {
+  margin: 0; padding: 40px 24px; text-align: center; color: var(--gris);
+  border: 1px dashed var(--linea-2); border-radius: var(--radio);
+}
+.sin-resultados[hidden] { display: none; }
+
+/* Vía de cultivo: cómo se empieza cada planta */
+.via {
+  display: inline-block; font-size: 11px; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+  padding: 4px 8px; border-radius: 6px; white-space: nowrap;
+}
+.via--vivero   { background: #DCE7DB; color: #26522F; }
+.via--plantel  { background: #F3E1D6; color: #8C3F1F; }
+.via--semilla  { background: #E7E3D2; color: #6E6329; }
+.via--material { background: #DDE4EA; color: #3B5468; }
+
+.bloque-via {
+  background: var(--crema-2); border-radius: 12px;
+  padding: 18px 20px; margin: 0 0 24px;
+}
+.bloque-via__reco { margin: 0 0 12px; font-weight: 500; }
+.bloque-via__reco .via { margin-right: 8px; vertical-align: 2px; }
+.bloque-via__lista { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; }
+.bloque-via__lista dt {
+  font-size: 12px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--gris-2); padding-top: 2px;
+}
+.bloque-via__lista dd { margin: 0; color: var(--texto-2); }
+.bloque-via__nota { margin: 12px 0 0; font-size: 14px; color: var(--ocre); font-weight: 500; }
+
+.planta {
+  text-align: left; cursor: pointer;
+  background: var(--crema); border: 1px solid var(--linea); border-radius: var(--radio);
+  padding: 20px; display: flex; flex-direction: column; gap: 12px;
+  transition: border-color .18s ease, transform .18s ease;
+  font-size: inherit; color: inherit;
+}
+.planta:hover { border-color: var(--verde); transform: translateY(-3px); }
+.planta__alto { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.planta__nombre {
+  font-family: var(--display); font-size: 21px; font-weight: 500;
+  letter-spacing: -.02em; margin: 0;
+}
+.planta__corto { margin: 0; font-size: 15px; color: var(--gris); min-height: 3em; }
+.planta__pie {
+  margin: 9px 0 0; font-size: 13px; color: var(--gris-2);
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+}
+
+.etiqueta {
+  flex: none; font-size: 11px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; padding: 5px 9px; border-radius: 6px;
+}
+.etiqueta--arbol    { background: #DCE7DB; color: #26522F; }
+.etiqueta--fruta    { background: #F3E1D6; color: #8C3F1F; }
+.etiqueta--verdura  { background: #E7E3D2; color: #6E6329; }
+.etiqueta--aromatica{ background: #DDE4EA; color: #3B5468; }
+
+.dificultad { display: flex; align-items: center; gap: 8px; }
+.dificultad__t { font-size: 13px; color: var(--gris-2); font-weight: 500; }
+.puntos-dif { display: flex; gap: 3px; }
+.puntos-dif span { width: 12px; height: 5px; border-radius: 3px; background: var(--linea-2); }
+.puntos-dif span.on      { background: var(--verde-2); }
+.puntos-dif span.on.alta { background: var(--terracota); }
+.puntos-dif--grande span { width: 22px; height: 6px; }
+
+/* Tira de 12 meses */
+.tira { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2px; }
+.tira span {
+  height: 20px; border-radius: 3px; background: #E6E2D7; color: #A9A395;
+  font-size: 9px; font-weight: 700; display: grid; place-items: center;
+}
+.tira span.on { background: var(--verde-2); color: var(--crema); }
+.tira span.foco { outline: 2px solid var(--terracota); outline-offset: 1px; }
+.tira--grande { gap: 3px; }
+.tira--grande span { height: 30px; border-radius: 5px; font-size: 10px; }
+
+/* ---------- 10. Panel lateral (ficha de planta) ---------- */
+.fondo-panel {
+  position: fixed; inset: 0; z-index: 95;
+  background: rgba(27, 35, 26, .45);
+  display: flex; justify-content: flex-end;
+}
+.fondo-panel[hidden] { display: none; }
+.panel {
+  background: var(--crema); width: min(520px, 100%); height: 100%;
+  overflow-y: auto; padding: 28px 30px 60px;
+  box-shadow: -24px 0 60px rgba(0, 0, 0, .2);
+}
+.panel__alto {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 16px; margin-bottom: 22px;
+}
+.panel__nombre {
+  font-family: var(--display); font-size: 34px; font-weight: 700;
+  letter-spacing: -.03em; margin: 14px 0 4px;
+}
+.panel__variedad { margin: 0; color: var(--ocre); font-weight: 500; }
+.cerrar {
+  flex: none; width: 38px; height: 38px; border-radius: 9px;
+  border: 1px solid var(--linea); background: transparent; color: var(--gris);
+  font-size: 19px; cursor: pointer;
+}
+.cerrar:hover { background: var(--crema-3); color: var(--texto); }
+.panel__dif {
+  display: flex; align-items: center; gap: 10px; padding: 14px 0;
+  border-top: 1px solid var(--linea); border-bottom: 1px solid var(--linea);
+  margin-bottom: 22px;
+}
+.panel__dif > span:first-child { font-size: 14px; color: var(--gris); font-weight: 500; }
+.panel__dif .puntos-dif { margin-left: auto; gap: 4px; }
+
+.aviso {
+  background: var(--aviso-bg); border-left: 3px solid var(--terracota);
+  border-radius: 0 12px 12px 0; padding: 16px 18px; margin: 0 0 24px;
+}
+.aviso__t {
+  margin: 0 0 4px; font-size: 12px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--terracota);
+}
+.aviso p { margin: 0; color: var(--aviso-texto); font-weight: 500; }
+
+/* ---------- 11. Calendario ---------- */
+.meses { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 6px; margin-bottom: 8px; }
+.mes-btn {
+  cursor: pointer; padding: 14px 4px 12px; border-radius: 10px;
+  border: 1px solid var(--linea-2); background: transparent; color: var(--gris);
+  font-family: var(--display); font-weight: 700; font-size: 14px;
+  transition: border-color .15s ease;
+}
+.mes-btn:hover { border-color: var(--verde); }
+.mes-btn.activo { border-color: var(--verde); background: var(--verde); color: var(--crema); }
+
+.temperaturas { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 6px; margin-bottom: 26px; }
+.temperaturas span { height: 6px; border-radius: 3px; }
+.temp--frio  { background: var(--azul-claro); }
+.temp--suave { background: var(--verde-claro); }
+.temp--calor { background: #D98A5B; }
+
+.ficha-mes {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1px; background: var(--linea); border: 1px solid var(--linea);
+  border-radius: 16px; overflow: hidden;
+}
+.ficha-mes__cab {
+  background: var(--verde); color: var(--crema-texto);
+  padding: 28px 26px; grid-column: 1 / -1;
+}
+.ficha-mes__cab h3 {
+  font-family: var(--display); font-size: 30px; font-weight: 700;
+  letter-spacing: -.03em; margin: 0 0 6px;
+}
+.ficha-mes__cab p { margin: 0; color: var(--verde-claro); font-size: 18px; }
+.ficha-mes__celda { background: var(--crema); padding: 24px 26px; }
+.ficha-mes__celda p:last-child { margin: 0; color: var(--texto-2); }
+.et-planta  { color: var(--verde-2) !important; }
+.et-cosecha { color: var(--terracota) !important; }
+.et-tarea   { color: var(--ocre) !important; }
+.et-semilla { color: #6E6329 !important; }
+.et-plantel { color: var(--azul) !important; }
+
+.ficha-mes__celda--enlace {
+  grid-column: 1 / -1; background: var(--crema-2);
+  padding: 18px 26px; font-weight: 700;
+}
+.seccion--crema2 .ficha-mes__celda--enlace { background: var(--crema-3); }
+
+/* ---------- 12. Riego ---------- */
+.riego-tarjeta { border-radius: var(--radio); padding: 22px; border: 1px solid var(--linea); background: var(--crema); }
+.riego-tarjeta--verano { background: var(--aviso-bg); border-color: var(--aviso-borde); }
+.riego-tarjeta__est { margin: 0 0 10px; font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.riego-tarjeta__frec {
+  font-family: var(--display); font-size: 26px; font-weight: 700;
+  letter-spacing: -.02em; margin: 0 0 6px;
+}
+.riego-tarjeta__nota { margin: 0; font-size: 15px; color: var(--gris); }
+.c-invierno  { color: var(--azul); }
+.c-primavera { color: var(--verde-2); }
+.c-verano    { color: var(--terracota); }
+.c-otono     { color: var(--ocre); }
+
+/* Calculadoras */
+.calculadora {
+  background: var(--crema); border: 1px solid var(--linea);
+  border-radius: 16px; padding: 26px;
+}
+.seccion--crema .calculadora { background: var(--crema-2); }
+.campos { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 14px; margin-bottom: 20px; }
+.campo label {
+  display: block; font-size: 12px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--gris-2); margin-bottom: 6px;
+}
+.campo input, .campo select {
+  width: 100%; padding: 11px 13px; border-radius: 9px;
+  border: 1px solid var(--linea-2); background: var(--crema);
+  font-family: var(--cuerpo); font-size: 16px; color: var(--texto);
+}
+.campo input:focus, .campo select:focus { outline: 2px solid var(--verde-2); outline-offset: 1px; }
+.resultado {
+  background: var(--verde); color: var(--crema-texto);
+  border-radius: 12px; padding: 20px 22px;
+}
+.resultado__n {
+  font-family: var(--display); font-size: clamp(28px, 4vw, 40px); font-weight: 700;
+  letter-spacing: -.03em; margin: 0 0 4px;
+}
+.resultado__t { margin: 0; color: var(--verde-claro); font-size: 15px; }
+
+/* Esquema de riego */
+.esquema {
+  font-family: var(--display); font-size: 14px; line-height: 2;
+  background: var(--tinta); color: var(--crema-texto);
+  border-radius: 16px; padding: 26px; overflow-x: auto;
+  white-space: pre; margin: 0;
+}
+
+/* ---------- 13. Errores ---------- */
+.errores {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1px; background: var(--linea-osc);
+  border: 1px solid var(--linea-osc); border-radius: 16px; overflow: hidden;
+}
+.error {
+  background: var(--tinta); padding: 26px 24px; transition: background .18s ease;
+}
+.error:hover { background: var(--tinta-2); }
+.error__alto { display: flex; align-items: baseline; gap: 12px; margin-bottom: 9px; }
+.error__n { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--rojo); }
+.error h3 {
+  font-family: var(--display); font-size: 20px; font-weight: 500;
+  letter-spacing: -.02em; margin: 0;
+}
+.error p { margin: 0 0 10px; color: var(--gris-oscuro); }
+.error__sol { margin: 0 !important; font-size: 14px; font-weight: 500; color: var(--verde-claro) !important; }
+
+/* ---------- 14. Acordeón ---------- */
+.acordeon { border-top: 1px solid var(--linea); }
+.acordeon__item { border-bottom: 1px solid var(--linea); }
+.acordeon__btn {
+  width: 100%; text-align: left; background: transparent; border: none;
+  padding: 20px 0; cursor: pointer; display: flex; gap: 16px; align-items: center;
+  font-family: var(--display); font-size: 19px; font-weight: 500;
+  letter-spacing: -.01em; color: var(--texto);
+}
+.acordeon__btn:hover { color: var(--terracota); }
+.acordeon__btn::after {
+  content: '+'; margin-left: auto; font-size: 24px; font-weight: 400;
+  color: var(--terracota); flex: none; line-height: 1;
+}
+.acordeon__item.abierto .acordeon__btn::after { content: '−'; }
+.acordeon__cuerpo { display: none; padding: 0 0 24px; max-width: 78ch; }
+.acordeon__item.abierto .acordeon__cuerpo { display: block; }
+.acordeon__cuerpo > *:first-child { margin-top: 0; }
+.acordeon__cuerpo > *:last-child { margin-bottom: 0; }
+.acordeon__cuerpo p { color: var(--gris); }
+.acordeon__cuerpo ul { color: var(--gris); padding-left: 20px; }
+.acordeon__cuerpo li { margin-bottom: 6px; }
+.acordeon__cuerpo strong { color: var(--texto); font-weight: 700; }
+
+/* ---------- 15. Tablas ---------- */
+.tabla-envoltorio { overflow-x: auto; border: 1px solid var(--linea); border-radius: var(--radio); }
+table.tabla { width: 100%; border-collapse: collapse; font-size: 15px; min-width: 560px; }
+table.tabla th {
+  text-align: left; padding: 14px 16px; background: var(--verde);
+  color: var(--crema-texto); font-family: var(--display); font-weight: 700;
+  font-size: 13px; letter-spacing: .06em; text-transform: uppercase;
+  position: sticky; top: 0;
+}
+table.tabla td { padding: 13px 16px; border-top: 1px solid var(--linea); color: var(--texto-2); }
+table.tabla tr:nth-child(even) td { background: var(--crema-2); }
+.seccion--crema2 table.tabla tr:nth-child(even) td { background: var(--crema); }
+table.tabla td.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+/* ---------- 16. Línea de tiempo ---------- */
+.cronologia { border-left: 2px solid var(--linea); padding-left: 0; margin: 0; list-style: none; }
+.hito { position: relative; padding: 0 0 34px 30px; }
+.hito::before {
+  content: ''; position: absolute; left: -7px; top: 6px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--crema); border: 2px solid var(--terracota);
+}
+.hito--clave::before { background: var(--terracota); }
+.hito__fecha {
+  font-family: var(--display); font-size: 12px; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--terracota);
+  margin: 0 0 4px;
+}
+.hito__t {
+  font-family: var(--display); font-size: 20px; font-weight: 500;
+  letter-spacing: -.01em; margin: 0 0 6px;
+}
+.hito p { margin: 0; color: var(--gris); max-width: 70ch; }
+.hito ul { margin: 8px 0 0; padding-left: 20px; color: var(--gris); }
+
+/* ---------- 17. Lista de compra ---------- */
+.compra-grupo { margin-bottom: 32px; }
+.compra-grupo h3 {
+  font-family: var(--display); font-size: 20px; font-weight: 700;
+  letter-spacing: -.02em; margin: 0 0 12px;
+}
+.compra-lista { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--linea); }
+.compra-item { border-bottom: 1px solid var(--linea); }
+.compra-item label {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 13px 4px; cursor: pointer; color: var(--texto-2);
+}
+.compra-item label:hover { background: var(--crema-2); }
+.seccion--crema2 .compra-item label:hover { background: var(--crema-3); }
+.compra-item input { margin-top: 5px; width: 17px; height: 17px; accent-color: var(--verde-2); flex: none; }
+.compra-item input:checked + span { text-decoration: line-through; color: var(--gris-2); }
+.barra-progreso-compra {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.barra-progreso-compra__pista {
+  flex: 1; min-width: 180px; height: 8px; border-radius: 4px;
+  background: var(--linea-2); overflow: hidden;
+}
+.barra-progreso-compra__valor { height: 100%; background: var(--verde-2); width: 0; transition: width .25s ease; }
+
+/* ---------- 18. Diagnóstico ---------- */
+.diagnostico-lista { display: grid; gap: 1px; background: var(--linea); border: 1px solid var(--linea); border-radius: var(--radio); overflow: hidden; }
+.diagnostico-item { background: var(--crema); padding: 22px 24px; }
+.diagnostico-item__s {
+  font-family: var(--display); font-size: 18px; font-weight: 500;
+  letter-spacing: -.01em; margin: 0 0 8px;
+}
+.diagnostico-item__c { margin: 0 0 8px; color: var(--gris); }
+.diagnostico-item__q { margin: 0; font-size: 14px; font-weight: 500; color: var(--verde-2); }
+
+/* ---------- 19. Glosario ---------- */
+.termino {
+  border: none; background: transparent; padding: 0; cursor: help;
+  color: var(--terracota); font: inherit; font-weight: 700;
+  border-bottom: 1px dashed var(--terracota);
+}
+.termino:hover { color: var(--terracota-2); }
+.aviso-flotante {
+  position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%);
+  z-index: 96; max-width: min(560px, 92vw);
+  background: var(--tinta); color: var(--crema-texto);
+  border-radius: 12px; padding: 15px 18px;
+  display: flex; gap: 14px; align-items: flex-start;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, .28);
+}
+.aviso-flotante[hidden] { display: none; }
+.aviso-flotante p { margin: 0; font-size: 15px; }
+.aviso-flotante strong { color: var(--naranja); }
+.aviso-flotante button {
+  flex: none; border: none; background: transparent; color: var(--gris-oscuro);
+  font-size: 18px; cursor: pointer;
+}
+
+/* ---------- 20. Qué planto hoy ---------- */
+.simulador { border: 1px solid var(--linea); border-radius: 16px; overflow: hidden; }
+.simulador__cab { padding: 26px; border-bottom: 1px solid var(--linea); background: var(--crema-2); }
+.seccion--crema2 .simulador__cab { background: var(--crema); }
+.simulador__cab h3 {
+  font-family: var(--display); font-size: 26px; font-weight: 700;
+  letter-spacing: -.025em; margin: 0 0 5px;
+}
+.simulador__cab p { margin: 0; color: var(--gris); }
+.simulador__lista {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1px; background: var(--linea);
+}
+.simulador__item {
+  cursor: pointer; text-align: left; background: var(--crema); border: none;
+  padding: 20px 22px; display: flex; flex-direction: column; gap: 6px;
+  transition: background .18s ease; font-size: inherit; color: inherit;
+}
+.simulador__item:hover { background: var(--crema-3); }
+.simulador__nombre {
+  font-family: var(--display); font-size: 19px; font-weight: 500; letter-spacing: -.02em;
+}
+.simulador__accion { font-size: 14px; color: var(--gris); }
+.meses-sim { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 26px; }
+.meses-sim .mes-btn { padding: 11px 17px; }
+
+/* ---------- 21. Pie ---------- */
+.pie { padding: 80px 20px; background: var(--verde); color: var(--crema-texto); }
+.pie__fila {
+  max-width: var(--ancho); margin: 0 auto;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px; align-items: end;
+}
+.pie__lema {
+  font-family: var(--display); font-size: clamp(26px, 4vw, 42px); font-weight: 700;
+  line-height: 1.08; letter-spacing: -.03em; margin: 0 0 16px; max-width: 18ch;
+}
+.pie p { color: var(--verde-claro); max-width: 46ch; margin: 0; }
+.pie__botones { display: flex; gap: 10px; flex-wrap: wrap; }
+.pie__legal {
+  max-width: var(--ancho); margin: 56px auto 0; padding-top: 26px;
+  border-top: 1px solid var(--linea-verde);
+  font-size: 14px; color: var(--verde-claro);
+}
+.pie__legal a { color: var(--verde-pastel); text-decoration: underline; }
+.pie__legal a:hover { color: #fff; }
+
+/* ---------- 22. Fuentes ---------- */
+.fuentes { list-style: none; margin: 0; padding: 0; }
+.fuentes li { border-top: 1px solid var(--linea); padding: 16px 0; }
+.fuentes li:last-child { border-bottom: 1px solid var(--linea); }
+.fuentes strong { display: block; font-weight: 700; margin-bottom: 3px; }
+.fuentes a { font-size: 14px; word-break: break-all; }
+
+/* ---------- 23. Utilidades ---------- */
+.destacado-cita {
+  font-family: var(--display); font-size: clamp(22px, 3vw, 30px);
+  line-height: 1.2; letter-spacing: -.02em; margin: 0 0 16px;
+}
+.mb-0 { margin-bottom: 0; }
+.mt-40 { margin-top: 40px; }
+.mt-56 { margin-top: 56px; }
+.columnas-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; align-items: start; }
+.solo-lectores {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ---------- 24. Responsive ---------- */
+@media (max-width: 760px) {
+  body { font-size: 16px; }
+  .seccion { padding: 64px 16px; }
+  .hero { padding: 110px 16px 0; }
+  .meses { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .temperaturas { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .cifra, .cifra:first-child, .cifra:last-child {
+    padding: 18px 0; border-right: none; border-bottom: 1px solid var(--linea-verde);
+  }
+  .panel { padding: 22px 20px 50px; }
+  .regla { padding-right: 0; }
+  .esquema { font-size: 12px; }
+}

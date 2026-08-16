@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mi Huerto en Maceta — Plan definitivo para Tortosa 2026-2027</title>
+<meta name="description" content="Guía completa de huerto, frutales y aromáticas en maceta y bancal para Tortosa (Tarragona): 31 fichas de plantas, calendario mes a mes, riego por goteo, calculadoras y plan de agosto 2026 a diciembre 2027.">
+<meta name="theme-color" content="#1F3B26">
+<meta name="color-scheme" content="light">
+<meta property="og:title" content="Mi Huerto en Maceta">
+<meta property="og:description" content="De cero a tu primera cosecha: plan de huerto, frutales y aromáticas en maceta para Tortosa, 2026-2027.">
+<meta property="og:type" content="website">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+<div id="progreso"></div>
+
+<!-- ============ CABECERA ============ -->
+<header class="cabecera">
+  <div class="cabecera__fila">
+    <a href="#top" class="cabecera__marca">Mi Huerto en Maceta</a>
+    <button class="menu-boton" id="menuBoton" aria-expanded="false" aria-controls="navPrincipal">Menú</button>
+    <nav class="cabecera__nav" id="navPrincipal">
+      <a href="#reglas">Reglas</a>
+      <a href="#terreno">Terreno</a>
+      <a href="#catalogo">Catálogo</a>
+      <a href="#semilla">Semilla o plantel</a>
+      <a href="#calendario">Calendario</a>
+      <a href="#riego">Riego</a>
+      <a href="#cuidados">Cuidados</a>
+      <a href="#errores">Errores</a>
+      <a href="#plan">Plan 26-27</a>
+      <a href="#compra">Compra</a>
+      <a href="#hoy" class="destacado">Qué planto hoy</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="top" class="hero">
+  <div class="contenedor">
+    <p class="hero__kicker">Huerto, frutales y aromáticas · Tortosa (Tarragona) · 2026-2027</p>
+    <h1>De cero a tu primera cosecha</h1>
+    <p class="hero__entrada">Nunca has cultivado nada. El terreno es de alquiler y la tierra es mala. Solución: dos bancales elevados, frutales en macetas transportables y riego por goteo automatizado, para que el huerto se mude contigo. Aquí está el plan completo.</p>
+    <div class="hero__botones">
+      <a href="#reglas" class="btn btn--claro">Empezar por las 8 reglas</a>
+      <a href="#hoy" class="btn btn--borde">¿Qué puedo plantar hoy?</a>
+    </div>
+    <div class="cifras">
+      <div class="cifra"><p class="cifra__n">31</p><p class="cifra__t">plantas con ficha</p></div>
+      <div class="cifra"><p class="cifra__n">4 m²</p><p class="cifra__t">de huerto para empezar</p></div>
+      <div class="cifra"><p class="cifra__n">20</p><p class="cifra__t">errores que matan</p></div>
+      <div class="cifra"><p class="cifra__n">17</p><p class="cifra__t">meses planificados</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 01 REGLAS ============ -->
+<section id="reglas" class="seccion seccion--crema">
+  <div class="contenedor">
+    <div class="cabecera-seccion" data-reveal>
+      <div>
+        <p class="kicker">01 — Empieza por aquí</p>
+        <h2 class="titulo-2">Las 8 reglas del principiante</h2>
+      </div>
+      <p class="intro">Si solo lees una cosa de toda la guía, que sea esta lista. El objetivo no es un huerto técnicamente perfecto: es un huerto <strong>estable, productivo y lo bastante sencillo</strong> para que lo sigas usando dentro de tres años.</p>
+    </div>
+    <div class="lista-reglas" id="listaReglas"></div>
+  </div>
+</section>
+
+<!-- ============ 02 TERRENO ============ -->
+<section id="terreno" class="seccion seccion--crema2">
+  <div class="contenedor">
+    <div class="cabecera-seccion" data-reveal>
+      <div>
+        <p class="kicker">02 — El terreno</p>
+        <h2 class="titulo-2">Clima, zonas e infraestructura</h2>
+      </div>
+      <p class="intro">No hace falta llenar todo el terreno; hacerlo es el error típico de principiante. La estructura completa cabe en cinco zonas y un fin de semana de montaje.</p>
+    </div>
+
+    <h3 class="titulo-3">El clima de Tortosa y qué implica</h3>
+    <p class="intro" style="max-width:70ch; margin-bottom:26px;">Clima mediterráneo cálido. Tu problema no será el frío: será el calor, la evaporación, el viento y la irregularidad de la lluvia. Por eso todo el plan gira alrededor del <strong>agua y la protección de las raíces</strong>.</p>
+    <div class="rejilla rejilla--4" id="listaClima" style="margin-bottom:56px;"></div>
+
+    <h3 class="titulo-3">Las cinco zonas</h3>
+    <div class="rejilla rejilla--3" id="listaZonas" style="margin-bottom:56px;"></div>
+
+    <h3 class="titulo-3">Cómo se monta todo</h3>
+    <div class="acordeon" id="acordeonInfra" style="margin-bottom:56px;"></div>
+
+    <h3 class="titulo-3">Volumen de maceta por especie</h3>
+    <p class="intro" style="max-width:70ch; margin-bottom:20px;">Compromiso entre producción y transportabilidad: cuanto mayor sea el recipiente, más estable es el agua, pero más difícil es mudarlo. Recuerda escalar 35-50 L → 60-80 L → 80-120 L, no empezar por el máximo.</p>
+    <div class="tabla-envoltorio">
+      <table class="tabla">
+        <thead><tr><th>Planta</th><th>Recipiente objetivo práctico</th></tr></thead>
+        <tbody id="tablaMacetas"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 CATÁLOGO ============ -->
+<section id="catalogo" class="seccion seccion--crema">
+  <div class="contenedor">
+    <div class="cabecera-seccion" data-reveal>
+      <div>
+        <p class="kicker">03 — Catálogo</p>
+        <h2 class="titulo-2">Qué plantar, una por una</h2>
+      </div>
+      <p class="intro">La barra de doce casillas de cada tarjeta son los meses del año: las marcadas son los meses en los que se planta. Filtra por grupo, por mes, o por los dos a la vez. Toca cualquier planta para abrir su ficha completa.</p>
+    </div>
+
+    <div class="filtros" id="filtros"></div>
+
+    <p class="etiqueta-filtro">Mes de plantación</p>
+    <div class="filtros filtros--meses" id="filtrosMes"></div>
+
+    <p class="conteo" id="conteo"></p>
+    <div class="rejilla rejilla--tarjetas" id="rejillaPlantas"></div>
+    <p class="sin-resultados" id="sinResultados" hidden>Ese mes no hay nada que plantar de este grupo. Prueba con otro mes o quita el filtro de grupo.</p>
+  </div>
+</section>
+
+<!-- ============ 04 SEMILLA O PLANTEL ============ -->
+<section id="semilla" class="seccion seccion--crema2">
+  <div class="contenedor">
+    <div class="cabecera-seccion" data-reveal>
+      <div>
+        <p class="kicker">04 — Cómo se empieza</p>
+        <h2 class="titulo-2">Semilla o plantel</h2>
+      </div>
+      <p class="intro">Cuando el plan dice «tomate en marzo-abril» no significa poner una semilla en el bancal: significa <strong>comprar plantel y trasplantarlo</strong>. Aquí está la diferencia, cultivo por cultivo.</p>
+    </div>
+
+    <div class="rejilla rejilla--3" id="listaFormas" style="margin-bottom:56px;"></div>
+
+    <h3 class="titulo-3">Las palabras, separadas</h3>
+    <p class="intro" style="max-width:70ch; margin-bottom:20px;">Tres verbos distintos que conviene no mezclar nunca:</p>
+    <div class="rejilla rejilla--3" id="listaVocabulario" style="margin-bottom:56px;"></div>
+
+    <h3 class="titulo-3">Tabla maestra</h3>
+    <p class="intro" style="max-width:70ch; margin-bottom:20px;">La respuesta corta a prácticamente cualquier duda. Las fechas son <strong>ventanas</strong>, no días obligatorios: el calendario orienta, la temperatura real manda.</p>
+    <div class="tabla-envoltorio" style="margin-bottom:56px;">
+      <table class="tabla">
+        <thead><tr><th>Cultivo</th><th>Si partes de semilla</th><th>Cuándo va al bancal</th><th>Si compras plantel</th><th>Lo recomendado</th></tr></thead>
+        <tbody id="tablaSemilla"></tbody>
+      </table>
+    </div>
+
+    <h3 class="titulo-3">Tu primer año, sin complicaciones</h3>
+    <p class="intro" style="max-width:70ch; margin-bottom:20px;">No hagas un gran semillero en 2027. Así aprendes primero a cultivar, no a producir plantel. En 2028, si te apetece, ya empiezas tus propios tomates desde semilla.</p>
+    <div class="rejilla rejilla--4" id="listaPrimerAno"></div>
+  </div>
+</section>
+
+<!-- Panel lateral de ficha -->
+<div class="fondo-panel" id="fondoPanel" hidden>
+  <aside class="panel" id="panel" role="dialog" aria-modal="true" aria-label="Ficha de planta"></aside>
+</div>
+
+<!-- ============ 04 CALENDARIO ============ -->
+<section id="calendario" class="seccion seccion--crema">
+  <div class="contenedor">
+    <div class="cabecera-seccion" data-reveal>
+      <div>
+        <p class="kicker">05 — El año</p>
+        <h2 class="titulo-2">Calendario mes a mes</h2>
+      </div>
+      <p class="intro">El huerto mediterráneo tiene dos arranques: noviembre-febrero para los árboles y marzo-abril para el verano. Agosto no se planta: se prepara. Cada mes te dice además qué siembras directo y qué compras hecho.</p>
+    </div>
+
+    <div class="meses" id="botonesMes"></div>
+    <div class="temperaturas" id="temperaturasMes"></div>
+    <div class="ficha-mes" id="fichaMes"></div>
+  </div>
+</section>
+
+<!-- ============ 05 RIEGO ============ -->
+<section id="riego" class="seccion seccion--crema2">
+  <div class="contenedor">
+    <div class="cabecera-seccion" data-reveal>
+      <div>
+        <p class="kicker">06 — Agua</p>
+        <h2 class="titulo-2">Cuánto regar y cuándo</h2>
+      </div>
+      <p class="intro">Una maceta no tiene reservas: lo que no le das tú, no lo tiene. Pero no programes "15 minutos todos los días" sin saber cuánta agua sale: dos instalaciones pueden dar cantidades completamente distintas en el mismo tiempo.</p>
+    </div>
+
+    <div class="rejilla rejilla--4" id="listaRiego" style="margin-bottom:56px;"></div>
+
+    <div class="columnas-2" style="margin-bottom:56px;">
+      <div data-reveal>
+        <h3 class="titulo-3">El test del dedo</h3>
+        <p class="intro" style="margin-bottom:22px;">Gratis, instantáneo y más fiable que cualquier sensor. Tres pasos:</p>
+        <ol class="pasos">
+          <li><span class="pasos__n">01</span><p><strong>Mete el dedo</strong> 4-5 cm en la tierra, hasta el nudillo.</p></li>
+          <li><span class="pasos__n">02</span><p><strong>Sale seco:</strong> riega hasta que salga agua por los agujeros de abajo.</p></li>
+          <li><span class="pasos__n">03</span><p><strong>Sale húmedo:</strong> espera. Pasarse de agua pudre las raíces igual que quedarse corto las seca.</p></li>
+        </ol>
+        <p class="intro mt-40">En macetas muy grandes también puedes usar un palillo de madera largo, o levantar ligeramente un borde para aprender cómo cambia el peso. En los bancales, comprueba la humedad a 5-10 cm: si la superficie parece seca pero debajo está húmedo, no falta agua.</p>
+      </div>
+      <div class="tarjeta--verde" data-reveal>
+        <p class="kicker kicker--claro">Innegociable</p>
+        <p class="destacado-cita">Un fin de semana de agosto sin riego mata un árbol en maceta.</p>
+        <p>A 40 °C, dos días sin agua secan el sustrato entero y no hay riego de emergencia que lo recupere. El programador de goteo no es un lujo: es el seguro de vida del huerto. Cuesta menos que un solo frutal.</p>
+      </div>
+    </div>
+
+    <h3 class="titulo-3">El sistema: dos zonas independientes</h3>
+    <p class="intro" style="max-width:70ch; margin-bottom:24px;">Las hortalizas, los árboles y el romero no tienen las mismas necesidades. El sistema mínimo debe tener dos zonas separadas. Las aromáticas mediterráneas pueden quedar fuera del automático o en un ramal que puedas cerrar.</p>
+
+    <div class="columnas-2" style="margin-bottom:56px;">
+      <pre class="esquema">        GRIFO
+          │
+   DISTRIBUIDOR 2 VÍAS
+     ┌────┴────┐
+  PROGRAM. A  PROGRAM. B
+     │         │
+   FILTRO    FILTRO
+     │         │
+  REDUCTOR  REDUCTOR   (si hace falta)
+     │         │
+  TUBO 16mm  TUBO 16mm
+     │         │
+  BANCALES  MACETAS / FRUTALES</pre>
+      <div>
+        <h4 class="titulo-4">Componentes</h4>
+        <ul class="puntos">
+          <li><p><strong>Programador a pilas.</strong> Debe permitir frecuencia diaria, duración configurable e, idealmente, dos programas o salidas.</p></li>
+          <li><p><strong>Filtro.</strong> Barato y muy recomendable: evita que las partículas obstruyan los goteros.</p></li>
+          <li><p><strong>Reductor de presión.</strong> Necesario si la presión de red es alta o si tu cinta de goteo lo exige.</p></li>
+          <li><p><strong>Tubo principal de 16 mm.</strong> Es la medida doméstica común y tiene accesorios baratos por todas partes.</p></li>
+          <li><p><strong>Cierre de líneas.</strong> Tapones o válvulas al final. Una vez al mes en temporada: abre el extremo, deja correr agua unos segundos y vuelve a cerrar.</p></li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="titulo-3">Cuántos goteros por recipiente</h3>
+    <div class="tabla-envoltorio" style="margin-bottom:56px;">
+      <table class="tabla">
+        <thead><tr><th>Recipiente</th><th>Configuración</th><th>Caudal total</th></tr></thead>
+        <tbody id="tablaGoteros"></tbody>
+      </table>
+    </div>
+
+    <h3 class="titulo-3">Calculadoras</h3>
+    <p class="intro" style="max-width:70ch; margin-bottom:24px;">La fórmula que lo resuelve todo: <strong>litros aplicados = caudal total de goteros × horas de funcionamiento</strong>. Con eso dejas de programar a ciegas.</p>
+
+    <div class="rejilla rejilla--2" style="margin-bottom:20px;">
+      <div class="calculadora">
+        <h4 class="titulo-4">Cuánta agua recibe una maceta</h4>
+        <div class="campos">
+          <div class="campo">
+            <label for="numGoteros">Nº de goteros</label>
+            <input type="number" id="numGoteros" value="2" min="1" max="20" step="1">
+          </div>
+          <div class="campo">
+            <label for="caudalGotero">Caudal (L/h)</label>
+            <select id="caudalGotero">
+              <option value="2">2 L/h</option>
+              <option value="4" selected>4 L/h</option>
+              <option value="8">8 L/h</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="minutosRiego">Minutos de riego</label>
+            <input type="number" id="minutosRiego" value="30" min="1" max="240" step="5">
+          </div>
+        </div>
+        <div class="resultado">
+          <p class="resultado__n" id="resultadoAgua">4 L</p>
+          <p class="resultado__t" id="resultadoAguaTexto">Caudal total 8 L/h durante 30 min</p>
+        </div>
+      </div>
+
+      <div class="calculadora">
+        <h4 class="titulo-4">Cuánto sustrato necesita un bancal</h4>
+        <div class="campos">
+          <div class="campo">
+            <label for="largoBancal">Largo (cm)</label>
+            <input type="number" id="largoBancal" value="200" min="20" max="1000" step="10">
+          </div>
+          <div class="campo">
+            <label for="anchoBancal">Ancho (cm)</label>
+            <input type="number" id="anchoBancal" value="100" min="20" max="300" step="10">
+          </div>
+          <div class="campo">
+            <label for="altoBancal">Alto (cm)</label>
+            <input type="number" id="altoBancal" value="30" min="10" max="90" step="5">
+          </div>
+          <div class="campo">
+            <label for="numBancales">Nº de bancales</label>
+            <input type="number" id="numBancales" value="2" min="1" max="10" step="1">
+          </div>
+        </div>
+        <div class="resultado">
+          <p class="resultado__n" id="resultadoSustrato">1,2 m³</p>
+          <p class="resultado__t" id="resultadoSustratoTexto">1.200 litros en total — a granel sale mucho más barato que en sacos</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="titulo-3 mt-56">Acolchado</h3>
+    <p class="intro" style="max-width:70ch;">Cuando las plantas estén establecidas, cubre el suelo con <strong>5-8 cm</strong> de paja limpia, hojas secas trituradas, compost grueso o restos vegetales sanos y secos, dejando unos centímetros libres alrededor del tallo. Reduce evaporación, frena las hierbas, suaviza la temperatura del suelo y evita salpicaduras sobre las hojas. En pleno verano vale mucho más que cualquier producto milagro.</p>
+  </div>
+</section>
+
+<!-- ============ 06 CUIDADOS ============ -->
+<section id="cuidados" class="seccion seccion--crema">
+  <div class="contenedor">
+    <div class="cabecera-seccion" data-reveal>
+      <div>
+        <p class="kicker">07 — Mantenimiento</p>
+        <h2 class="titulo-2">Abonar, podar y no complicarse</h2>
+      </div>
+      <p class="intro">No necesitas una estantería llena de fertilizantes ni un armario de insecticidas. Dos productos de abono y una rutina de observación semanal cubren casi todo el año.</p>
+    </div>
+
+    <div class="acordeon" id="acordeonCuidados" style="margin-bottom:56px;"></div>
+
+    <h3 class="titulo-3">Rutina semanal, mensual y anual</h3>
+    <div class="rejilla rejilla--3" id="listaRutinas" style="margin-bottom:56px;"></div>
+
+    <h3 class="titulo-3">Tabla maestra de hortalizas</h3>
+    <p class="intro" style="max-width:70ch; margin-bottom:20px;">Fechas orientativas para un clima mediterráneo cálido como el de Tortosa: ajústalas a la temperatura real de cada año.</p>
+
+    <h4 class="titulo-4">Primavera y verano</h4>
+    <div class="tabla-envoltorio" style="margin-bottom:32px;">
+      <table class="tabla">
+        <thead><tr><th>Cultivo</th><th>Inicio fácil</th><th>Separación</th><th>Lugar recomendado</th><th>Dificultad</th></tr></thead>
+        <tbody id="tablaVerano"></tbody>
+      </table>
+    </div>
+
+    <h4 class="titulo-4">Otoño, invierno y primavera temprana</h4>
+    <div class="tabla-envoltorio">
+      <table class="tabla">
+        <thead><tr><th>Cultivo</th><th>Inicio fácil</th><th>Separación</th><th>Lugar recomendado</th><th>Dificultad</th></tr></thead>
+        <tbody id="tablaInvierno"></tbody>
+      </table>
+    </div>
+
+    <p class="intro mt-40" style="max-width:70ch;"><strong>Cultivos que ocupan demasiado para tus primeros 4 m²:</strong> calabaza, sandía, melón, maíz y alcachofa. No están prohibidos, pero úsalos solo si de verdad los consumes y deja que las guías salgan fuera del bancal.</p>
+  </div>
+</section>
+
+<!-- ============ 07 ERRORES ============ -->
+<section id="errores" class="seccion seccion--tinta">
+  <div class="contenedor">
+    <div class="cabecera-seccion" data-reveal>
+      <div>
+        <p class="kicker kicker--claro">08 — Cuidado</p>
+        <h2 class="titulo-2">Los 20 errores que matan tu huerto</h2>
+      </div>
+      <p class="intro">Casi todos los huertos que fracasan mueren por uno de estos veinte. Ninguno es difícil de evitar si lo sabes de antemano.</p>
+    </div>
+    <div class="errores" id="listaErrores"></div>
+  </div>
+</section>
+
+<!-- ============ 08 DIAGNÓSTICO ============ -->
+<section id="diagnostico" class="seccion seccion--crema">
+  <div class="contenedor">
+    <div class="cabecera-seccion" data-reveal>
+      <div>
+        <p class="kicker">09 — Urgencias</p>
+        <h2 class="titulo-2">Diagnóstico rápido</h2>
+      </div>
+      <p class="intro">Algo va mal y no sabes qué. Busca el síntoma, lee la causa probable y, sobre todo, resiste la tentación de regar o abonar más "por si acaso".</p>
+    </div>
+    <div class="diagnostico-lista" id="listaDiagnostico"></div>
+  </div>
+</section>
+
+<!-- ============ 09 PLAN 2026-2027 ============ -->
+<section id="plan" class="seccion seccion--crema2">
+  <div class="contenedor">
+    <div class="cabecera-seccion" data-reveal>
+      <div>
+        <p class="kicker">10 — El plan</p>
+        <h2 class="titulo-2">De agosto 2026 a diciembre 2027</h2>
+      </div>
+      <p class="intro">Diecisiete meses, mes a mes, desde el día en que coges la cinta métrica hasta el primer inventario anual. Después de esto sabrás más de tu microclima que cualquier guía general.</p>
+    </div>
+
+    <ul class="cronologia" id="listaCronologia" style="margin-bottom:64px;"></ul>
+
+    <h3 class="titulo-3">Qué haría yo mañana</h3>
+    <p class="intro" style="max-width:70ch; margin-bottom:20px;">Si empiezas literalmente desde cero, haz solo esto. Este orden evita casi todos los errores caros de principiante.</p>
+    <ol class="pasos" style="margin-bottom:56px;">
+      <li><span class="pasos__n">01</span><p>Coge una cinta métrica.</p></li>
+      <li><span class="pasos__n">02</span><p>Marca en el terreno dos rectángulos de 2 × 1 m.</p></li>
+      <li><span class="pasos__n">03</span><p>Comprueba que reciben buen sol.</p></li>
+      <li><span class="pasos__n">04</span><p>Mide los metros que hay desde el grifo.</p></li>
+      <li><span class="pasos__n">05</span><p>Haz una foto del grifo y de la zona.</p></li>
+      <li><span class="pasos__n">06</span><p>Busca precio de dos bancales metálicos desmontables.</p></li>
+      <li><span class="pasos__n">07</span><p>Llama a 2-3 proveedores de la zona y pregunta por 1,2 m³ de sustrato para huerto elevado, con transporte.</p></li>
+      <li><span class="pasos__n">08</span><p>No compres todavía ningún árbol grande.</p></li>
+      <li><span class="pasos__n">09</span><p>Monta primero el riego y los bancales.</p></li>
+      <li><span class="pasos__n">10</span><p>Cuando el sistema esté preparado, empieza a plantar.</p></li>
+    </ol>
+
+    <h3 class="titulo-3">Presupuesto por fases</h3>
+    <p class="intro" style="max-width:70ch; margin-bottom:20px;">Los precios cambian mucho según tienda y proveedor local, así que lo importante no es un número exacto sino <strong>dónde gastar y dónde ahorrar</strong>.</p>
+    <div class="rejilla rejilla--3" id="listaPresupuesto" style="margin-bottom:56px;"></div>
+
+    <div class="columnas-2">
+      <div>
+        <h3 class="titulo-3">Plan mínimo, si quieres gastar aún menos</h3>
+        <p class="intro" style="margin-bottom:16px;">Probablemente la mejor opción económica de todas, porque evita gastar en capacidad que aún no sabes si usarás.</p>
+        <ul class="puntos">
+          <li><p><strong>2026:</strong> un solo bancal de 2 × 1 m, su tierra, riego básico, fresas, aromáticas, ajo, rábano y zanahoria.</p></li>
+          <li><p><strong>Invierno:</strong> una higuera y un granado. Nada más.</p></li>
+          <li><p><strong>Primavera 2027:</strong> 2 tomates, 3 pimientos, 1 calabacín y 2 pepinos en vertical.</p></li>
+          <li><p><strong>Julio:</strong> si te encanta el huerto, añade el segundo bancal.</p></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="titulo-3">Experimento de coco 2027</h3>
+        <p class="intro" style="margin-bottom:16px;">La hidroponía no es la base del huerto: es una prueba controlada de <strong>2 plantas contra 2</strong>, y llega solo cuando ya sabes regar.</p>
+        <ul class="puntos">
+          <li><p>Cuatro tomates de la misma variedad y el mismo vivero: dos en bancal, dos en recipientes de 20-30 L con coco y perlita.</p></li>
+          <li><p>Necesitas depósito opaco de 60-80 L, bomba, temporizador, goteros, nutriente A+B y medidores de pH y <span class="termino" data-termino="ec">EC</span>.</p></li>
+          <li><p>Busca en torno a un <strong>10-15 % de drenaje</strong> para evitar acumulación de sales. No hace falta recuperar el drenaje en una prueba de dos plantas.</p></li>
+          <li><p>Mide kilos, número de frutos, problemas, agua, fertilizante, tiempo de mantenimiento, sabor y coste. En septiembre decides.</p></li>
+          <li><p><strong>Matiz importante:</strong> la normativa europea no considera la hidroponía producción ecológica certificable en el mismo sentido que el cultivo en suelo vivo. Puede ser eficiente y limpio, pero es cultivo sin suelo.</p></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 10 COMPRA ============ -->
+<section id="compra" class="seccion seccion--crema">
+  <div class="contenedor">
+    <div class="cabecera-seccion" data-reveal>
+      <div>
+        <p class="kicker">11 — Lista</p>
+        <h2 class="titulo-2">Qué comprar en agosto y septiembre</h2>
+      </div>
+      <p class="intro">Marca las casillas conforme vayas comprando: se guardan en este navegador. El ahorro principal del huerto no viene de comprar lo más barato de cada cosa, sino de <strong>no comprar cosas que no necesitas</strong>.</p>
+    </div>
+
+    <div class="barra-progreso-compra">
+      <span id="compraTexto" style="font-weight:700;">0 de 0 comprados</span>
+      <span class="barra-progreso-compra__pista"><span class="barra-progreso-compra__valor" id="compraBarra"></span></span>
+      <button class="chip" id="compraReset" type="button">Desmarcar todo</button>
+    </div>
+
+    <div class="rejilla rejilla--2" id="listaCompra" style="margin-bottom:48px;"></div>
+
+    <div class="tarjeta--verde">
+      <p class="kicker kicker--claro">No compres todavía</p>
+      <p style="margin:0 0 12px; color:var(--verde-pastel);">Todo esto puede esperar, y buena parte no lo necesitarás nunca:</p>
+      <p id="noComprar" style="margin:0; color:#fff; font-weight:500;"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 11 QUÉ PLANTO HOY ============ -->
+<section id="hoy" class="seccion seccion--crema2">
+  <div class="contenedor">
+    <div class="cabecera-seccion" data-reveal>
+      <div>
+        <p class="kicker">12 — Interactivo</p>
+        <h2 class="titulo-2">¿Qué puedo plantar hoy?</h2>
+      </div>
+      <p class="intro">Elige un mes y te digo exactamente qué comprar y plantar esa semana. Toca cualquier resultado para abrir su ficha.</p>
+    </div>
+    <div class="meses-sim" id="botonesSim"></div>
+    <div class="simulador">
+      <div class="simulador__cab">
+        <h3 id="simTitulo"></h3>
+        <p id="simSub"></p>
+      </div>
+      <div class="simulador__lista" id="simLista"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FUENTES ============ -->
+<section id="fuentes" class="seccion seccion--crema">
+  <div class="contenedor">
+    <div class="cabecera-seccion" data-reveal>
+      <div>
+        <p class="kicker">13 — Rigor</p>
+        <h2 class="titulo-2">Fuentes técnicas</h2>
+      </div>
+      <p class="intro">El plan combina el contexto concreto del terreno con recomendaciones agronómicas de fuentes institucionales y universitarias, revisadas el 16 de agosto de 2026.</p>
+    </div>
+    <ul class="fuentes" id="listaFuentes"></ul>
+  </div>
+</section>
+
+<!-- ============ PIE ============ -->
+<footer class="pie">
+  <div class="pie__fila">
+    <div>
+      <p class="pie__lema">Cuatro macetas bien cuidadas ganan a doce medio muertas.</p>
+      <p>El primer año aprendes y comes higos. La cosecha que llena la mesa llega el segundo verano. Empieza pequeño, riega bien y ten paciencia.</p>
+    </div>
+    <div class="pie__botones">
+      <a href="#catalogo" class="btn btn--claro">Elegir mi primera planta</a>
+      <a href="#reglas" class="btn btn--borde">Repasar las reglas</a>
+    </div>
+  </div>
+  <div class="pie__legal">
+    <p style="margin:0 0 8px;">Plan definitivo de huerto, frutales y aromáticas · Tortosa (Tarragona) · agosto 2026 – diciembre 2027.</p>
+    <p style="margin:0;">Antes de usar cualquier producto fitosanitario, comprueba que esté autorizado para ese cultivo y esa plaga en el <a href="https://www.mapa.gob.es/es/agricultura/temas/sanidad-vegetal/productos-fitosanitarios/registro-productos" target="_blank" rel="noopener">Registro Oficial de Productos Fitosanitarios</a> y sigue su etiqueta.</p>
+  </div>
+</footer>
+
+<!-- Aviso flotante del glosario -->
+<div class="aviso-flotante" id="avisoTermino" hidden>
+  <p id="avisoTerminoTexto"></p>
+  <button type="button" id="avisoTerminoCerrar" aria-label="Cerrar">×</button>
+</div>
+
+<script src="js/datos.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
