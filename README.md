@@ -1,8 +1,11 @@
 # Mi Huerto en Maceta — web
 
+**→ [millonaris.github.io/huerto-en-maceta](https://millonaris.github.io/huerto-en-maceta/)**
+
 Web estática (HTML + CSS + JavaScript, sin dependencias) que reúne el diseño
 *Mi Huerto en Maceta v2* y todo el contenido de
-`Plan_definitivo_huerto_frutales_Tortosa_2026.md`.
+`Plan_definitivo_huerto_frutales_Tortosa_2026.md` y
+`Calendario_semilla_vs_plantel_Tortosa_2026_2027.md`.
 
 ## Cómo verla
 
@@ -41,21 +44,24 @@ tarjeta y el buscador «¿Qué puedo plantar hoy?».
 |---|---|---|
 | 01 | Reglas | Las 8 reglas del principiante, con el porqué de cada una |
 | 02 | Terreno | Clima de Tortosa, las 5 zonas, bancales, sustratos, macetas, tutores |
-| 03 | Catálogo | 31 fichas de planta filtrables, con ficha lateral completa |
-| 04 | Calendario | Los 12 meses: qué se planta, qué se cosecha y cuál es tu tarea |
-| 05 | Riego | Frecuencias por estación, esquema de goteo, goteros y calculadoras |
-| 06 | Cuidados | Abonado, plagas, poda, vivero, vacaciones, mudanza, rutinas y tablas |
-| 07 | Errores | Los 20 errores que matan el huerto, con su solución |
-| 08 | Diagnóstico | Síntoma → causa probable → qué hacer |
-| 09 | Plan 26-27 | Cronograma de agosto 2026 a diciembre 2027, presupuesto, hidroponía |
-| 10 | Compra | Lista de compra con casillas que se guardan en el navegador |
-| 11 | Qué planto hoy | Elige un mes y salen las plantas y la acción concreta |
-| 12 | Fuentes | AEMET, extensiones universitarias, Gencat, MAPA, Reglamento UE |
+| 03 | Catálogo | 31 fichas de planta filtrables por grupo y por mes de plantación |
+| 04 | Semilla o plantel | Las 3 formas de empezar, el vocabulario y la tabla maestra |
+| 05 | Calendario | Los 12 meses: qué se planta y cosecha, tu tarea, siembra directa y plantel |
+| 06 | Riego | Frecuencias por estación, esquema de goteo, goteros y calculadoras |
+| 07 | Cuidados | Abonado, plagas, poda, vivero, vacaciones, mudanza, rutinas y tablas |
+| 08 | Errores | Los 20 errores que matan el huerto, con su solución |
+| 09 | Diagnóstico | Síntoma → causa probable → qué hacer |
+| 10 | Plan 26-27 | Cronograma de agosto 2026 a diciembre 2027, presupuesto, hidroponía |
+| 11 | Compra | Lista de compra con casillas que se guardan en el navegador |
+| 12 | Qué planto hoy | Elige un mes y salen las plantas y la acción concreta |
+| 13 | Fuentes | AEMET, extensiones universitarias, Gencat, MAPA, Reglamento UE |
 
 ## Cosas que hace la web
 
-- **Catálogo filtrable** por grupo y ordenable por dificultad.
-- **Ficha lateral** de cada planta con avisos, trucos y meses de plantación.
+- **Catálogo filtrable** por grupo y por mes de plantación (se combinan), y
+  ordenable por dificultad. Cada chip de mes lleva su recuento de plantas.
+- **Ficha lateral** de cada planta con avisos, trucos, meses de plantación y
+  cómo se empieza: planta de vivero, plantel, semilla directa o diente.
 - **Calculadora de riego**: nº de goteros × caudal × minutos → litros reales.
 - **Calculadora de sustrato**: medidas del bancal → m³ y litros a comprar.
 - **Lista de compra persistente**: las casillas marcadas se guardan en
