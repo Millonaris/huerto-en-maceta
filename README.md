@@ -48,11 +48,10 @@ servidor.js             Servidor local mínimo, opcional
 diseno-original/        El diseño descargado de claude.ai, como referencia
 ```
 
-Para cambiar contenido no hace falta tocar HTML: casi todo sale de `js/datos.js`.
-Por ejemplo, para añadir una planta basta con copiar un objeto del array
-`PLANTAS` y ajustar sus campos. El array `meses` son los números de mes en los
-que se planta (1 = enero) y alimenta a la vez la barra de doce casillas de la
-tarjeta y el buscador «¿Qué puedo plantar hoy?».
+Para cambiar contenido no hace falta tocar HTML. Las **fechas y los cultivos**
+se editan en el JSON de `datos/` y se regeneran con el script; todo lo demás
+(reglas, zonas, errores, cronograma, lista de compra, trucos) está en
+`js/datos.js`.
 
 ## Secciones
 
@@ -60,9 +59,9 @@ tarjeta y el buscador «¿Qué puedo plantar hoy?».
 |---|---|---|
 | 01 | Reglas | Las 8 reglas del principiante, con el porqué de cada una |
 | 02 | Terreno | Clima de Tortosa, las 5 zonas, bancales, sustratos, macetas, tutores |
-| 03 | Catálogo | 31 fichas de planta filtrables por grupo y por mes de plantación |
-| 04 | Semilla o plantel | Las 3 formas de empezar, el vocabulario y la tabla maestra |
-| 05 | Calendario | Los 12 meses: qué se planta y cosecha, tu tarea, siembra directa y plantel |
+| 03 | Catálogo | 114 fichas filtrables por categoría, mes y texto, con buscador |
+| 04 | Semilla o plantel | Las 3 formas de empezar, el vocabulario y la tabla maestra de 114 |
+| 05 | Calendario | Los 12 meses: lo mejor que plantar, qué se cosecha y tu tarea |
 | 06 | Riego | Frecuencias por estación, esquema de goteo, goteros y calculadoras |
 | 07 | Cuidados | Abonado, plagas, poda, vivero, vacaciones, mudanza, rutinas y tablas |
 | 08 | Errores | Los 20 errores que matan el huerto, con su solución |
@@ -74,10 +73,12 @@ tarjeta y el buscador «¿Qué puedo plantar hoy?».
 
 ## Cosas que hace la web
 
-- **Catálogo filtrable** por grupo y por mes de plantación (se combinan), y
-  ordenable por dificultad. Cada chip de mes lleva su recuento de plantas.
-- **Ficha lateral** de cada planta con avisos, trucos, meses de plantación y
-  cómo se empieza: planta de vivero, plantel, semilla directa o diente.
+- **Catálogo de 114 cultivos** filtrable por categoría, por mes y por texto (se
+  combinan), y ordenable por dificultad. Cada chip de mes lleva su recuento.
+- **Dos modos**: «puedo plantarlo ya» (el método práctico) e «incluir
+  semilleros», que es el que amplía marzo de 90 a 103 cultivos.
+- **Ficha lateral** con un bloque por método de establecimiento: ventana
+  posible, ventana óptima, meses de precaución, nota y fuentes enlazadas.
 - **Calculadora de riego**: nº de goteros × caudal × minutos → litros reales.
 - **Calculadora de sustrato**: medidas del bancal → m³ y litros a comprar.
 - **Lista de compra persistente**: las casillas marcadas se guardan en
