@@ -37,6 +37,7 @@
       <a href="#errores">Errores</a>
       <a href="#plan">Plan 26-27</a>
       <a href="#compra">Compra</a>
+      <a href="#fresas">Fresas</a>
       <a href="#hoy" class="destacado">Qué planto hoy</a>
     </nav>
   </div>
@@ -51,6 +52,7 @@
     <div class="hero__botones">
       <a href="#reglas" class="btn btn--claro">Empezar por las 8 reglas</a>
       <a href="#hoy" class="btn btn--borde">¿Qué puedo plantar hoy?</a>
+      <a href="#fresas" class="btn btn--borde">Plan de fresas</a>
     </div>
     <div class="cifras">
       <div class="cifra"><p class="cifra__n">114</p><p class="cifra__t">cultivos con ficha</p></div>
@@ -507,12 +509,440 @@
   </div>
 </section>
 
+<!-- ============ 13 FRESAS ============ -->
+<section id="fresas" class="seccion seccion--crema">
+  <div class="contenedor">
+    <div class="cabecera-seccion" data-reveal>
+      <div>
+        <p class="kicker">13 — Monográfico</p>
+        <h2 class="titulo-2">Plan maestro de fresas</h2>
+      </div>
+      <p class="intro">El resto de la web es el huerto entero. Esta sección es solo fresas: <strong>40 plantas de día neutro</strong> en diez jardineras elevadas, con goteo automático, pensadas para dar fruta muy dulce y muchísimas veces al año. Está separada porque tiene decisiones propias que no valen para el resto del huerto.</p>
+    </div>
+
+    <div class="rejilla rejilla--4" id="fresasCifras" style="margin-bottom:30px;"></div>
+
+    <nav class="subnav" id="fresasSubnav" aria-label="Apartados del plan de fresas"></nav>
+
+    <!-- ---- 01 La decisión ---- -->
+    <div class="bloque-fresa" id="fresas-decision">
+      <p class="kicker">01 — Si lo montara mañana</p>
+      <h3 class="titulo-3">La decisión final, en una tabla</h3>
+      <p class="intro" style="max-width:70ch; margin-bottom:24px;">Todo lo que viene después son los motivos. Si solo quieres la lista de la compra mental, es esta.</p>
+      <div class="tabla-envoltorio" style="margin-bottom:26px;">
+        <table class="tabla">
+          <thead><tr><th>Decisión</th><th>Qué haría</th></tr></thead>
+          <tbody id="fresasDecision"></tbody>
+        </table>
+      </div>
+      <div class="tarjeta--verde">
+        <p class="kicker kicker--claro">El plan en una frase</p>
+        <p class="destacado-cita" id="fresasFrase" style="margin-bottom:0;"></p>
+      </div>
+      <p class="intro mt-40" style="max-width:70ch;">La fresa también tiene su ficha en el catálogo general, con la ventana de plantación y sus fuentes: <button type="button" class="enlace-cultivo" data-cultivo="fresa">abrir la ficha de Fresa →</button></p>
+    </div>
+
+    <!-- ---- 02 Variedades ---- -->
+    <div class="bloque-fresa" id="fresas-variedades">
+      <p class="kicker">02 — Qué plantaría</p>
+      <h3 class="titulo-3">Variedades: Albion y San Andreas</h3>
+      <p class="intro" style="max-width:70ch; margin-bottom:24px;">Las dos son de <span class="termino" data-termino="reflorescente">día neutro</span>: no dependen de los días cortos para florecer, así que producen repetidamente mientras la temperatura acompañe. No hará falta una tercera.</p>
+      <div class="rejilla rejilla--3" id="fresasVariedades" style="margin-bottom:56px;"></div>
+
+      <h4 class="titulo-4">Cómo reparto las 40 plantas</h4>
+      <p class="intro" style="max-width:70ch; margin:10px 0 20px;">No pondría las 25 Albion juntas y las 15 San Andreas juntas: si una fila va peor por viento o sol, no sabría distinguirlo de la variedad. Las dos aparecen en las dos filas.</p>
+      <div id="fresasMapa" style="margin-bottom:26px;"></div>
+      <ul class="puntos" id="fresasEtiquetado"></ul>
+    </div>
+
+    <!-- ---- 03 Jardineras ---- -->
+    <div class="bloque-fresa" id="fresas-jardineras">
+      <p class="kicker">03 — El recipiente</p>
+      <h3 class="titulo-3">Las jardineras: profundidad antes que nada</h3>
+      <div class="aviso" style="margin-bottom:28px;">
+        <p class="aviso__t">Corrección importante</p>
+        <p id="fresasJardineraAviso"></p>
+      </div>
+      <div class="columnas-2" style="margin-bottom:56px;">
+        <div>
+          <h4 class="titulo-4">La jardinera que compraría</h4>
+          <div class="tabla-envoltorio" style="margin-top:16px;">
+            <table class="tabla">
+              <thead><tr><th>Medida</th><th>Objetivo</th></tr></thead>
+              <tbody id="fresasJardineraIdeal"></tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <h4 class="titulo-4">¿Por qué quiero más profundidad?</h4>
+          <p class="intro" style="margin:10px 0 18px;">No porque la raíz de la fresa necesite un metro. Es por <strong>estabilidad</strong>: más volumen de sustrato significa condiciones más constantes.</p>
+          <ul class="puntos" id="fresasJardineraPorque"></ul>
+        </div>
+      </div>
+
+      <h4 class="titulo-4">Drenaje</h4>
+      <ul class="puntos" id="fresasDrenaje" style="margin-top:14px;"></ul>
+    </div>
+
+    <!-- ---- 04 Estructura y viento ---- -->
+    <div class="bloque-fresa" id="fresas-estructura">
+      <p class="kicker">04 — El montaje</p>
+      <h3 class="titulo-3">Estructura, distribución y viento</h3>
+      <p class="intro" style="max-width:70ch; margin-bottom:26px;">Dos filas de cinco jardineras de 1 m, elevadas 40-50 cm y unidas entre sí. En tu zona el viento manda más que la ergonomía: por eso la estructura baja y anclada.</p>
+
+      <div class="esquema" style="margin-bottom:32px;">
+        <p class="esquema__nodo esquema__nodo--origen">Fila A · 5 jardineras × 1 m · 20 fresas</p>
+        <p class="esquema__flecha" aria-hidden="true">↕</p>
+        <p class="esquema__nodo">Pasillo de 50-70 cm</p>
+        <p class="esquema__flecha" aria-hidden="true">↕</p>
+        <p class="esquema__nodo esquema__nodo--origen">Fila B · 5 jardineras × 1 m · 20 fresas</p>
+        <p style="margin:16px 0 0; color:var(--verde-claro); font-size:15px;">Altura del soporte: 40-50 cm · todo anclado y unido como una sola pieza</p>
+      </div>
+
+      <div class="acordeon" id="fresasEstructura"></div>
+    </div>
+
+    <!-- ---- 05 Sitio, sol y calor ---- -->
+    <div class="bloque-fresa" id="fresas-sitio">
+      <p class="kicker">05 — Dónde ponerlas</p>
+      <h3 class="titulo-3">Sitio, sol, calor y frío</h3>
+      <p class="intro" style="max-width:70ch; margin-bottom:24px;">Las fresas de día neutro reducen mucho la floración con calor sostenido por encima de <strong>29-32 °C</strong>. En Tortosa el enemigo no es el invierno: es julio. Nuestras prioridades, en orden:</p>
+      <ol class="pasos" id="fresasPrioridades" style="margin-bottom:40px;"></ol>
+
+      <div class="columnas-2" style="margin-bottom:40px;">
+        <div class="tarjeta--verde">
+          <p class="kicker kicker--claro">El objetivo real del año</p>
+          <p class="destacado-cita">No obligarla a dar fresas en pleno pico de agosto.</p>
+          <p>Otoño suave: establecimiento y quizá algo de fruta. Invierno: mantener planta sana. Primavera: gran producción. Principio de verano: seguir produciendo. Julio y agosto: proteger del calor y mantener las plantas vivas y fuertes. Final de verano y otoño: intentar una nueva oleada cuando bajen las temperaturas.</p>
+        </div>
+        <div>
+          <h4 class="titulo-4">¿Producirán todo el año?</h4>
+          <p class="intro" style="margin:10px 0 0;">No literalmente los 365 días. Las de día neutro producen mientras la temperatura está en zona favorable, y el calor fuerte frena la floración. Con 40 plantas tendremos muchas produciendo a la vez y otras descansando, lo que ayuda a que la cosecha sea más continua.</p>
+        </div>
+      </div>
+
+      <div class="acordeon" id="fresasSitio"></div>
+    </div>
+
+    <!-- ---- 06 Sustrato ---- -->
+    <div class="bloque-fresa" id="fresas-sustrato">
+      <p class="kicker">06 — El sustrato</p>
+      <h3 class="titulo-3">Qué relleno pongo dentro</h3>
+      <p class="intro" style="max-width:70ch; margin-bottom:24px;">Comprado y de calidad: ligero, drenante y ligeramente ácido. Las fuentes universitarias sitúan el pH de la fresa en torno a <strong>5,3-6,5</strong>.</p>
+
+      <div class="rejilla rejilla--2" style="margin-bottom:26px;">
+        <div class="tarjeta">
+          <p class="dato-etiqueta" style="color:var(--verde-2);">Busca esto en la etiqueta</p>
+          <ul class="puntos" id="fresasSustratoBusca" style="margin-top:14px;"></ul>
+        </div>
+        <div class="tarjeta">
+          <p class="dato-etiqueta" style="color:var(--terracota);">No lo llenaría con esto</p>
+          <ul class="puntos" id="fresasSustratoEvita" style="margin-top:14px;"></ul>
+        </div>
+      </div>
+
+      <div class="columnas-2">
+        <div>
+          <h4 class="titulo-4">Si solo encuentras sustrato universal</h4>
+          <p class="intro" style="margin:10px 0 16px;">Mezcla sencilla, para mantener aire en las raíces y evitar un medio compacto o cargado de sales:</p>
+          <div class="rejilla rejilla--3" id="fresasMezcla"></div>
+          <p class="regla__por" style="margin-top:14px;">Puedes sustituir una parte pequeña por humus maduro, pero no llenaría el recipiente de humus.</p>
+        </div>
+        <div class="calculadora">
+          <h4 class="titulo-4">Cuánto sustrato comprar</h4>
+          <div class="campos">
+            <div class="campo">
+              <label for="fresasNumJard">Nº de jardineras</label>
+              <input type="number" id="fresasNumJard" value="10" min="1" max="60" step="1">
+            </div>
+            <div class="campo">
+              <label for="fresasLitrosJard">Litros útiles cada una</label>
+              <input type="number" id="fresasLitrosJard" value="55" min="10" max="200" step="5">
+            </div>
+          </div>
+          <div class="resultado">
+            <p class="resultado__n" id="fresasResultadoSustrato">600 L</p>
+            <p class="resultado__t" id="fresasResultadoSustratoTexto"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---- 07 Plantación ---- -->
+    <div class="bloque-fresa" id="fresas-plantacion">
+      <p class="kicker">07 — Manos a la obra</p>
+      <h3 class="titulo-3">Cuándo y cómo plantar</h3>
+      <div class="rejilla rejilla--4" id="fresasVentana" style="margin-bottom:48px;"></div>
+
+      <div class="columnas-2" style="margin-bottom:48px;">
+        <div>
+          <h4 class="titulo-4">Qué planta comprar</h4>
+          <ul class="puntos" id="fresasComprarPlanta" style="margin-top:14px;"></ul>
+        </div>
+        <div>
+          <h4 class="titulo-4">La <span class="termino" data-termino="corona">corona</span>, a ras de sustrato</h4>
+          <p class="intro" style="margin:10px 0 18px;">Este paso es sencillo, pero hacerlo mal mata la planta. La corona es el corazón engrosado del que salen hojas y raíces.</p>
+          <div class="corona">
+            <span class="corona__lado">hojas</span>
+            <span class="corona__linea"><span class="corona__punto"></span></span>
+            <span class="corona__nivel">superficie del sustrato</span>
+            <span class="corona__lado">raíces</span>
+          </div>
+          <div class="rejilla rejilla--3" id="fresasCorona" style="margin-top:14px;"></div>
+        </div>
+      </div>
+
+      <h4 class="titulo-4">Plantación paso a paso</h4>
+      <ol class="pasos" id="fresasPasos" style="margin:16px 0 48px;"></ol>
+
+      <h4 class="titulo-4">Flores y estolones del primer mes</h4>
+      <div class="rejilla rejilla--3" id="fresasFlores" style="margin-top:16px;"></div>
+    </div>
+
+    <!-- ---- 08 Riego ---- -->
+    <div class="bloque-fresa" id="fresas-riego">
+      <p class="kicker">08 — Agua</p>
+      <h3 class="titulo-3">Riego: goteo automático en pulsos</h3>
+      <p class="intro" style="max-width:70ch; margin-bottom:26px;">No quiero agua entrando 24 horas al día: las raíces necesitan agua <em>y</em> oxígeno. Un gotero autocompensante de 2 L/h por planta, y la duración se ajusta según el tiempo, no según el calendario.</p>
+
+      <div class="columnas-2" style="margin-bottom:48px;">
+        <div class="esquema">
+          <p class="esquema__nodo esquema__nodo--origen">Grifo</p>
+          <p class="esquema__flecha" aria-hidden="true">↓</p>
+          <p class="esquema__nodo">Programador a pilas</p>
+          <p class="esquema__flecha" aria-hidden="true">↓</p>
+          <p class="esquema__nodo">Filtro</p>
+          <p class="esquema__flecha" aria-hidden="true">↓</p>
+          <p class="esquema__nodo">Reductor de presión · 1-1,5 bar</p>
+          <p class="esquema__flecha" aria-hidden="true">↓</p>
+          <p class="esquema__nodo">Tubo principal de 16 mm</p>
+          <p class="esquema__flecha" aria-hidden="true">↓</p>
+          <p class="esquema__nodo esquema__destino" style="border-color:var(--verde-claro);">40 microtubos · 40 goteros de 2 L/h</p>
+        </div>
+        <div>
+          <h4 class="titulo-4">Componentes</h4>
+          <ul class="puntos" id="fresasRiegoComponentes" style="margin-top:14px;"></ul>
+          <p class="regla__por" style="margin-top:16px;">El gotero no va tocando la corona: a <strong>5-8 cm</strong>, hacia la zona de raíces. Cuando la planta crezca, se puede desplazar un poco si moja solo un punto.</p>
+        </div>
+      </div>
+
+      <div class="columnas-2" style="margin-bottom:48px;">
+        <div>
+          <h4 class="titulo-4">Cuánta agua da el sistema</h4>
+          <p class="intro" style="margin:10px 0 16px;">Con un gotero de 2 L/h por planta:</p>
+          <div class="tabla-envoltorio">
+            <table class="tabla">
+              <thead><tr><th>Tiempo de riego</th><th>Agua por planta</th></tr></thead>
+              <tbody id="fresasTablaMinutos"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="calculadora">
+          <h4 class="titulo-4">Calculadora de riego de las 40</h4>
+          <div class="campos">
+            <div class="campo">
+              <label for="fresasGoteros">Goteros por planta</label>
+              <input type="number" id="fresasGoteros" value="1" min="1" max="4" step="1">
+            </div>
+            <div class="campo">
+              <label for="fresasCaudal">Caudal (L/h)</label>
+              <select id="fresasCaudal">
+                <option value="2" selected>2 L/h</option>
+                <option value="4">4 L/h</option>
+              </select>
+            </div>
+            <div class="campo">
+              <label for="fresasMinutos">Minutos</label>
+              <input type="number" id="fresasMinutos" value="20" min="1" max="180" step="5">
+            </div>
+            <div class="campo">
+              <label for="fresasPlantas">Nº de plantas</label>
+              <input type="number" id="fresasPlantas" value="40" min="1" max="200" step="1">
+            </div>
+          </div>
+          <div class="resultado">
+            <p class="resultado__n" id="fresasResultadoAgua"></p>
+            <p class="resultado__t" id="fresasResultadoAguaTexto"></p>
+          </div>
+        </div>
+      </div>
+
+      <h4 class="titulo-4">Pauta de arranque, temporada por temporada</h4>
+      <p class="intro" style="max-width:70ch; margin:10px 0 20px;">Es una base de puesta a punto, no una ley fija: la duración depende de temperatura, viento, tamaño de planta, lluvia, cantidad de fruta, profundidad de la jardinera y retención del sustrato.</p>
+      <div class="rejilla rejilla--3" id="fresasRiegoPauta" style="margin-bottom:40px;"></div>
+
+      <div class="columnas-2">
+        <div>
+          <h4 class="titulo-4">Cómo saber si el riego es correcto</h4>
+          <p class="intro" style="margin:10px 0 16px;">Mete un dedo varios centímetros en el sustrato. Queremos húmedo, fresco y aireado. No queremos barro permanente, agua acumulada ni un sustrato seco separado de las paredes.</p>
+        </div>
+        <div class="rejilla rejilla--2">
+          <div class="tarjeta">
+            <p class="dato-etiqueta" style="color:var(--terracota);">Señal de poco riego</p>
+            <ul class="puntos" id="fresasSenalPoco" style="margin-top:14px;"></ul>
+          </div>
+          <div class="tarjeta">
+            <p class="dato-etiqueta" style="color:var(--azul);">Señal de exceso</p>
+            <ul class="puntos" id="fresasSenalExceso" style="margin-top:14px;"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---- 09 El agua de Tortosa ---- -->
+    <div class="bloque-fresa" id="fresas-agua">
+      <p class="kicker">09 — Lo que casi nadie mira</p>
+      <h3 class="titulo-3">El agua de Tortosa</h3>
+      <p class="intro" style="max-width:70ch; margin-bottom:24px;">Este es el punto que de verdad cambia el plan. La fresa es un cultivo <strong>sensible a la salinidad</strong>, y en una jardinera el agua se evapora pero las sales se quedan: se acumulan más rápido que en un suelo profundo.</p>
+
+      <h4 class="titulo-4">Analíticas publicadas de la red, 2026</h4>
+      <div class="tabla-envoltorio" style="margin:14px 0 12px;">
+        <table class="tabla">
+          <thead><tr><th>Muestra</th><th>Conductividad</th><th>pH</th><th>Dureza</th><th>Cloruros</th><th>Sodio</th></tr></thead>
+          <tbody id="fresasAnaliticas"></tbody>
+        </table>
+      </div>
+      <p class="nota-ventanas" style="margin-bottom:40px;">Esto no significa que el agua de tu casa tenga exactamente esos valores: depende de la zona y del momento. Pero demuestra que merece la pena medirla.</p>
+
+      <h4 class="titulo-4">Umbrales de UC Cooperative Extension para fresa en goteo</h4>
+      <div class="tabla-envoltorio" style="margin:14px 0 40px;">
+        <table class="tabla">
+          <thead><tr><th>Parámetro</th><th>Sin restricción</th><th>Restricción ligera o moderada</th><th>Problemático</th></tr></thead>
+          <tbody id="fresasUmbrales"></tbody>
+        </table>
+      </div>
+
+      <div class="columnas-2" style="margin-bottom:40px;">
+        <div>
+          <h4 class="titulo-4">Qué haría con el agua</h4>
+          <div class="rejilla" id="fresasAguaPasos" style="margin-top:16px; gap:12px;"></div>
+        </div>
+        <div class="calculadora">
+          <h4 class="titulo-4">Mezcla para bajar la <span class="termino" data-termino="ec">EC</span></h4>
+          <div class="campos">
+            <div class="campo">
+              <label for="fresasEcRed">EC de tu grifo (mS/cm)</label>
+              <input type="number" id="fresasEcRed" value="1.4" min="0.1" max="5" step="0.05">
+            </div>
+            <div class="campo">
+              <label for="fresasEcObjetivo">EC objetivo (mS/cm)</label>
+              <input type="number" id="fresasEcObjetivo" value="0.7" min="0.1" max="3" step="0.05">
+            </div>
+          </div>
+          <div class="resultado">
+            <p class="resultado__n" id="fresasResultadoMezcla"></p>
+            <p class="resultado__t" id="fresasResultadoMezclaTexto"></p>
+          </div>
+          <p class="regla__por" style="margin-top:14px;">Cuenta con agua de lluvia o de ósmosis cercana a 0 mS/cm. Es una estimación de mezcla, siempre a comprobar con el medidor.</p>
+        </div>
+      </div>
+
+      <div class="rejilla rejilla--2">
+        <div class="tarjeta--verde">
+          <p class="kicker kicker--claro">Riego de lavado de sales</p>
+          <p id="fresasLavado" style="color:var(--verde-pastel); margin:0;"></p>
+        </div>
+        <div class="aviso">
+          <p class="aviso__t">No corregir el pH «a ojo»</p>
+          <p id="fresasPh"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---- 10 Abonado ---- -->
+    <div class="bloque-fresa" id="fresas-abonado">
+      <p class="kicker">10 — Nutrición</p>
+      <h3 class="titulo-3">Abonado: simple y sin pasarnos</h3>
+      <p class="intro" style="max-width:70ch; margin-bottom:24px;">Queremos fresas, no una selva de hojas. Un solo plan de abonado principal, siguiendo la dosis para recipiente de la etiqueta.</p>
+      <div class="rejilla rejilla--4" id="fresasAbonado" style="margin-bottom:32px;"></div>
+      <ul class="puntos" id="fresasAbonadoReglas"></ul>
+    </div>
+
+    <!-- ---- 11 Salud y limpieza ---- -->
+    <div class="bloque-fresa" id="fresas-salud">
+      <p class="kicker">11 — Que no se estropee</p>
+      <h3 class="titulo-3">Salud, fruta limpia y bichos</h3>
+      <p class="intro" style="max-width:70ch; margin-bottom:26px;">El diseño elevado ya resuelve gran parte del problema: fruta lejos del sustrato, buena ventilación y riego que no moja las flores. El resto es observación semanal.</p>
+      <div class="acordeon" id="fresasSalud"></div>
+    </div>
+
+    <!-- ---- 12 Dulzor y cosecha ---- -->
+    <div class="bloque-fresa" id="fresas-dulzor">
+      <p class="kicker">12 — El objetivo</p>
+      <h3 class="titulo-3">Cómo conseguir fresas más dulces</h3>
+      <p class="intro" style="max-width:70ch; margin-bottom:24px;">No existe un truco mágico para poner azúcar en la planta. El sabor sale de una planta que puede hacer fotosíntesis y madurar bien la fruta, no de aditivos raros.</p>
+      <div class="rejilla rejilla--4" id="fresasDulzor" style="margin-bottom:44px;"></div>
+
+      <div class="columnas-2">
+        <div>
+          <h4 class="titulo-4">Cuándo cosechar</h4>
+          <ul class="puntos" id="fresasCosecha" style="margin-top:14px;"></ul>
+        </div>
+        <div>
+          <h4 class="titulo-4">Producción: qué esperar</h4>
+          <p class="intro" id="fresasProduccion" style="margin:10px 0 24px;"></p>
+          <h4 class="titulo-4">Multiplicar las mejores, gratis</h4>
+          <ol class="pasos" id="fresasMultiplicar" style="margin-top:14px;"></ol>
+          <h4 class="titulo-4 mt-40">Renovación del sistema</h4>
+          <ul class="puntos" id="fresasRenovacion" style="margin-top:14px;"></ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---- 13 Calendario ---- -->
+    <div class="bloque-fresa" id="fresas-calendario">
+      <p class="kicker">13 — Mes a mes</p>
+      <h3 class="titulo-3">Calendario de la fresa: agosto 2026 → octubre 2027</h3>
+      <p class="intro" style="max-width:70ch; margin-bottom:24px;">Quince meses, del día en que mides el hueco a la cosecha de otoño del segundo año. Elige un mes y sale exactamente qué toca hacer.</p>
+      <div class="meses meses--fresas" id="fresasBotonesMes"></div>
+      <div class="temperaturas temperaturas--fresas" id="fresasTemperaturas"></div>
+      <div class="ficha-mes" id="fresasFichaMes"></div>
+    </div>
+
+    <!-- ---- 14 Compra y montaje ---- -->
+    <div class="bloque-fresa" id="fresas-compra">
+      <p class="kicker">14 — Lista</p>
+      <h3 class="titulo-3">Compra y orden exacto de montaje</h3>
+      <p class="intro" style="max-width:70ch; margin-bottom:20px;">Las casillas se guardan en este navegador, aparte de la lista de compra del huerto general. El orden de abajo evita comprar cosas inútiles.</p>
+
+      <div class="barra-progreso-compra">
+        <span id="fresasCompraTexto" style="font-weight:700;">0 de 0 comprados</span>
+        <span class="barra-progreso-compra__pista"><span class="barra-progreso-compra__valor" id="fresasCompraBarra"></span></span>
+        <button class="chip" id="fresasCompraReset" type="button">Desmarcar todo</button>
+      </div>
+
+      <div class="rejilla rejilla--2" id="fresasListaCompra" style="margin-bottom:48px;"></div>
+
+      <h4 class="titulo-4">Orden exacto para montarlo</h4>
+      <ol class="pasos" id="fresasMontaje" style="margin-top:16px;"></ol>
+    </div>
+
+    <!-- ---- 15 Errores ---- -->
+    <div class="bloque-fresa" id="fresas-errores">
+      <p class="kicker">15 — Cuidado</p>
+      <h3 class="titulo-3">Los 16 errores que quiero evitar</h3>
+      <p class="intro" style="max-width:70ch; margin-bottom:26px;">Ninguno es difícil de evitar sabiéndolo antes de comprar nada.</p>
+      <div class="bloque-tinta">
+        <div class="errores" id="fresasErrores"></div>
+      </div>
+    </div>
+
+    <!-- ---- Fuentes de la sección ---- -->
+    <div class="bloque-fresa" id="fresas-fuentes">
+      <p class="kicker">Rigor</p>
+      <h3 class="titulo-3">Fuentes de este plan de fresas</h3>
+      <p class="intro" style="max-width:70ch; margin-bottom:10px;" id="fresasAdaptacion"></p>
+      <ul class="fuentes fuentes--compacta" id="fresasFuentes"></ul>
+    </div>
+  </div>
+</section>
+
 <!-- ============ FUENTES ============ -->
 <section id="fuentes" class="seccion seccion--crema">
   <div class="contenedor">
     <div class="cabecera-seccion" data-reveal>
       <div>
-        <p class="kicker">13 — Rigor</p>
+        <p class="kicker">14 — Rigor</p>
         <h2 class="titulo-2">Fuentes técnicas</h2>
       </div>
       <p class="intro">El calendario no es una opinión: cada ventana de cada cultivo sale de fuentes contrastadas, y cada ficha enlaza las suyas.</p>
@@ -548,6 +978,7 @@
 
 <script src="js/catalogo.js"></script>
 <script src="js/datos.js"></script>
+<script src="js/fresas.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

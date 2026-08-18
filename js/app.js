@@ -67,6 +67,7 @@
     busqueda: '',
     mes: hoy,              // calendario
     sim: hoy,              // "qué planto hoy"
+    fresaMes: '2026-09',   // calendario propio del plan de fresas
     abierta: null
   };
 
@@ -752,6 +753,370 @@
   }
 
   /* =========================================================
+     14 bis. SECCIÓN MONOGRÁFICA DE FRESAS
+     Datos en js/fresas.js. Es una sección independiente: no
+     toca el catálogo ni el calendario general del huerto.
+     ========================================================= */
+  const CLAVE_COMPRA_FRESAS = 'huerto-fresas-compra-v1';
+
+  const CLASE_VARIEDAD = {
+    'Albion': 'jard--albion',
+    'San Andreas': 'jard--sanandreas',
+    'Mixta': 'jard--mixta'
+  };
+
+  function pintarFresasCabecera() {
+    $('#fresasCifras').innerHTML = FRESAS.cifras.map(c => `
+      <div class="tarjeta">
+        <p class="riego-tarjeta__frec c-primavera" style="font-size:30px;">${c.n}</p>
+        <p class="dato-etiqueta" style="margin-bottom:0;">${c.t}</p>
+      </div>`).join('');
+
+    $('#fresasSubnav').innerHTML = FRESAS.subnav
+      .map(s => `<a href="#${s.id}">${s.t}</a>`).join('');
+  }
+
+  function pintarFresasDecision() {
+    pintarTabla('#fresasDecision', ['Decisión', 'Qué haría'], FRESAS.decision);
+    $('#fresasFrase').textContent = FRESAS.frase;
+  }
+
+  function pintarFresasVariedades() {
+    $('#fresasVariedades').innerHTML = FRESAS.variedades.map(v => `
+      <div class="tarjeta" data-reveal>
+        <p class="dato-etiqueta">${v.papel}</p>
+        <h4 class="titulo-4">${v.nombre}</h4>
+        <p class="riego-tarjeta__frec c-primavera" style="font-size:22px;">${v.plantas}</p>
+        <p class="regla__por" style="margin-bottom:14px;">${v.tipo}</p>
+        <ul class="puntos">${v.fuerte.map(f => `<li><p>${f}</p></li>`).join('')}</ul>
+        <p class="regla__por" style="margin-top:14px;">${v.nota}</p>
+      </div>`).join('');
+
+    const caja = j => `
+      <div class="jard ${CLASE_VARIEDAD[j.v] || ''}">
+        <span class="jard__id">${j.id}</span>
+        <span class="jard__v">${j.v}</span>
+        <span class="jard__f" aria-hidden="true">🍓🍓🍓🍓</span>
+      </div>`;
+    const fila = letra => FRESAS.jardineras_mapa.filter(j => j.fila === letra).map(caja).join('');
+
+    $('#fresasMapa').innerHTML = `
+      <p class="mapa__fila">Fila A · 20 fresas</p>
+      <div class="mapa__linea">${fila('A')}</div>
+      <p class="mapa__pasillo">Pasillo de 50-70 cm · cabe trabajar desde los dos lados</p>
+      <p class="mapa__fila">Fila B · 20 fresas</p>
+      <div class="mapa__linea">${fila('B')}</div>`;
+
+    $('#fresasEtiquetado').innerHTML =
+      FRESAS.etiquetado.map(t => `<li><p>${t}</p></li>`).join('');
+  }
+
+  function pintarFresasJardineras() {
+    $('#fresasJardineraAviso').textContent = FRESAS.jardinera_aviso;
+    pintarTabla('#fresasJardineraIdeal', ['Medida', 'Objetivo'], FRESAS.jardinera_ideal);
+    $('#fresasJardineraPorque').innerHTML =
+      FRESAS.jardinera_porque.map(t => `<li><p>${t}</p></li>`).join('');
+    $('#fresasDrenaje').innerHTML =
+      FRESAS.drenaje.map(t => `<li><p>${t}</p></li>`).join('');
+  }
+
+  function pintarFresasSitio() {
+    $('#fresasPrioridades').innerHTML = FRESAS.prioridades_sitio.map((t, i) =>
+      `<li><span class="pasos__n">0${i + 1}</span><p>${t}</p></li>`).join('');
+  }
+
+  function pintarFresasSustrato() {
+    $('#fresasSustratoBusca').innerHTML =
+      FRESAS.sustrato_busca.map(t => `<li><p>${t}</p></li>`).join('');
+    $('#fresasSustratoEvita').innerHTML =
+      FRESAS.sustrato_evita.map(t => `<li><p>${t}</p></li>`).join('');
+    $('#fresasMezcla').innerHTML = FRESAS.sustrato_mezcla.map(t => {
+      const partes = t.split(' ');
+      return `<div class="tarjeta--plana">
+        <p class="riego-tarjeta__frec c-primavera" style="font-size:24px;">${partes.shift()}</p>
+        <p class="dato-valor" style="font-size:15px;">${partes.join(' ')}</p>
+      </div>`;
+    }).join('');
+  }
+
+  function pintarFresasPlantacion() {
+    $('#fresasVentana').innerHTML = FRESAS.ventana.map(v => `
+      <div class="riego-tarjeta">
+        <p class="riego-tarjeta__est ${v.clase}">${v.t}</p>
+        <p class="riego-tarjeta__nota">${v.d}</p>
+      </div>`).join('');
+
+    $('#fresasComprarPlanta').innerHTML =
+      FRESAS.comprar_planta.map(t => `<li><p>${t}</p></li>`).join('');
+
+    $('#fresasCorona').innerHTML = FRESAS.corona.map(c => `
+      <div class="corona-caso ${c.mal ? 'corona-caso--mal' : 'corona-caso--bien'}">
+        <p class="corona-caso__t">${c.t}</p>
+        <p>${c.d}</p>
+      </div>`).join('');
+
+    $('#fresasPasos').innerHTML = FRESAS.pasos_plantacion.map((t, i) =>
+      `<li><span class="pasos__n">${String(i + 1).padStart(2, '0')}</span><p>${t}</p></li>`).join('');
+
+    $('#fresasFlores').innerHTML = FRESAS.flores_estolones.map(f => `
+      <div class="tarjeta" data-reveal>
+        <h4 class="titulo-4">${f.t}</h4>
+        <p class="riego-tarjeta__nota">${f.d}</p>
+      </div>`).join('');
+  }
+
+  function pintarFresasRiego() {
+    $('#fresasRiegoComponentes').innerHTML =
+      FRESAS.riego_componentes.map(t => `<li><p>${t}</p></li>`).join('');
+
+    pintarTabla('#fresasTablaMinutos', ['Tiempo de riego', 'Agua por planta'],
+      FRESAS.riego_minutos, [1]);
+
+    $('#fresasRiegoPauta').innerHTML = FRESAS.riego_pauta.map(r => `
+      <div class="riego-tarjeta${r.destacado ? ' riego-tarjeta--verano' : ''}">
+        <p class="riego-tarjeta__est ${r.clase}">${r.est}</p>
+        <p class="riego-tarjeta__frec ${r.clase}" style="font-size:22px;">${r.frec}</p>
+        <p class="riego-tarjeta__nota">${r.nota}</p>
+      </div>`).join('');
+
+    $('#fresasSenalPoco').innerHTML =
+      FRESAS.riego_senales.poco.map(t => `<li><p>${t}</p></li>`).join('');
+    $('#fresasSenalExceso').innerHTML =
+      FRESAS.riego_senales.exceso.map(t => `<li><p>${t}</p></li>`).join('');
+  }
+
+  function pintarFresasAgua() {
+    pintarTabla('#fresasAnaliticas',
+      ['Muestra', 'Conductividad', 'pH', 'Dureza', 'Cloruros', 'Sodio'],
+      FRESAS.analiticas, [1, 2, 3, 4, 5]);
+    pintarTabla('#fresasUmbrales',
+      ['Parámetro', 'Sin restricción', 'Restricción ligera o moderada', 'Problemático'],
+      FRESAS.umbrales);
+
+    $('#fresasAguaPasos').innerHTML = FRESAS.agua_pasos.map(p => `
+      <div class="tarjeta">
+        <h4 class="titulo-4">${p.t}</h4>
+        <p class="riego-tarjeta__nota">${p.d}</p>
+      </div>`).join('');
+
+    $('#fresasLavado').innerHTML = FRESAS.lavado;
+    $('#fresasPh').textContent = FRESAS.ph_aviso;
+  }
+
+  function pintarFresasAbonado() {
+    $('#fresasAbonado').innerHTML = FRESAS.abonado.map(a => `
+      <div class="tarjeta" data-reveal>
+        <p class="dato-etiqueta">${a.t}</p>
+        <p class="riego-tarjeta__nota">${a.d}</p>
+      </div>`).join('');
+    $('#fresasAbonadoReglas').innerHTML =
+      FRESAS.abonado_reglas.map(t => `<li><p>${t}</p></li>`).join('');
+  }
+
+  function pintarFresasDulzor() {
+    $('#fresasDulzor').innerHTML = FRESAS.dulzor.map(d => `
+      <div class="tarjeta">
+        <p class="riego-tarjeta__est c-primavera">${d.n}</p>
+        <h4 class="titulo-4">${d.t}</h4>
+        <p class="riego-tarjeta__nota">${d.d}</p>
+      </div>`).join('');
+
+    $('#fresasCosecha').innerHTML =
+      FRESAS.cosecha.map(t => `<li><p>${t}</p></li>`).join('');
+    $('#fresasProduccion').textContent = FRESAS.produccion;
+    $('#fresasMultiplicar').innerHTML = FRESAS.multiplicar.map((t, i) =>
+      `<li><span class="pasos__n">0${i + 1}</span><p>${t}</p></li>`).join('');
+    $('#fresasRenovacion').innerHTML =
+      FRESAS.renovacion.map(t => `<li><p>${t}</p></li>`).join('');
+  }
+
+  /* Calendario propio de la fresa: 15 meses, de agosto 2026 a octubre 2027 */
+  function pintarFresasCalendario() {
+    const meses = FRESAS.calendario;
+
+    $('#fresasBotonesMes').innerHTML = meses.map(m =>
+      `<button type="button" class="mes-btn${m.id === estado.fresaMes ? ' activo' : ''}" data-fresa-mes="${m.id}">${m.corto}</button>`
+    ).join('');
+
+    const txt = { frio: 'Meses frescos', suave: 'Temperatura suave', calor: 'Calor extremo' };
+    $('#fresasTemperaturas').innerHTML = meses.map(m =>
+      `<span class="temp--${m.temp}" title="${m.nombre}: ${txt[m.temp]}"></span>`).join('');
+
+    const m = meses.find(x => x.id === estado.fresaMes) || meses[0];
+    $('#fresasFichaMes').innerHTML = `
+      <div class="ficha-mes__cab">
+        <h3>${m.nombre}</h3>
+        <p>${m.lema}</p>
+      </div>
+      <div class="ficha-mes__celda">
+        <p class="dato-etiqueta et-planta">Objetivo del mes</p>
+        <p>${m.objetivo}</p>
+      </div>
+      <div class="ficha-mes__celda ficha-mes__celda--ancha">
+        <p class="dato-etiqueta et-tarea">Qué hago</p>
+        <ul class="puntos" style="margin-top:12px;">${m.tareas.map(t => `<li><p>${t}</p></li>`).join('')}</ul>
+      </div>
+      <div class="ficha-mes__celda--enlace" style="font-weight:500;">
+        <p class="dato-etiqueta et-cosecha" style="margin-bottom:4px;">Ojo con esto</p>
+        <p style="margin:0; color:var(--texto-2);">${m.ojo}</p>
+      </div>`;
+  }
+
+  /* Lista de compra propia, con su propia clave de localStorage */
+  function leerCompraFresas() {
+    try { return JSON.parse(localStorage.getItem(CLAVE_COMPRA_FRESAS) || '{}') || {}; }
+    catch (e) { return {}; }
+  }
+
+  function guardarCompraFresas(obj) {
+    try { localStorage.setItem(CLAVE_COMPRA_FRESAS, JSON.stringify(obj)); } catch (e) { /* modo privado */ }
+  }
+
+  function pintarFresasCompra() {
+    const marcados = leerCompraFresas();
+    let n = 0;
+    $('#fresasListaCompra').innerHTML = FRESAS.compra.map(g => `
+      <div class="compra-grupo">
+        <h3>${g.g}</h3>
+        <ul class="compra-lista">
+          ${g.items.map(item => {
+            const id = 'cf-' + (n++);
+            const on = marcados[item] ? ' checked' : '';
+            return `<li class="compra-item">
+              <label for="${id}">
+                <input type="checkbox" id="${id}" data-item="${esc(item)}"${on}>
+                <span>${item}</span>
+              </label></li>`;
+          }).join('')}
+        </ul>
+      </div>`).join('');
+
+    $('#fresasMontaje').innerHTML = FRESAS.montaje.map((t, i) =>
+      `<li><span class="pasos__n">${String(i + 1).padStart(2, '0')}</span><p>${t}</p></li>`).join('');
+
+    actualizarProgresoCompraFresas();
+  }
+
+  function actualizarProgresoCompraFresas() {
+    const cajas = $$('#fresasListaCompra input[type="checkbox"]');
+    const hechas = cajas.filter(c => c.checked).length;
+    const pct = cajas.length ? (hechas / cajas.length) * 100 : 0;
+    $('#fresasCompraTexto').textContent = hechas + ' de ' + cajas.length + ' comprados';
+    $('#fresasCompraBarra').style.width = pct + '%';
+  }
+
+  function pintarFresasErrores() {
+    $('#fresasErrores').innerHTML = FRESAS.errores.map(e => `
+      <article class="error">
+        <div class="error__alto">
+          <span class="error__n">${e.n}</span>
+          <h3>${e.t}</h3>
+        </div>
+        <p>${e.d}</p>
+        <p class="error__sol">En su lugar: ${e.s}</p>
+      </article>`).join('');
+  }
+
+  function pintarFresasFuentes() {
+    $('#fresasAdaptacion').textContent = FRESAS.adaptacion;
+    $('#fresasFuentes').innerHTML = FRESAS.fuentes.map(f => `
+      <li>
+        <strong>${esc(f.t)}</strong>
+        <span class="fuentes__ambito">${esc(f.d)}</span>
+        ${f.url ? `<a href="${f.url}" target="_blank" rel="noopener">${f.url}</a>` : ''}
+      </li>`).join('');
+  }
+
+  /* Calculadoras propias de la sección */
+  function calcularFresasSustrato() {
+    const jardineras = Math.round(num('#fresasNumJard', 10));
+    const litros = num('#fresasLitrosJard', 55);
+    const total = jardineras * litros;
+    const conMargen = Math.round((total * 1.1) / 50) * 50; // margen del 10 %, al saco de 50 L
+    $('#fresasResultadoSustrato').textContent = formatear(conMargen, 0) + ' L';
+    $('#fresasResultadoSustratoTexto').textContent =
+      formatear(total, 0) + ' L de relleno + un 10 % de margen: el sustrato se asienta y habrá que rellenar.';
+  }
+
+  function calcularFresasAgua() {
+    const goteros = num('#fresasGoteros', 1);
+    const caudal = num('#fresasCaudal', 2);
+    const minutos = num('#fresasMinutos', 20);
+    const plantas = Math.round(num('#fresasPlantas', 40));
+    const porPlanta = goteros * caudal * (minutos / 60);
+    const total = porPlanta * plantas;
+    $('#fresasResultadoAgua').textContent = formatear(porPlanta, 2) + ' L por planta';
+    $('#fresasResultadoAguaTexto').textContent =
+      formatear(total, total < 10 ? 1 : 0) + ' L en total para ' + plantas +
+      ' plantas · caudal de ' + formatear(goteros * caudal * plantas, 0) + ' L/h en el sistema';
+  }
+
+  function calcularFresasMezcla() {
+    const red = num('#fresasEcRed', 1.4);
+    const objetivo = num('#fresasEcObjetivo', 0.7);
+
+    if (objetivo >= red) {
+      $('#fresasResultadoMezcla').textContent = 'No hace falta mezclar';
+      $('#fresasResultadoMezclaTexto').textContent =
+        'Tu agua ya está en el objetivo o por debajo: riega con ella y vigila el drenaje.';
+      return;
+    }
+    const pctRed = Math.round((objetivo / red) * 100);
+    $('#fresasResultadoMezcla').textContent = pctRed + ' % red + ' + (100 - pctRed) + ' % lluvia u ósmosis';
+    $('#fresasResultadoMezclaTexto').textContent =
+      'Para pasar de ' + formatear(red, 2) + ' a ' + formatear(objetivo, 2) +
+      ' mS/cm. Baja en la misma proporción sodio, cloruros y dureza.';
+  }
+
+  function pintarFresas() {
+    pintarFresasCabecera();
+    pintarFresasDecision();
+    pintarFresasVariedades();
+    pintarFresasJardineras();
+    pintarAcordeon('#fresasEstructura', FRESAS.estructura);
+    pintarFresasSitio();
+    pintarAcordeon('#fresasSitio', FRESAS.sitio);
+    pintarFresasSustrato();
+    pintarFresasPlantacion();
+    pintarFresasRiego();
+    pintarFresasAgua();
+    pintarFresasAbonado();
+    pintarAcordeon('#fresasSalud', FRESAS.salud);
+    pintarFresasDulzor();
+    pintarFresasCalendario();
+    pintarFresasCompra();
+    pintarFresasErrores();
+    pintarFresasFuentes();
+    calcularFresasSustrato();
+    calcularFresasAgua();
+    calcularFresasMezcla();
+  }
+
+  function activarEventosFresas() {
+    $('#fresasListaCompra').addEventListener('change', e => {
+      if (e.target.type !== 'checkbox') return;
+      const marcados = leerCompraFresas();
+      const item = e.target.getAttribute('data-item');
+      if (e.target.checked) marcados[item] = 1; else delete marcados[item];
+      guardarCompraFresas(marcados);
+      actualizarProgresoCompraFresas();
+    });
+
+    $('#fresasCompraReset').addEventListener('click', () => {
+      guardarCompraFresas({});
+      $$('#fresasListaCompra input[type="checkbox"]').forEach(c => { c.checked = false; });
+      actualizarProgresoCompraFresas();
+    });
+
+    ['#fresasNumJard', '#fresasLitrosJard'].forEach(sel =>
+      $(sel).addEventListener('input', calcularFresasSustrato));
+    ['#fresasGoteros', '#fresasCaudal', '#fresasMinutos', '#fresasPlantas'].forEach(sel =>
+      $(sel).addEventListener('input', calcularFresasAgua));
+    ['#fresasEcRed', '#fresasEcObjetivo'].forEach(sel =>
+      $(sel).addEventListener('input', calcularFresasMezcla));
+  }
+
+  /* =========================================================
      15. GLOSARIO FLOTANTE
      ========================================================= */
   function mostrarTermino(clave) {
@@ -905,6 +1270,12 @@
       const mes = e.target.closest('[data-mes]');
       if (mes) { estado.mes = parseInt(mes.getAttribute('data-mes'), 10); pintarCalendario(); return; }
 
+      const fresaMes = e.target.closest('[data-fresa-mes]');
+      if (fresaMes) {
+        estado.fresaMes = fresaMes.getAttribute('data-fresa-mes');
+        pintarFresasCalendario(); return;
+      }
+
       const sim = e.target.closest('[data-sim]');
       if (sim) { estado.sim = parseInt(sim.getAttribute('data-sim'), 10); pintarSimulador(); return; }
 
@@ -973,8 +1344,10 @@
     pintarCompra();
     pintarSimulador();
     pintarFuentes();
+    pintarFresas();
 
     activarAcordeones();
+    activarEventosFresas();
     activarEventos();
     activarMenu();
     activarProgreso();

@@ -10,6 +10,8 @@ Web estática (HTML + CSS + JavaScript, sin dependencias) sobre el diseño
 cada uno con sus métodos de establecimiento, ventana posible, ventana óptima,
 meses de precaución y fuentes. Es la fuente de verdad; el resto del contenido
 (reglas, terreno, riego, cuidados, plan 2026-27) viene de los `.md` del plan.
+La sección 13, monográfica de fresas, sale de
+`Plan_maestro_fresas_Tortosa_2026_2027.md` y vive en `js/fresas.js`.
 
 Para regenerar el catálogo tras editar el JSON:
 
@@ -43,6 +45,7 @@ datos/                  Dataset maestro V3 en JSON — fuente de verdad del cale
 herramientas/           Script que valida el JSON y genera js/catalogo.js
 js/catalogo.js          Dataset generado (no editar a mano)
 js/datos.js             Contenido no-calendario y trucos escritos a mano
+js/fresas.js            Todo el plan monográfico de fresas (sección 13)
 js/app.js               Renderizado e interacción
 servidor.js             Servidor local mínimo, opcional
 diseno-original/        El diseño descargado de claude.ai, como referencia
@@ -69,7 +72,8 @@ se editan en el JSON de `datos/` y se regeneran con el script; todo lo demás
 | 10 | Plan 26-27 | Cronograma de agosto 2026 a diciembre 2027, presupuesto, hidroponía |
 | 11 | Compra | Lista de compra con casillas que se guardan en el navegador |
 | 12 | Qué planto hoy | Elige un mes y salen las plantas y la acción concreta |
-| 13 | Fuentes | AEMET, extensiones universitarias, Gencat, MAPA, Reglamento UE |
+| 13 | Fresas | Plan maestro de 40 fresas: variedades, jardineras, riego, agua, calendario |
+| 14 | Fuentes | AEMET, extensiones universitarias, Gencat, MAPA, Reglamento UE |
 
 ## Cosas que hace la web
 
@@ -82,7 +86,12 @@ se editan en el JSON de `datos/` y se regeneran con el script; todo lo demás
 - **Calculadora de riego**: nº de goteros × caudal × minutos → litros reales.
 - **Calculadora de sustrato**: medidas del bancal → m³ y litros a comprar.
 - **Lista de compra persistente**: las casillas marcadas se guardan en
-  `localStorage`, con barra de progreso y botón de reinicio.
+  `localStorage`, con barra de progreso y botón de reinicio. La sección de
+  fresas tiene la suya, con su propia clave.
+- **Sección monográfica de fresas** con quince apartados, su índice interno, su
+  calendario propio de agosto 2026 a octubre 2027 (15 meses), el mapa de las
+  diez jardineras y tres calculadoras: sustrato a comprar, agua que reciben las
+  40 plantas y mezcla de agua de red con lluvia u ósmosis para bajar la EC.
 - **Glosario emergente**: los términos subrayados abren su definición abajo.
 - Barra de progreso de lectura, navegación activa, menú móvil y animaciones de
   entrada que respetan `prefers-reduced-motion`.
